@@ -1,4 +1,4 @@
-#original
+# original
 *.iml
 .gradle
 /local.properties
@@ -11,7 +11,7 @@
 /captures
 .externalNativeBuild
 
-#built application files
+# built application files
 *.apk
 *.ap_
 
@@ -31,13 +31,9 @@ local.properties
 # Windows thumbnail db
 Thumbs.db
 
-# OSX files
-.DS_Store
-
 # Android Studio
 *.iml
 .idea
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
 .navigation
@@ -47,3 +43,6 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+# all IDE related files
+.idea/
