@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "424270071779",
+    "firebase_url": "https://killddl-5ed41.firebaseio.com",
+    "project_id": "killddl-5ed41",
+    "storage_bucket": "killddl-5ed41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424270071779:android:54a425f8e42b6736",
+        "android_client_info": {
+          "package_name": "app.killddl.killddl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424270071779-k11i4l7mcg2ii7qgq2sr84s73l28isii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.killddl.killddl",
+            "certificate_hash": "806fff2da197fd3b3bba4d63305552437181c930"
+          }
+        },
+        {
+          "client_id": "424270071779-gn78o598119uf2ggthgmlobaivngdgs9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkb0BnCe9ClI9YmpED4t9CPuQQIi2YjWU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424270071779-gn78o598119uf2ggthgmlobaivngdgs9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
