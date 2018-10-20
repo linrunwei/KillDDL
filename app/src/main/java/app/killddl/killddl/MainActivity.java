@@ -1,12 +1,11 @@
 package app.killddl.killddl;
 
-import android.graphics.drawable.AnimationDrawable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.view.View;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.LinearLayout;
 
 
 public class MainActivity extends AppCompatActivity {

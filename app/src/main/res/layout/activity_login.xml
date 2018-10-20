@@ -7,7 +7,7 @@
     android:paddingTop="16dp"
     android:paddingRight="24dp"
     android:paddingLeft="24dp"
-    android:background="#f4f4f4"
+    android:background="@drawable/background_anim"
     android:id = "@+id/loginLayout">
     <!--android:background="@drawable/background_anim"-->
 
