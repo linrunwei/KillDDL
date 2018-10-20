@@ -7,7 +7,7 @@
     android:paddingTop="16dp"
     android:paddingRight="24dp"
     android:paddingLeft="24dp"
-    android:background="@drawable/background_login"
+    android:background="#f4f4f4"
     android:id = "@+id/loginLayout">
     <!--android:background="@drawable/background_anim"-->
 
@@ -94,14 +94,8 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginTop="0dp"
                 android:textAllCaps="false"
-                android:background=""/>
+                />
 
         </LinearLayout>
     </ScrollView>
-
-
-
-
-
-
 </LinearLayout>

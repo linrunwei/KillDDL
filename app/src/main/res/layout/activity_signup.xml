@@ -69,12 +69,13 @@
                 android:textAllCaps="false"
                 android:background="@drawable/background_btn2"/>
 
-        </LinearLayout>
+          </LinearLayout>
     </ScrollView>
+</LinearLayout>
 
 
 
-
+<!--
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -108,4 +109,5 @@
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>
+-->
 

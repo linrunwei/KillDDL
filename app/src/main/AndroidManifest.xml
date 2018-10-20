@@ -21,13 +21,11 @@
             </intent-filter>
         </activity>
 
-<<<<<<< HEAD
-=======
+
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> fd16c628b25487bd17bc70a6239fc8241ae444ed
-    </application>
+        </application>
 
 </manifest>
