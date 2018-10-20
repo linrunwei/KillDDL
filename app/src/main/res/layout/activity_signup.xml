@@ -10,6 +10,10 @@
     android:paddingLeft="24dp"
     android:background="@drawable/background_login"
     android:id="@+id/loginLayout">
+    android:id = "@+id/loginLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SignupActivity">
     <!--android:background="@drawable/background_anim"-->
 
     <ScrollView
