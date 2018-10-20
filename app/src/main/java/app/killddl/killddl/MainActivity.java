@@ -4,12 +4,10 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.widget.LinearLayout;
-=======
 import android.view.View;
 import android.content.Intent;
->>>>>>> fd16c628b25487bd17bc70a6239fc8241ae444ed
+
 
 public class MainActivity extends AppCompatActivity {
 
