@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.google.firebase.firestore.*;
+import com.google.firebase.Timestamp;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         //login button
         //TODO connect to database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference userRef = db.collection("User");
+
+
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
                 if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
                 if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
+
+                //Find user from db
+                userRef.whereEqualTo("name", username).whereEqualTo("password", password);
+
                 if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
             }
         });
