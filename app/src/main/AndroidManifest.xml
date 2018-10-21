@@ -26,12 +26,11 @@
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
-        </activity>
-            <activity android:name=".NotificationActivity" />
-            <activity android:name=".RepeatingActivity" />
-            <receiver android:name=".NotificationReceiver" />
-        </activity>
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".RepeatingActivity" />
+        <receiver android:name=".NotificationReceiver" />
 
         <activity android:name=".AddActivity"
                   android:label="AddActivity"
