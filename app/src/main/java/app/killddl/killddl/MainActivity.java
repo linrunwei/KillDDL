@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
                 else if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
                 else if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
-                /*else{
-                    Intent mainPage = new Intent();
+                else{
+                    Intent mainPage = new Intent(getApplicationContext(),CalendarActivity.class);
                     startActivity(mainPage);
-                }*/
+                }
             }
         });
 

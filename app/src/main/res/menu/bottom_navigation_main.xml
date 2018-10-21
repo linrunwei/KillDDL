@@ -14,12 +14,12 @@
         android:icon="@drawable/ic_calendar"
         android:title="Calendar"
         app:showAsAction="ifRoom" />
-    <item
+    <!--item
         android:id="@+id/action_add"
         android:enabled="true"
         android:icon="@drawable/ic_add"
         android:title="Add"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" /-->
     <item
         android:id="@+id/action_profile"
         android:enabled="true"

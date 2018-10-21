@@ -129,11 +129,23 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="12 pm" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="ShowPopup"
+                    android:layout_gravity="right"
+                    app:backgroundTint="@color/white"
+                    app:srcCompat="@drawable/ic_add" />
+
             </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
+
 
 
     <android.support.design.widget.BottomNavigationView

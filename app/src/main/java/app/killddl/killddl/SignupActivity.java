@@ -1,5 +1,6 @@
 package app.killddl.killddl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,10 +32,10 @@ public class SignupActivity extends AppCompatActivity {
                 else if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
                 else if(false){errorMsg.setText("Username already in use!");} //TODO check database
                 else if(false){errorMsg.setText("Password already in use!");} //TODO check database
-                /*else{
-                    Intent mainPage = new Intent();
+                else{
+                    Intent mainPage = new Intent(getApplicationContext(),CalendarActivity.class);
                     startActivity(mainPage);
-                }*/
+                }
             }
         });
 
