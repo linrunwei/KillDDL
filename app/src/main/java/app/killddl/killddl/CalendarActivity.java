@@ -88,5 +88,10 @@ public class CalendarActivity extends AppCompatActivity{
 
     }
 
+//TODO finish add task 3h
+//TODO finish profile page 3h
+//TODO fix calendar page 1h
+//TODO finish menu page 3h
+
 
 
