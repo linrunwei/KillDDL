@@ -5,7 +5,7 @@
         android:width="2dp"
         android:color="#19a1d2"/>
     <corners
-        android:radius="4dp" />
+        android:radius="30dp" />
 
     <padding
         android:left="2dp"
