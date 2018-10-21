@@ -1,10 +1,10 @@
 package app.killddl.killddl;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.*;
 import android.graphics.Color;
 
-public class Task {
+import com.google.firebase.Timestamp;
+
+public class Tasks {
     protected int id;
     protected Boolean isFinished;
     protected String name;
@@ -16,7 +16,7 @@ public class Task {
     protected Enum frequency;
     protected Timestamp createTime;
 
-    public Task(int id, Timestamp createTime){
+    public Tasks(int id, Timestamp createTime){
         this.id = id;
         this.createTime = createTime;
     }
@@ -75,4 +75,3 @@ public class Task {
         return this.frequency;
     }
 }
-
