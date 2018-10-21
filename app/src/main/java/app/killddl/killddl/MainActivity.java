@@ -3,6 +3,8 @@ package app.killddl.killddl;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4500);
         animationDrawable.start();
 
+//        Button button = findViewById(R.id.test);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+//            }
+//        });
+
         //login button
         //TODO connect to database
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
@@ -45,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
             }
         });
-
-
     }
 
     @Override
@@ -60,4 +68,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void JumpToNotification (View view) {
+        startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+    }
 }
