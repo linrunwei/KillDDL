@@ -36,16 +36,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText usernameEditText = (EditText) findViewById(R.id.login_username);
                 EditText passwordEditText = (EditText) findViewById(R.id.login_password);
-                TextView errorMsg = (TextView) findViewById(R.id.errorMsg);
+                TextView errorMsg = (TextView) findViewById(R.id.login_errorMsg);
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
                 if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
-                if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
-                if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
+                else if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
+                else if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
+                /*else{
+                    Intent mainPage = new Intent();
+                    startActivity(mainPage);
+                }*/
             }
         });
 
+
+        Button signupBtn = (Button) findViewById(R.id.signupBtn);
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signup = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(signup);
+            }
+        });
 
     }
 

@@ -72,6 +72,7 @@
                 android:background="@drawable/background_btn2"/>
 
             <Button
+                android:id="@+id/signupBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" Sign Up"
@@ -99,12 +100,13 @@
                 android:textStyle=""
                 />
             <TextView
-                android:id="@+id/errorMsg"
+                android:id="@+id/login_errorMsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:padding="16dp"
-                android:textColorHint="#ff0202" />
+                android:textColorHint="#ff0202"
+                android:textColor="#ff0202"/>
 
 
         </LinearLayout>

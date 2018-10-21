@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KILLDDL"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:text="19th October 2018"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="441dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="441dp"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingTop="16dp"
+            android:paddingRight="24dp"
+            android:paddingBottom="16dp">
+            <LinearLayout
+                android:layout_width="333dp"
+                android:layout_height="60sp"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox1"
+                    android:layout_width="33dp"
+                    android:layout_height="60sp"/>
+                <TextView
+                    android:id="@+id/task1"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_name" />
+                <TextView
+                    android:id="@+id/task_time1"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="12 pm" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="333dp"
+                android:layout_height="60sp"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="33dp"
+                    android:layout_height="60sp"/>
+                <TextView
+                    android:id="@+id/task2"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_name" />
+                <TextView
+                    android:id="@+id/task_time2"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="12 pm" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="333dp"
+                android:layout_height="60sp"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="33dp"
+                    android:layout_height="60sp"/>
+
+                <TextView
+                    android:id="@+id/task3"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_name" />
+                <TextView
+                    android:id="@+id/task_time3"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="12 pm" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main">
+    </android.support.design.widget.BottomNavigationView>
+
+
+
+
+</LinearLayout>
