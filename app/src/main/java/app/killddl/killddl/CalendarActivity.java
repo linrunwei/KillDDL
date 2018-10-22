@@ -1,10 +1,12 @@
 package app.killddl.killddl;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
@@ -19,8 +21,9 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        mCalendarView = (CalendarView) findViewById(R.id.calendarView);
+        displayTaskList();
 
+        mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
@@ -29,7 +32,7 @@ public class CalendarActivity extends AppCompatActivity {
                 LinearLayout ll = (LinearLayout) findViewById(R.id.calendar_tasks);
                 ll.removeAllViews();
                 //example tasks TODO need adding vector of tasks
-                java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
+                //java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
                 //Tasks example = new Tasks(1,timestamp);
                 //example.EditName("Hello");
 
@@ -61,6 +64,20 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
+    LinearLayout displayTaskList(){
+        LinearLayout rl = (LinearLayout) findViewById(R.id.calendar_tasks);
+        while(rl.getChildCount() > 0){
+            rl.removeAllViews();
+        }
+        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for(int i=0; i<3; i++){
+            View view = inflater.inflate(R.layout.task_view, null);
+            view.setId(i);
+            rl.addView(view);
+        }
+        return rl;
+
+    }
 
     LinearLayout addTaskView(Tasks task) {
         LinearLayout ll = new LinearLayout(this);
@@ -78,15 +95,17 @@ public class CalendarActivity extends AppCompatActivity {
         taskName.setText(task.name);
         ll.addView(taskName);
 
-
         return ll;
     }
 
     public void AddTask(View v){
-        System.out.println("Hello!!!!");
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
         //TODO add extra info
         startActivity(addTask);
+    }
+    public void clickTask(View View){
+        Intent editTaskIntent = new Intent(getApplicationContext(),AddTaskActivity.class);
+        startActivity(editTaskIntent);
     }
 }
 

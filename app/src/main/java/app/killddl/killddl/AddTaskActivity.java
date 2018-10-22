@@ -1,6 +1,7 @@
 package app.killddl.killddl;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,15 +11,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class AddTaskActivity extends AppCompatActivity {
     private TextView mDisplayDate;
+    private TextView mDisplayTime;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    Boolean dateSet = false;
+    Boolean timeSet = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtask);
         mDisplayDate = (TextView) findViewById(R.id.addtask_date);
+        mDisplayTime = (TextView) findViewById(R.id.addtask_time);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +50,33 @@ public class AddTaskActivity extends AppCompatActivity {
                 month = month + 1;
                 String date = month + "/" + day + "/" + year;
                 mDisplayDate.setText(date);
+                dateSet = true;
+            }
+        };
+
+        mDisplayTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int hour = cal.get(Calendar.HOUR);
+                int minute = cal.get(Calendar.MINUTE);
+                TimePickerDialog dialog = new TimePickerDialog(
+                        AddTaskActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mTimeSetListener,
+                        hour,minute,true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                String date = i + ":" + i1;
+                System.out.println(date);
+                mDisplayTime.setText(date);
+                timeSet = true;
             }
         };
     }
@@ -50,5 +84,9 @@ public class AddTaskActivity extends AppCompatActivity {
     public void close(View v){
         Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
         startActivity(calendar);
+    }
+
+    public void AddTask(View v){
+        //TODO addtask functionality
     }
 }

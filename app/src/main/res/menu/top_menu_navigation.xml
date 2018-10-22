@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/action_daily"
+        android:enabled="true"
+        android:title="Daily"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_weekly"
+        android:enabled="true"
+        android:title="Weekly"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_monthly"
+        android:enabled="true"
+        android:title="Monthly"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

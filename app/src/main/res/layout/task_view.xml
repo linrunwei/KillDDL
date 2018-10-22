@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/task_view"
+        android:layout_width="333dp"
+        android:layout_height="60sp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/menu_content_chekcbox"
+            android:layout_width="33dp"
+            android:layout_height="60sp" />
+
+        <TextView
+            android:layout_width="229dp"
+            android:layout_height="wrap_content"
+            android:text="@string/string_name"
+            android:clickable="true"
+            android:onClick="clickTask"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="12 pm"/>
+    </LinearLayout>
+
+</LinearLayout>

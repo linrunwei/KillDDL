@@ -119,7 +119,7 @@
 
 
         </RadioGroup>
-    <TextView
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
@@ -129,6 +129,30 @@
         android:id="@+id/addtask_date"
         android:text="Choose Date"
         />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:onClick="ShowDate"
+            android:id="@+id/addtask_time"
+            android:text="Choose Time"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:onClick="AddTask"
+            android:text="Finish"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addtask_errormsg"/>
+
 
 
 
