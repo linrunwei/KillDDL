@@ -22,14 +22,14 @@ public class ProfileActivity extends AppCompatActivity {
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_menu:
+                        Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
+                        startActivity(menuIntent);
                         break;
                     case R.id.action_calendar:
                         Intent calendarIntent = new Intent(getApplicationContext(),CalendarActivity.class);
                         startActivity(calendarIntent);
                         break;
                     case R.id.action_profile:
-                        Intent profileIntent = new Intent(getApplicationContext(),SignupActivity.class);
-                        startActivity(profileIntent);
                         break;
                 }
             }

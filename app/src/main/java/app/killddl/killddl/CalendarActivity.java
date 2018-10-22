@@ -29,7 +29,7 @@ public class CalendarActivity extends AppCompatActivity {
                 LinearLayout ll = (LinearLayout) findViewById(R.id.calendar_tasks);
                 ll.removeAllViews();
                 //example tasks TODO need adding vector of tasks
-                //java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
+                java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
                 //Tasks example = new Tasks(1,timestamp);
                 //example.EditName("Hello");
 
@@ -83,6 +83,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public void AddTask(View v){
+        System.out.println("Hello!!!!");
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
         //TODO add extra info
         startActivity(addTask);

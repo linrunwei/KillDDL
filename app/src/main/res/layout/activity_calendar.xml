@@ -57,12 +57,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <android.support.design.widget.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
                 android:id="@+id/floatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,11 +65,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginVertical="80dp"
                 android:layout_marginEnd="20dp"
-                android:clickable="true"
                 android:onClick="AddTask"
                 app:backgroundTint="@color/amber_primary_dark"
                 app:srcCompat="@drawable/ic_baseline_add_24px" />
-        </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="160sp">
@@ -100,7 +93,7 @@
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:text="12 pm" />
+                    android:text="12 pm"/>
             </LinearLayout>
 
 

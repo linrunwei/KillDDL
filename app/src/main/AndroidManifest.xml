@@ -44,5 +44,6 @@
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".AddTaskActivity"/>
     </application>
 </manifest>
