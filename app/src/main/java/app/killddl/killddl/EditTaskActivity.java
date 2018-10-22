@@ -11,26 +11,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class EditTaskActivity extends AppCompatActivity {
+    private EditText mTaskName;
+    private EditText mDescription;
+    private RadioGroup mColor;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
-    private EditText mTaskName;
+    private Spinner mFrequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Display all the value
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addtask);
-        mDisplayDate = (TextView) findViewById(R.id.addtask_date);
-        mDisplayTime = (TextView) findViewById(R.id.addtask_time);
-        mTaskName = (EditText) findViewById(R.id.addtask_taskname);
+        setContentView(R.layout.activity_edittask);
+        mTaskName = (EditText) findViewById(R.id.edittask_taskname);
+        mDescription = (EditText) findViewById(R.id.edittask_description);
+        mColor = (RadioGroup) findViewById(R.id.edittask_color_group);
+        mDisplayDate = (TextView) findViewById(R.id.edittask_date);
+        mDisplayTime = (TextView) findViewById(R.id.edittask_time);
+        mFrequency = (Spinner) findViewById(R.id.edittask_frequency);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                        AddTaskActivity.this,
+                        EditTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
                         year,month,day);
@@ -68,7 +78,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 int hour = cal.get(Calendar.HOUR);
                 int minute = cal.get(Calendar.MINUTE);
                 TimePickerDialog dialog = new TimePickerDialog(
-                        AddTaskActivity.this,
+                        EditTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mTimeSetListener,
                         hour,minute,true);
@@ -88,14 +98,54 @@ public class AddTaskActivity extends AppCompatActivity {
                 timeSet = true;
             }
         };
+
+        //Get all value
+
+        //Display all the value
+
+        //Disable edit functionality
+
+        mTaskName.setEnabled(false);
+        mDescription.setEnabled(false);
+        mColor.setClickable(false);
+        mDisplayDate.setClickable(false);
+        mDisplayTime.setClickable(false);
+        mFrequency.setEnabled(false);
+
+
+
+
     }
 
-    public void close(View v){
-        Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
-        startActivity(calendar);
-    }
 
-    public void AddTask(View v){
-        //TODO addtask functionality
-    }
+    public void Edit(View v){
+
+        mTaskName.setEnabled(true);
+        mDescription.setEnabled(true);
+        mColor.setClickable(true);
+        mDisplayDate.setClickable(true);
+        mDisplayTime.setClickable(true);
+        mFrequency.setEnabled(true);
+
+        Button mEdit = (Button) findViewById(R.id.edittask_edit);
+        mEdit.setText("Save");
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            //save
+            @Override
+            public void onClick(View view) {
+                Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+                startActivity(calendar);
+            }
+        });
+        }
+
+
+        void Finish(View v){
+            //TODO backend
+            Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+            startActivity(calendar);
+        }
+
+
+
 }

@@ -17,4 +17,12 @@
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="get_notification">Get Notification</string>
     <string name="string_name">Submit Homework</string>
+    <string name="frequency_prompt">Choose a frequency</string>
+    <string-array name="frequency">
+        <item>None</item>
+        <item>Workdays</item>
+        <item>Weekend</item>
+        <item>Every Day</item>
+        <item>Every Week</item>
+    </string-array>
 </resources>

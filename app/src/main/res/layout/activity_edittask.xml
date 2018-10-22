@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Task"
+            android:text="Edit Task"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
@@ -43,16 +43,15 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/addtask_taskname"
             android:hint="Task Name"
+            android:id="@+id/edittask_taskname"
             android:inputType="text"
-            android:maxLines="1"
-            />
+            android:maxLines="1" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/addtask_description"
             android:hint="Description"
+            android:id="@+id/edittask_description"
             android:inputType="text"
             android:maxLines="3"
             android:minLines="3"/>
@@ -61,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Select Color"
+            android:onClick="ShowDate"
             android:layout_marginLeft="3dp"
             android:textSize="18sp"/>
         <LinearLayout
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_below="@+id/button"
-            android:id="@+id/addtask_color_group"
+            android:id="@+id/edittask_color_group"
 
             android:orientation="horizontal">
 
@@ -134,7 +134,7 @@
         android:layout_marginTop="20dp"
         android:textSize="18sp"
         android:onClick="ShowDate"
-        android:id="@+id/addtask_date"
+        android:id="@+id/edittask_date"
         android:text="Choose Date"
         />
         <TextView
@@ -143,8 +143,7 @@
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:onClick="ShowDate"
-            android:id="@+id/addtask_time"
+            android:id="@+id/edittask_time"
             android:text="Choose Time"
             />
         <TextView
@@ -161,6 +160,7 @@
             android:layout_width="match_parent"
             android:prompt="@string/frequency_prompt"
             android:entries="@array/frequency"
+            android:id="@+id/edittask_frequency"
             android:layout_height="40dp"></Spinner>
         <Button
             android:layout_width="wrap_content"
@@ -168,16 +168,28 @@
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
-            android:onClick="AddTask"
+            android:onClick="Edit"
+            android:layout_gravity="bottom|center"
+            android:text="Edit"
+            android:id="@+id/edittask_edit"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:onClick="Finish"
             android:layout_gravity="bottom|center"
             android:text="Finish"
+            android:id="@+id/edittask_finish"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red_primary"
-            android:id="@+id/addtask_errormsg"/>
+            android:id="@+id/edittask_errormsg"/>
 
 
 

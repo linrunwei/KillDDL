@@ -104,7 +104,7 @@ public class CalendarActivity extends AppCompatActivity {
         startActivity(addTask);
     }
     public void clickTask(View View){
-        Intent editTaskIntent = new Intent(getApplicationContext(),AddTaskActivity.class);
+        Intent editTaskIntent = new Intent(getApplicationContext(),EditTaskActivity.class);
         startActivity(editTaskIntent);
     }
 }

@@ -74,7 +74,7 @@ public class MenuActivity extends AppCompatActivity {
                         startActivity(calendarIntent);
                         break;
                     case R.id.action_profile:
-                        Intent profileIntent = new Intent(getApplicationContext(),SignupActivity.class);
+                        Intent profileIntent = new Intent(getApplicationContext(),ProfileActivity.class);
                         startActivity(profileIntent);
                         break;
                 }
@@ -193,7 +193,12 @@ public class MenuActivity extends AppCompatActivity {
         return rl;
     }
     public void clickTask(View View){
-        Intent editTaskIntent = new Intent(getApplicationContext(),AddTaskActivity.class);
+        Intent editTaskIntent = new Intent(getApplicationContext(),EditTaskActivity.class);
         startActivity(editTaskIntent);
+    }
+    public void AddTask(View v){
+        Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
+        //TODO add extra info
+        startActivity(addTask);
     }
 }

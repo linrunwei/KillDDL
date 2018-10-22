@@ -62,13 +62,14 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginVertical="80dp"
             android:layout_marginEnd="20dp"
             android:clickable="true"
+            android:onClick="AddTask"
             app:backgroundTint="@color/amber_primary_dark"
             app:srcCompat="@drawable/ic_baseline_add_24px" />
 
