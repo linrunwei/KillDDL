@@ -1,42 +1,45 @@
 package app.killddl.killddl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.firebase.Timestamp;
 
-public class User {
+public class User implements Serializable{
     protected String name;
-    //protected String password;
-    protected List<Tasks> taskList = new ArrayList<Tasks>();
+    protected String password;
+    protected List<Object> taskList;
 
-    public User(String name, String password) {
+    public User(){
+    }
+    public User(String name, String password){
         this.name = name;
-        //this.password = password;
+        this.password = password;
     }
 
-    public String getName() {
+    public String getName(){
         return this.name;
     }
-
-    public void addTask(Tasks task) {
+    public void setPassword(String ps){
+        this.password = ps;
+    }
+    public void addTask(Tasks task){
         this.taskList.add(task);
     }
-}
-/*
-    public List<Tasks> getTaskList(Timestamp ts){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference taskRef = db.collection("Task");
-        taskRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    taskList = task.getResult().toObjects(Tasks.class);
-                }
-            }
-        });
 
-    public List<Tasks> getTaskList(){
+    public List<Object> getTaskList(){
         return this.taskList;
+    }
+    public List<Tasks> getTaskListByTime(Timestamp tsp){
+        List<Tasks> selected = new ArrayList<>();
+        for(Object t : this.taskList){
+            Timestamp curr = ((Tasks) t).getDeadline();
+
+            if(curr.toDate() == tsp.toDate()){
+                selected.add((Tasks) t);
+            }
+        }
+        return selected;
     }
 
 }
-*/

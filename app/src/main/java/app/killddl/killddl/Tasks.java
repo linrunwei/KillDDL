@@ -4,8 +4,9 @@ import android.graphics.Color;
 
 import com.google.firebase.Timestamp;
 
+import java.io.Serializable;
 
-public class Tasks {
+public class Tasks implements Serializable{
     protected int id;
     protected Boolean isFinished;
     protected String name;
@@ -13,14 +14,17 @@ public class Tasks {
     protected Timestamp deadline;
     protected int priority;
     protected Timestamp notification;
-    protected Color color;
-    protected Enum frequency;
+    //    protected Color color;
+    protected int frequency;
     protected Timestamp createTime;
+    public Tasks(){
 
+    }
     public Tasks(int id, Timestamp createTime){
         this.id = id;
         this.createTime = createTime;
     }
+
     public int getId(){
         return this.id;
     }
@@ -63,16 +67,16 @@ public class Tasks {
     public Timestamp getNotification(){
         return this.notification;
     }
-    public void EditColor(Color color){
-        this.color = color;
-    }
-    public Color getColor(){
-        return this.color;
-    }
-    public void EditFrequency(Enum frequency){
+    //    public void EditColor(Color color){
+//        this.color = color;
+//    }
+//    public Color getColor(){
+//        return this.color;
+//    }
+    public void EditFrequency(int frequency){
         this.frequency = frequency;
     }
-    public Enum getFrequency(){
+    public int getFrequency(){
         return this.frequency;
     }
 }
