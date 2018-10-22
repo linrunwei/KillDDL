@@ -50,7 +50,7 @@
                 android:drawableLeft="@drawable/ic_lock_white_400_24dp"
                 android:drawablePadding="16dp"
                 android:ems="10"
-                android:hint="password"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="16dp"

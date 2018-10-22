@@ -50,16 +50,31 @@
             android:id="@+id/textView2"
             android:layout_width="218dp"
             android:layout_height="match_parent"
-            android:text="Highlighted ToDo-s"
+            android:text="Tasks of the day"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Create Task" />
-
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="80dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:onClick="AddTask"
+                app:backgroundTint="@color/amber_primary_dark"
+                app:srcCompat="@drawable/ic_baseline_add_24px" />
+        </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="160sp">
@@ -69,84 +84,32 @@
             android:orientation="vertical"
             android:paddingRight="24dp"
             android:paddingLeft="24dp"
+            android:id="@+id/calendar_tasks"
             >
             <LinearLayout
                 android:layout_width="333dp"
-                android:layout_height="60sp"
+                android:layout_height="40sp"
                 android:orientation="horizontal">
                 <CheckBox
-                    android:id="@+id/checkBox1"
                     android:layout_width="33dp"
-                    android:layout_height="60sp"/>
-
+                    android:layout_height="20sp"/>
                 <TextView
-                    android:id="@+id/task1"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="@string/string_name" />
                 <TextView
-                    android:id="@+id/task_time1"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="12 pm" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="333dp"
-                android:layout_height="60sp"
-                android:orientation="horizontal">
-                <CheckBox
-                    android:id="@+id/checkBox2"
-                    android:layout_width="33dp"
-                    android:layout_height="60sp"/>
-
-                <TextView
-                    android:id="@+id/task2"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/string_name" />
-                <TextView
-                    android:id="@+id/task_time2"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="12 pm" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="333dp"
-                android:layout_height="60sp"
-                android:orientation="horizontal">
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    android:layout_width="33dp"
-                    android:layout_height="60sp"/>
-
-                <TextView
-                    android:id="@+id/task3"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/string_name" />
-                <TextView
-                    android:id="@+id/task_time3"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="12 pm" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/floatingActionButton5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:layout_weight="1"
-                    android:onClick="ShowPopup"
-                    app:backgroundTint="@color/app_green"
-                    app:srcCompat="@drawable/ic_add" />
-            </LinearLayout>
-
-
 
 
 
         </LinearLayout>
+
     </ScrollView>
+
+
 
 
 
@@ -154,12 +117,13 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="150dp"
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:menu="@menu/bottom_navigation_main">
     </android.support.design.widget.BottomNavigationView>
+    </RelativeLayout>
 
 
 </LinearLayout>

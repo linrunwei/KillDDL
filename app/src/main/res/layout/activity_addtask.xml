@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="350dp"
-    android:layout_height="475dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:padding="5dp"
     android:layout_gravity="center">
-    <TextView
-        android:id="@+id/txtclose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:textColor="@color/black"
-        android:text="X"
-        android:textStyle="bold"
-        android:layout_gravity="end"
-        android:gravity="center"
-        android:background="@drawable/background_btn2"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +18,27 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="150dp"
+            />
+
+        <TextView
+        android:id="@+id/txtclose"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:background="@drawable/background_btn2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,18 +46,26 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Description"
-            android:minLines="3"
-            android:maxLines="3"/>
+            android:hint="Description"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Select Date"
-            android:id="@+id/addtask_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Select Color"
             android:onClick="ShowDate"
-            android:layout_marginTop="50dp"
-            android:layout_centerHorizontal="true"
-            android:textSize="30sp"/>
+            android:layout_marginLeft="3dp"
+            android:textSize="18sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+        </LinearLayout>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/addtask_date"
+            />
 
 
     </LinearLayout>

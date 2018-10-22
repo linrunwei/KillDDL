@@ -17,23 +17,23 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
         <activity android:name=".CalendarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
-
-        </application>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AddTaskActivity"></activity>
+    </application>
 
 </manifest>

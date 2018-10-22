@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         //animate background
         loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
         animationDrawable = (AnimationDrawable) loginLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(4500);
-        animationDrawable.setExitFadeDuration(4500);
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2000);
         animationDrawable.start();
 
         //login button
