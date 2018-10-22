@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         //animate background
         loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-        animationDrawable = (AnimationDrawable) loginLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(2000);
-        animationDrawable.start();
+        //animationDrawable = (AnimationDrawable) loginLayout.getBackground();
+        //animationDrawable.setEnterFadeDuration(2000);
+        //animationDrawable.setExitFadeDuration(2000);
+        //animationDrawable.start();
 
 //        Button button = findViewById(R.id.test);
 //        button.setOnClickListener(new View.OnClickListener() {

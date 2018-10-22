@@ -28,8 +28,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yanxi Li"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/profile_head_username"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="21sp"/>
         </LinearLayout>
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5"
+                        android:id="@+id/profile_tasks_number"
                         android:textColor="#f26c78"
                         android:textSize="22sp"
                         android:textStyle="bold"/>
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:text="Yanxi LI"
+                android:id="@+id/profile_username"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -101,17 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_email_black_24dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="yanxili@usc.edu"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
 
         </LinearLayout>
         <Button
@@ -135,5 +124,6 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
-        app:menu="@menu/bottom_navigation_main"></android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/bottom_navigation_main"
+        ></android.support.design.widget.BottomNavigationView>
 </LinearLayout>
