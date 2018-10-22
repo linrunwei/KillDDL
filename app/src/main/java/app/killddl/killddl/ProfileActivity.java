@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -34,6 +35,16 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //generate username and tasks they have
+        //TODO fixed tasks remaining after get User
+        User u = new User("Yanxi Li", "123456");
+        TextView headUserName = findViewById(R.id.profile_head_username);
+        TextView username = findViewById(R.id.profile_username);
+        TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
+        headUserName.setText(u.name);
+        username.setText(u.name);
+        tasksRemaining.setText("12");
 
     }
 
