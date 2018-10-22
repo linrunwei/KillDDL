@@ -34,6 +34,7 @@ public class User {
             }
         });
 
+    public List<Tasks> getTaskList(){
         return this.taskList;
     }
 

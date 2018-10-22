@@ -16,4 +16,5 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="get_notification">Get Notification</string>
+    <string name="string_name">Submit Homework</string>
 </resources>

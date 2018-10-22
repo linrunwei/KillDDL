@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#4a4a4a</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGray">#eeeeee</color>
 
@@ -45,8 +45,8 @@
     <color name="yellow_primary">#FFEB3B</color>
     <color name="yellow_primary_dark">#FBC02D</color>
     <color name="amber_primary">#FFC107</color>
-    <color name="amber_primary_dark">#FFA000</color>
-    <color name="orange_primary">#FF9800</color>
+    <color name="amber_primary_dark">#ffa000</color>
+    <color name="orange_primary">#c2a06d</color>
     <color name="orange_primary_dark">#F57C00</color>
     <color name="deep_orange_primary">#FF5722</color>
     <color name="deep_orange_primary_dark">#E64A19</color>
