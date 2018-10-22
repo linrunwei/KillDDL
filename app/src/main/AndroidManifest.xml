@@ -36,5 +36,13 @@
                   android:label="AddActivity"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".CalendarActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ProfileActivity" />
     </application>
 </manifest>
