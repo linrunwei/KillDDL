@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.firestore.*;
 import com.google.firebase.Timestamp;
 
@@ -34,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         //animate background
         loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
         animationDrawable = (AnimationDrawable) loginLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(4500);
-        animationDrawable.setExitFadeDuration(4500);
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2000);
         animationDrawable.start();
 
         // register notification channel
@@ -60,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         //login button
         //TODO connect to database
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference userRef = db.collection("User");
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //final CollectionReference userRef = db.collection("User");
 
 
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText usernameEditText = (EditText) findViewById(R.id.login_username);
                 EditText passwordEditText = (EditText) findViewById(R.id.login_password);
-                TextView errorMsg = (TextView) findViewById(R.id.errorMsg);
+                TextView errorMsg = (TextView) findViewById(R.id.login_errorMsg);
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
@@ -78,11 +75,28 @@ public class MainActivity extends AppCompatActivity {
                 if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
 
                 //Find user from db
-                userRef.whereEqualTo("name", username).whereEqualTo("password", password);
+               // userRef.whereEqualTo("name", username).whereEqualTo("password", password);
 
                 if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
+                else if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
+                else if(false){errorMsg.setText("Username/Password combination wrong!");} //TODO check database
+                else{
+                    Intent mainPage = new Intent(getApplicationContext(),CalendarActivity.class);
+                    startActivity(mainPage);
+                }
             }
         });
+
+
+        Button signupBtn = (Button) findViewById(R.id.signupBtn);
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signup = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(signup);
+            }
+        });
+
     }
 
     @Override

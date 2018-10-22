@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.google.firebase.Timestamp;
 
+
 public class Tasks {
     protected int id;
     protected Boolean isFinished;

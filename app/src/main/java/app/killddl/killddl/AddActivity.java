@@ -1,12 +1,13 @@
 package app.killddl.killddl;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.firebase.firestore.*;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 public class AddActivity extends AppCompatActivity {
 
     @Override
