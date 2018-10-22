@@ -1,6 +1,11 @@
 package app.killddl.killddl;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.firestore.*;
 import com.google.firebase.Timestamp;
 
@@ -31,13 +38,25 @@ public class MainActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4500);
         animationDrawable.start();
 
-//        Button button = findViewById(R.id.test);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-//            }
-//        });
+        // register notification channel
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            String channelId = "due-now";
+            CharSequence channelName = "Due Right Now";
+            String description = "Notification for tasks that due right now.";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationChannel.setDescription(description);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.WHITE);
+            notificationChannel.enableVibration(true);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+            else {
+                Toast.makeText(this, "createNotificationChannel failed", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         //login button
         //TODO connect to database
