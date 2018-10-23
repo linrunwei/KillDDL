@@ -1,7 +1,5 @@
 package app.killddl.killddl;
 
-import android.graphics.Color;
-
 import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
@@ -14,8 +12,8 @@ public class Tasks implements Serializable{
     protected Timestamp deadline;
     protected int priority;
     protected Timestamp notification;
-    //    protected Color color;
-    protected int frequency;
+    protected int color;
+    protected int frequency = -1;
     protected Timestamp createTime;
     public Tasks(){
 
@@ -67,12 +65,12 @@ public class Tasks implements Serializable{
     public Timestamp getNotification(){
         return this.notification;
     }
-    //    public void EditColor(Color color){
-//        this.color = color;
-//    }
-//    public Color getColor(){
-//        return this.color;
-//    }
+    public void EditColor(int color){
+        this.color = color;
+   }
+   public int getColor(){
+       return this.color;
+   }
     public void EditFrequency(int frequency){
         this.frequency = frequency;
     }

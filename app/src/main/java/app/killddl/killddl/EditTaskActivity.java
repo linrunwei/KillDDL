@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.List;
+
 public class EditTaskActivity extends AppCompatActivity {
     User user;
     private EditText mTaskName;
@@ -144,12 +146,18 @@ public class EditTaskActivity extends AppCompatActivity {
         }
 
 
-        void Finish(View v){
-            //TODO backend
-            Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
-            startActivity(calendar);
+    void Finish(View v, int taskId){
+        List<Object> tasks = user.getTaskList();
+
+        for (Object task : tasks) {
+            if (((Tasks)task).getId() == taskId) {
+                Db database = MainActivity.getDatabase();
+                database.removeTask((Tasks)task);
+                break;
+            }
         }
 
-
-
+        Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+        startActivity(calendar);
+    }
 }

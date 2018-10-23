@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout loginLayout;
     AnimationDrawable animationDrawable;
     TextView errorMsg;
-    Db database = new Db();
+    static Db database = new Db();
     FirebaseFirestore db = database.getDB();
     Vector<User> userlist = new Vector<>();
     public static boolean isComplete = false;
@@ -219,4 +219,9 @@ public class MainActivity extends AppCompatActivity {
         return user;
     }
     static void deleteUser() {user = null;}
+
+    static Db getDatabase(){
+        return database;
+    }
+
 }

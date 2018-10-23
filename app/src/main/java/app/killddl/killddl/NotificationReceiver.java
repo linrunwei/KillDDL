@@ -7,16 +7,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.widget.Toast;
 
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String channelId = "due-now";
         String taskName = intent.getStringExtra("taskName");
+        int frequency = intent.getIntExtra("frequency", -1);
 //        Intent repeatingIntent = new Intent(context, CalendarActivity.class);
-        Intent showTaskIntent = new Intent(context, CalendarActivity.class);
-        showTaskIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, showTaskIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent showDueIntent = new Intent(context, CalendarActivity.class);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.logo)
@@ -28,5 +30,25 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(100, builder.build());
+        //frequency
+        if (frequency != -1) {
+            switch (frequency) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+                default:
+                    Toast.makeText(context, "frequency notification failed", Toast.LENGTH_SHORT).show();
+                    break;
+
+            }
+        }
+
     }
 }
