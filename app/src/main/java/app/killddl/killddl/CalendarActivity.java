@@ -23,8 +23,8 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         displayTaskList();
-        Intent intent = getIntent();
-        System.out.println("username: " + user.name);
+        user = MainActivity.getUser();
+        System.out.println(user.name);
 
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

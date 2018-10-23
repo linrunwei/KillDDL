@@ -25,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = database.getDB();
     Vector<User> userlist = new Vector<>();
     public static boolean isComplete = false;
-    User user;
+    static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,9 +200,6 @@ public class MainActivity extends AppCompatActivity {
                 errorMsg.setText("");
                 //TODO jump to next page(menu page?)
                 Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("User", (Serializable) user);
-                newIntent.putExtras(bundle);
                 startActivity(newIntent);
             }
 
@@ -215,4 +211,10 @@ public class MainActivity extends AppCompatActivity {
             errorMsg.setText("");
         }
     }
+
+    static User getUser(){
+        return user;
+    }
+
+    static void deleteUser() {user = null;}
 }

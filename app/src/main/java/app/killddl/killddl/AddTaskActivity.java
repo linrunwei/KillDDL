@@ -13,14 +13,21 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.List;
+
 public class AddTaskActivity extends AppCompatActivity {
     User user;
+    private EditText mTaskName;
+    private EditText mDescription;
+    private RadioGroup mColor;
+    private Spinner mFrequency;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
-    private EditText mTaskName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
@@ -99,6 +106,10 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void AddTask(View v){
-        //TODO addtask functionality
+        List<Object> tasks = user.getTaskList();
+        String taskName = mTaskName.getText().toString();
+        String description = mDescription.getText().toString();
+
+
     }
 }
