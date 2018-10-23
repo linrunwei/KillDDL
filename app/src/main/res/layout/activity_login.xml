@@ -35,20 +35,33 @@
                 android:layout_marginTop="0dp"
                 android:src="@drawable/logo_black"
                 android:padding="4dp"/>
-
-            <EditText
-                android:id="@+id/login_username"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:drawableLeft="@drawable/ic_person_outline_white_400_24dp"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:hint="Username"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:padding="16dp"
-                android:textColorHint="#e2e2e2" />
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/login_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:drawableLeft="@drawable/ic_person_outline_white_400_24dp"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:textColorHint="#e2e2e2" />
+                <TextView
+                    android:id="@+id/login_errorMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="165dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_gravity="right"
+                    android:textColorHint="#ff0202"
+                    android:textColor="#ff0202" />
+            </RelativeLayout>
+
 
             <EditText
                 android:id="@+id/login_password"
@@ -62,7 +75,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="16dp"
-                android:textColorHint="#ffffff" />
+                android:textColorHint="#e2e2e2" />
 
             <Button
                 android:id="@+id/loginBtn"
@@ -105,17 +118,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="0dp"
                 android:textAllCaps="false"
-               />
-            <TextView
-                android:id="@+id/login_errorMsg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:padding="16dp"
-                android:textColorHint="#ff0202"
-                android:textColor="#ff0202"/>
-
-
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

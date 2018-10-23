@@ -24,7 +24,6 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
         displayTaskList();
         Intent intent = getIntent();
-        user = (User)intent.getSerializableExtra("User");
         System.out.println("username: " + user.name);
 
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);

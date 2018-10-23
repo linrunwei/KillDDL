@@ -16,4 +16,5 @@ public class Db {
     public void addTask(Tasks task){
         this.db.collection("Tasks").document(task.getName()+task.getId()).set(task);
     }
+    
 }
