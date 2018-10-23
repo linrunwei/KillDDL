@@ -1,14 +1,15 @@
 package app.killddl.killddl;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.firebase.Timestamp;
 
 public class User implements Serializable{
     protected String name;
     protected String password;
-    protected List<Object> taskList;
+    protected List<Object> taskList = new ArrayList<Object>();
 
     public User(){
     }

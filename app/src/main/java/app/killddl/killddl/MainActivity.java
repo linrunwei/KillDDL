@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
+                //System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
 
                 if((username.length() == 0) && (password.length() == 0)){
                     errorMsg.setText("Username and Password cannot be empty!");
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText passwordEditText = (EditText) findViewById(R.id.login_password);
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
+                //System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
                 if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
                 if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
 
@@ -174,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                                 User curr = document.toObject(User.class);
                                 System.out.println(curr.getName());
                                 userlist.add(curr);
+
+                                setUser(curr);
                                 System.out.println(userlist.size());
                             }
 
@@ -211,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
             errorMsg.setText("");
         }
     }
-
+    static void setUser(User u) {user = u;
+        System.out.println(user.getTaskList().size());}
     static User getUser(){
         return user;
     }
-
     static void deleteUser() {user = null;}
 }

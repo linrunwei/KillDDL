@@ -16,6 +16,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+        user = MainActivity.getUser();
+
         //Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -44,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
         headUserName.setText(user.name);
         username.setText(user.name);
-        tasksRemaining.setText(user.taskList.size());
+        tasksRemaining.setText(user.getTaskList().size()+ "");
 
     }
 

@@ -36,6 +36,9 @@ public class EditTaskActivity extends AppCompatActivity {
         //Display all the value
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittask);
+        user = MainActivity.getUser();
+
+
         mTaskName = (EditText) findViewById(R.id.edittask_taskname);
         mDescription = (EditText) findViewById(R.id.edittask_description);
         mColor = (RadioGroup) findViewById(R.id.edittask_color_group);
