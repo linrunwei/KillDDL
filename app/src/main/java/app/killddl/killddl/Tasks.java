@@ -12,10 +12,10 @@ public class Tasks implements Serializable{
     protected String name;
     protected String description;
     protected Timestamp deadline;
-    protected int priority;
     protected Timestamp notification;
-    //    protected Color color;
-    protected int frequency;
+    protected int color;//1 is blue; 2 is red; 3 is yellow; 4 is purple; 5 is green
+    //protected int recurringFrequency;//0 is None; 1 is Daily; 2 is Weekly; 3 is Monthly
+    protected int notificationFrequency;//0 is None; 1 is Daily; 2 is Weekly; 3 is Monthly
     protected Timestamp createTime;
     public Tasks(){
 
@@ -55,28 +55,30 @@ public class Tasks implements Serializable{
     public Timestamp getDeadline(){
         return this.deadline;
     }
-    public void EditPriority(int priority){
-        this.priority = priority;
-    }
-    public int getPriority(){
-        return this.priority;
-    }
+
     public void EditNotification(Timestamp notification){
         this.notification = notification;
     }
     public Timestamp getNotification(){
         return this.notification;
     }
-    //    public void EditColor(Color color){
-//        this.color = color;
-//    }
-//    public Color getColor(){
-//        return this.color;
-//    }
-    public void EditFrequency(int frequency){
-        this.frequency = frequency;
+    public void EditColor(int color){
+        this.color = color;
     }
-    public int getFrequency(){
-        return this.frequency;
+    public int getColor(){
+        return this.color;
+    }
+    /*
+    public void EditRecurringFrequency(int recurringFrequency){
+        this.recurringFrequency = recurringFrequency;
+    }
+    public int getRecurringFrequency(){
+        return this.recurringFrequency;
+    }*/
+    public void EditNotificationFrequency(int notificationFrequency){
+        this.notificationFrequency = notificationFrequency;
+    }
+    public int getNotificationFrequency(){
+        return this.notificationFrequency;
     }
 }
