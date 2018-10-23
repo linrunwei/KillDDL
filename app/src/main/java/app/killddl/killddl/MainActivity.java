@@ -96,9 +96,15 @@ public class MainActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
-                if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
-                if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
-                signinconnect(username, password);
+                if((username.length() == 0) && (password.length() == 0)){
+                    errorMsg.setText("Username and Password cannot be empty!");
+                }else if(username.length() == 0){
+                    errorMsg.setText("Username cannot be empty!");
+                }else if(password.length() == 0){
+                    errorMsg.setText("Password cannot be empty!");
+                }else{
+                    signinconnect(username, password);
+                }
                 if(!userlist.isEmpty()){
                     user = userlist.get(0);
                 }
@@ -190,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Integer result) {
             System.out.println(result+"result");
             if(result == 1){
-                errorMsg.setText("Successful!");
+                errorMsg.setText("");
                 //TODO jump to next page(menu page?)
                 Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
                 startActivity(newIntent);
@@ -201,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         }
         @Override
         protected void onPreExecute() {
-            errorMsg.setText("waiting");
+            errorMsg.setText("");
         }
     }
 }
