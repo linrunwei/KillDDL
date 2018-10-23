@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class EditTaskActivity extends AppCompatActivity {
+    User user;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;

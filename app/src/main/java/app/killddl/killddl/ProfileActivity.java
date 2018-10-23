@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

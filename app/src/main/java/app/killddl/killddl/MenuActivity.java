@@ -16,7 +16,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 public class MenuActivity extends AppCompatActivity {
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

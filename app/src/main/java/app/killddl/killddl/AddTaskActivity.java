@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class AddTaskActivity extends AppCompatActivity {
+    User user;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private EditText mTaskName;
@@ -28,6 +29,8 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtask);
+        Intent intent = getIntent();
+        user = (User)intent.getExtras().get("User");
         mDisplayDate = (TextView) findViewById(R.id.addtask_date);
         mDisplayTime = (TextView) findViewById(R.id.addtask_time);
         mTaskName = (EditText) findViewById(R.id.addtask_taskname);

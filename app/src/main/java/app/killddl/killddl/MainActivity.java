@@ -1,6 +1,5 @@
 package app.killddl.killddl;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -20,11 +19,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.*;
-import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     public void SignUp(View view)
     {
         Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+
         startActivity(intent);
     }
 

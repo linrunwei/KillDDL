@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CalendarActivity extends AppCompatActivity {
+    User user;
     private static final String TAG = "CalendarActivity";
     private CalendarView mCalendarView;
     @Override
@@ -22,6 +23,9 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         displayTaskList();
+        Intent intent = getIntent();
+        user = (User)intent.getSerializableExtra("User");
+        System.out.println("username: " + user.name);
 
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
