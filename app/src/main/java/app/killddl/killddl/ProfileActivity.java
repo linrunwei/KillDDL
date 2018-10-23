@@ -38,20 +38,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         //generate username and tasks they have
         //TODO fixed tasks remaining after get User
-        User u = new User("Yanxi Li", "123456");
+        user = MainActivity.getUser();
         TextView headUserName = findViewById(R.id.profile_head_username);
         TextView username = findViewById(R.id.profile_username);
         TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
-        headUserName.setText(u.name);
-        username.setText(u.name);
-        tasksRemaining.setText("12");
+        headUserName.setText(user.name);
+        username.setText(user.name);
+        tasksRemaining.setText(user.taskList.size());
 
     }
 
     void Logout(View v){
-        //TODO user logout
-
-
+        MainActivity.deleteUser();
         Intent login = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(login);
     }
