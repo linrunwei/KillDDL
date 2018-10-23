@@ -1,12 +1,10 @@
 package app.killddl.killddl;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
@@ -14,17 +12,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Date;
+import java.util.List;
+
 public class CalendarActivity extends AppCompatActivity {
     User user;
+    List<Tasks> tasksList;
     private static final String TAG = "CalendarActivity";
     private CalendarView mCalendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        displayTaskList();
+
         user = MainActivity.getUser();
         System.out.println(user.name);
+        Date date = new Date();
+        System.out.println("DATE:       " + date);
+
+        //displayTaskList();
 
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -67,17 +73,28 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
-    LinearLayout displayTaskList(){
+    LinearLayout displayTaskList(final List<Tasks> tasksList){
         LinearLayout rl = (LinearLayout) findViewById(R.id.calendar_tasks);
-        while(rl.getChildCount() > 0){
-            rl.removeAllViews();
+        for(int i=0; i<tasksList.size(); i++){
+            //create new View
+            LinearLayout ll = new LinearLayout(this);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+            //add color
+            final int id = tasksList.get(i).getId();
+            TextView tx = new TextView(this);
+            tx.setText(tasksList.get(i).getName());
+            tx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickTask(view, id);
+                }
+            });
+            ll.addView(tx);
+
+            //add days_remaining
+
         }
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for(int i=0; i<3; i++){
-            View view = inflater.inflate(R.layout.task_view, null);
-            view.setId(i);
-            rl.addView(view);
-        }
+        //TODO Use tasksList to display textView and setId
         return rl;
 
     }
@@ -106,9 +123,10 @@ public class CalendarActivity extends AppCompatActivity {
         //TODO add extra info
         startActivity(addTask);
     }
-    public void clickTask(View View){
-        Intent editTaskIntent = new Intent(getApplicationContext(),EditTaskActivity.class);
-        startActivity(editTaskIntent);
+    public void clickTask(View v, int id){
+        Intent newIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
+        newIntent.putExtra("edit_taskId",id);
+        startActivity(newIntent);
     }
 }
 

@@ -19,10 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class EditTaskActivity extends AppCompatActivity {
     User user;
+    ArrayList<Tasks> tasksList;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;
@@ -147,16 +148,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
     void Finish(View v, int taskId){
-        List<Object> tasks = user.getTaskList();
-
-        for (Object task : tasks) {
-            if (((Tasks)task).getId() == taskId) {
-                Db database = MainActivity.getDatabase();
-                database.removeTask((Tasks)task);
-                break;
-            }
-        }
-
+        tasksList.get(taskId).EditIsFinished(true);
         Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
         startActivity(calendar);
     }
