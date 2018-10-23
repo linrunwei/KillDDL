@@ -3,12 +3,13 @@ package app.killddl.killddl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import com.google.firebase.Timestamp;
 
 public class User implements Serializable{
     protected String name;
     protected String password;
-    protected List<Object> taskList;
+    protected Vector<Object> taskList;
 
     public User(){
     }
@@ -27,11 +28,11 @@ public class User implements Serializable{
         this.taskList.add(task);
     }
 
-    public List<Object> getTaskList(){
+    public Vector<Object> getTaskList(){
         return this.taskList;
     }
-    public List<Tasks> getTaskListByTime(Timestamp tsp){
-        List<Tasks> selected = new ArrayList<>();
+    public Vector<Tasks> getTaskListByTime(Timestamp tsp){
+        Vector<Tasks> selected = new Vector<>();
         for(Object t : this.taskList){
             Timestamp curr = ((Tasks) t).getDeadline();
 
