@@ -4,7 +4,7 @@
 |Name|Email|USC ID|
 |-|-|-|
 |Wanchen Jiang|wanchenj@usc.edu|6729012501| 
-|Runwei Lin|runweilin@usc.edu|5191117577|
+|Runwei Lin|runweili@usc.edu|5191117577|
 |Jinpeng He|jinpengh@usc.edu|9949408107|
 |Hao Chen|chen579@usc.edu|2286507011|
 |Yanxi Li|yanxili@usc.edu|3875675944|
@@ -19,7 +19,7 @@ Similar applications in market includes Things, Wunderlist, Omnifocus, etc. Thes
 
 ## IV. Notes for Test Run Our Application:  
 1. Download latest version of Android Studio;  
-2. Download our application and unzip it;  
+2. Download our project and unzip it;  
 3. Open up Android Studio, select `Open an existing Android Studio project`, navigate to the unzipped project folder and select `Open`;  
 4. The project will start to build automatically, wait until it finishes. It should take less than a minute;  
 5. Click `Run` button on the toolbar on the top;  
