@@ -70,18 +70,11 @@
             app:srcCompat="@drawable/ic_baseline_add_24px" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="160sp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="24dp"
-                android:paddingLeft="24dp"
-                android:id="@+id/calendar_tasks"
-                >
+            android:layout_height="160sp"
+            android:id="@+id/calendar_tasks">
 
 
-            </LinearLayout>
+
 
         </ScrollView>
 

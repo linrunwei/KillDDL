@@ -6,56 +6,86 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout loginLayout;
     AnimationDrawable animationDrawable;
     TextView errorMsg;
-    Db database = new Db();
-    FirebaseFirestore db = database.getDB();
-    Vector<User> userlist = new Vector<>();
-    public static boolean isComplete = false;
-    User user;
+    static Db dbase = new Db();
+    static private FirebaseAuth mAuth;
+    EditText userEmail,userPassword;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    DocumentReference myDocRef;
+
+
+
+
+/*
+    static void setUser(User u) {
+        user = u;
+        System.out.println(user.getTaskList().size());
+    }
+
+    static User getUser() {
+        return user;
+    }
+
+    static void deleteUser() {
+        user = null;
+    }
+    */
+
+
+
+
+    static FirebaseAuth getAuth(){return mAuth;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //animate background
-        loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-        //animationDrawable = (AnimationDrawable) loginLayout.getBackground();
-        //animationDrawable.setEnterFadeDuration(2000);
-        //animationDrawable.setExitFadeDuration(2000);
-        //animationDrawable.start();
 
-//        Button button = findViewById(R.id.test);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-//            }
-//        });
+        //DATABASE
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("message");
+        //TODO if user didnt quit, automatically logged in
+
+
+
+        //UI elements
+        userEmail = (EditText) findViewById(R.id.login_username);
+        userPassword = (EditText) findViewById(R.id.login_password);
+        loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
+
         errorMsg = (TextView) findViewById(R.id.login_errorMsg);
         // register notification channel
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -71,137 +101,180 @@ public class MainActivity extends AppCompatActivity {
             notificationChannel.enableVibration(true);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(notificationChannel);
-            }
-            else {
+            } else {
                 Toast.makeText(this, "createNotificationChannel failed", Toast.LENGTH_SHORT).show();
             }
         }
-
-        //login button
-        //TODO connect to database
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //final CollectionReference userRef = db.collection("User");
-
-
-//        final CollectionReference userRef = db.collection("User");
-//        final List<User> current = new ArrayList<>();
-        //Signin
-        Button loginBtn = (Button) findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+/*
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                EditText usernameEditText = (EditText) findViewById(R.id.login_username);
-                EditText passwordEditText = (EditText) findViewById(R.id.login_password);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
 
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
-                if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
-                if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
-                signinconnect(username, password);
-                if(!userlist.isEmpty()){
-                    user = userlist.get(0);
-                }
-                userlist.clear();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
 
             }
         });
-        //Signup
-        Button signupBtn = (Button) findViewById(R.id.signupBtn);
-        signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText usernameEditText = (EditText) findViewById(R.id.login_username);
-                EditText passwordEditText = (EditText) findViewById(R.id.login_password);
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                System.out.println("username: " + username + " password: " + password); //TODO remove this after connection
-                if(password.length() == 0){errorMsg.setText("Password cannot be empty!");}
-                if(username.length() == 0){errorMsg.setText("Username cannot be empty!");}
-
-                User newUser = new User(username, password);
-                database.addUser(newUser);
-                signinconnect(username, password);
-            }
-        });
-
-    }
-    public void signinconnect(String un, String ps){
-        SigninTask task = new SigninTask();
-        task.execute(un, ps);
+        */
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+
+
+    public void SignUp(View v){
+        System.out.println("Hellllllo");
+        RegisterUser();
     }
 
-    public void SignUp(View view)
-    {
-        Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+    private void RegisterUser(){
 
-        startActivity(intent);
-    }
+        //getting email and password from edit texts
+        final String email = userEmail.getText().toString().trim();
+        final String password  = userPassword.getText().toString().trim();
+        System.out.println("Email: " + email + " password:" + password);
 
-    public void JumpToNotification (View view) {
-        startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-    }
-    class SigninTask extends AsyncTask<String, Integer, Integer> {
-        @Override
-        protected Integer doInBackground(String... params) {
+        //checking if email and passwords are empty
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            return;
+        }
 
-            try{
-                String username = params[0];
-                String ps = params[1];
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            return;
+        }
 
-                //Find user from db
-                CollectionReference userRef = db.collection("User");
-                Query user = userRef.whereEqualTo("name", username).whereEqualTo("password", ps);
-                System.out.println("find finished");
-                user.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        //if the email and password are not empty
+        //displaying a progress dialog
+
+
+        //creating a new user
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("ok");
-                            for(DocumentSnapshot document : task.getResult()){
-                                User curr = document.toObject(User.class);
-                                System.out.println(curr.getName());
-                                userlist.add(curr);
-                                System.out.println(userlist.size());
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //checking if success
+                        if(task.isSuccessful()){
+                            //display some message here
+                            Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            FirebaseUser currUser = mAuth.getCurrentUser();
+                            String uid = "";
+                            if(currUser!= null){
+                                uid = currUser.getUid();
                             }
+                            dbase.setID(uid);
+                            dbase.setTaskList(new ArrayList<Tasks>());
+                            User user = new User(email);
+                            myDocRef = dbase.getDB().collection("User").document(currUser.getUid());
+                            myDocRef.set(user);
+                            System.out.println("succesfully saved");
+
+                        }else{
+
+                            //display some message here
 
                         }
-                        isComplete = true;
+
+                    }
+                });
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof FirebaseAuthException) {
+                            ((FirebaseAuthException) e).getErrorCode();
+                            //System.out.println(((FirebaseAuthException) e).getErrorCode());
+                            Toast.makeText(MainActivity.this,((FirebaseAuthException) e).getErrorCode(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void UserLogin(){
+        final String email = userEmail.getText().toString().trim();
+        final String password  = userPassword.getText().toString().trim();
+
+
+        //checking if email and passwords are empty
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
+        //logging in the user
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        //if the task is successfull
+                        if(task.isSuccessful()){
+                            //start the profile activity
+                            FirebaseUser currUser = mAuth.getCurrentUser();
+                            String uid = "";
+                            if(currUser!= null){
+                                uid = currUser.getUid();
+                            }
+                            dbase.setID(uid);
+                            User user = new User(email);
+                            dbase.setUser(user);
+                            dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                List<Tasks> tasksList = new ArrayList<>();
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    Tasks t = document.toObject(Tasks.class);
+                                                    tasksList.add(t);
+                                                }
+                                                dbase.setTaskList(tasksList);
+                                                finish();
+                                                Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
+                                                startActivity(intent);
+                                            }
+
+                                        }
+                                    });
+                        }
                     }
                 });
 
-                Thread.sleep(1000);
-                while(!isComplete){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof FirebaseAuthException) {
+                            ((FirebaseAuthException) e).getErrorCode();
+                            Toast.makeText(MainActivity.this,((FirebaseAuthException) e).getErrorCode(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-                }
-                return userlist.size();
+    }
 
-            } catch(Exception e) {
-                e.printStackTrace();
-                return 0;
-            }
-        }
-        @Override
-        protected void onPostExecute(Integer result) {
-            System.out.println(result+"result");
-            if(result == 1){
-                errorMsg.setText("Successful!");
-                //TODO jump to next page(menu page?)
-                Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
-                startActivity(newIntent);
-            }
+    public void SignIn(View v){
+        UserLogin();
+    }
 
-            else
-                errorMsg.setText("Username/Password combination wrong!");
-        }
-        @Override
-        protected void onPreExecute() {
-            errorMsg.setText("waiting");
-        }
+
+    static Db getDatabase() {
+        return dbase;
+    }
+    static void quit() {
+        mAuth.signOut();
     }
 }

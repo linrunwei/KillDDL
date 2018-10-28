@@ -1,28 +1,30 @@
 package app.killddl.killddl;
 
-import android.graphics.Color;
-
 import com.google.firebase.Timestamp;
+import com.google.type.Date;
 
 import java.io.Serializable;
-
 public class Tasks implements Serializable{
     protected int id;
     protected Boolean isFinished;
     protected String name;
     protected String description;
     protected Timestamp deadline;
+    protected int priority;
     protected Timestamp notification;
-    protected int color;//1 is blue; 2 is red; 3 is yellow; 4 is purple; 5 is green
-    //protected int recurringFrequency;//0 is None; 1 is Daily; 2 is Weekly; 3 is Monthly
-    protected int notificationFrequency;//0 is None; 1 is Daily; 2 is Weekly; 3 is Monthly
+    protected int color;
+    protected String frequency = "-1";
     protected Timestamp createTime;
+    protected String date;
+    protected String time;
     public Tasks(){
 
     }
-    public Tasks(int id, Timestamp createTime){
+    public Tasks(int id, Timestamp deadline){
         this.id = id;
-        this.createTime = createTime;
+        createTime = Timestamp.now();
+        this.deadline = deadline;
+        isFinished = false;
     }
 
     public int getId(){
@@ -55,7 +57,12 @@ public class Tasks implements Serializable{
     public Timestamp getDeadline(){
         return this.deadline;
     }
-
+    public void EditPriority(int priority){
+        this.priority = priority;
+    }
+    public int getPriority(){
+        return this.priority;
+    }
     public void EditNotification(Timestamp notification){
         this.notification = notification;
     }
@@ -68,17 +75,11 @@ public class Tasks implements Serializable{
     public int getColor(){
         return this.color;
     }
-    /*
-    public void EditRecurringFrequency(int recurringFrequency){
-        this.recurringFrequency = recurringFrequency;
+    public void EditFrequency(String frequency){
+        this.frequency = frequency;
     }
-    public int getRecurringFrequency(){
-        return this.recurringFrequency;
-    }*/
-    public void EditNotificationFrequency(int notificationFrequency){
-        this.notificationFrequency = notificationFrequency;
+    public String getFrequency(){
+        return this.frequency;
     }
-    public int getNotificationFrequency(){
-        return this.notificationFrequency;
-    }
+
 }

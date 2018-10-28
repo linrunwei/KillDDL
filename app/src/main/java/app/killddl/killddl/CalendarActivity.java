@@ -1,40 +1,55 @@
 package app.killddl.killddl;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Vector;
+
 
 public class CalendarActivity extends AppCompatActivity {
     User user;
     private static final String TAG = "CalendarActivity";
     private CalendarView mCalendarView;
+    ScrollView calendarTasks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        displayTaskList();
-        Intent intent = getIntent();
-        user = (User)intent.getSerializableExtra("User");
-        System.out.println("username: " + user.name);
+        FirebaseUser currUser = MainActivity.getAuth().getCurrentUser();
+        Timestamp tsp = Timestamp.now();
 
+        calendarTasks = (ScrollView) findViewById(R.id.calendar_tasks);
+        calendarTasks.removeAllViews();
+        calendarTasks.addView(displayTaskList(tsp));
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
                 String date = (month+1) + "/" + (day) + "/" + year;
-                System.out.println(date);
-                LinearLayout ll = (LinearLayout) findViewById(R.id.calendar_tasks);
-                ll.removeAllViews();
+                Calendar calendar = new GregorianCalendar(year,month,day);
+                Timestamp tsp = new Timestamp(calendar.getTime());
+                calendarTasks.removeAllViews();
+                calendarTasks.addView(displayTaskList(tsp));
+                //ll.addView(displayTaskList(tasksList));
                 //example tasks TODO need adding vector of tasks
                 //java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
                 //Tasks example = new Tasks(1,timestamp);
@@ -68,16 +83,36 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
-    LinearLayout displayTaskList(){
-        LinearLayout rl = (LinearLayout) findViewById(R.id.calendar_tasks);
-        while(rl.getChildCount() > 0){
-            rl.removeAllViews();
-        }
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for(int i=0; i<3; i++){
-            View view = inflater.inflate(R.layout.task_view, null);
-            view.setId(i);
-            rl.addView(view);
+    LinearLayout displayTaskList(Timestamp tsp){
+
+        List<Tasks> tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+        System.out.println("REQUIRED DATE IS: " + tsp.toDate());
+        LinearLayout rl = new LinearLayout(this);
+        rl.setOrientation(LinearLayout.VERTICAL);
+        for(int i=0; i<tasksList.size(); i++){
+            if(!tasksList.get(i).isFinished) {
+                //create new View
+                LinearLayout ll = new LinearLayout(this);
+                ll.setOrientation(LinearLayout.VERTICAL);
+                float density = this.getResources().getDisplayMetrics().density;
+                int paddingPixel = (int) (30 * density);
+                ll.setPadding(paddingPixel, 0, 0, 0);
+                //add color
+
+                final int id = tasksList.get(i).getId();
+                TextView tx = new TextView(this);
+                tx.setText(tasksList.get(i).getName());
+                tx.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickTask(view, id);
+                    }
+                });
+                ll.addView(tx);
+                rl.addView(ll);
+            }
+
+            //add days_remaining
         }
         return rl;
 
@@ -96,7 +131,7 @@ public class CalendarActivity extends AppCompatActivity {
         ll.addView(circle);
 
         TextView taskName = new TextView(this);
-        taskName.setText(task.name);
+        //taskName.setText(task.name);
         ll.addView(taskName);
 
         return ll;
@@ -107,16 +142,13 @@ public class CalendarActivity extends AppCompatActivity {
         //TODO add extra info
         startActivity(addTask);
     }
-    public void clickTask(View View){
-        Intent editTaskIntent = new Intent(getApplicationContext(),EditTaskActivity.class);
-        startActivity(editTaskIntent);
+    public void clickTask(View v, int id){
+        Intent newIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
+        newIntent.putExtra("edit_taskId",id);
+        startActivity(newIntent);
     }
 }
 
-//TODO finish add task 3h
-//TODO finish profile page 3h
-//TODO fix calendar page 1h
-//TODO finish menu page 3h
 
 
 

@@ -90,6 +90,8 @@
                 android:button="@null"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/button_blue"
+                android:id="@+id/addtask_blue"
+                android:tag="blue"
                 android:checked="false" />
 
             <RadioButton
@@ -99,6 +101,8 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_red"
+                android:tag="red"
+                android:id="@+id/addtask_red"
                 android:checked="false" />
             <RadioButton
 
@@ -107,6 +111,8 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_yellow"
+                android:id="@+id/addtask_yellow"
+                android:tag="yellow"
                 android:checked="false" />
             <RadioButton
 
@@ -115,6 +121,8 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_purple"
+                android:id="@+id/addtask_purple"
+                android:tag="purple"
                 android:checked="false" />
             <RadioButton
 
@@ -123,6 +131,8 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_green"
+                android:id="@+id/addtask_green"
+                android:tag="green"
                 android:checked="false" />
 
 

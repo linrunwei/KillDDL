@@ -3,6 +3,7 @@ package app.killddl.killddl;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,27 +13,31 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.google.firebase.Timestamp;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 public class MenuActivity extends AppCompatActivity {
-    User user;
+    User user = MainActivity.getDatabase().getUser();
+    List<Tasks> tasksList = new ArrayList<Tasks>();
+    Timestamp tsp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        tsp = Timestamp.now();
 
-        /*
-        final ScrollView dailyView = (ScrollView) findViewById(R.id.daily);
-        final ScrollView weeklyView = (ScrollView) findViewById(R.id.weekly);
-        final ScrollView monthlyView = (ScrollView) findViewById(R.id.monthly);
-        dailyView.setVisibility(View.VISIBLE);
-        weeklyView.setVisibility(View.INVISIBLE);
-        monthlyView.setVisibility(View.INVISIBLE);*/
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.menu_content_chekcbox);
-        checkBox.setVisibility(View.INVISIBLE);
-        dailyTaskView();
-
+        tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
+        menuScroll.addView(displayTaskList(tasksList));
         //Top Navigation Bar
         BottomNavigationView topNavigationView = (BottomNavigationView) findViewById(R.id.top_navigation);
         topNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -40,22 +45,23 @@ public class MenuActivity extends AppCompatActivity {
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.action_daily:
-                        //dailyView.setVisibility(View.VISIBLE);
-                        //weeklyView.setVisibility(View.INVISIBLE);
-                        //monthlyView.setVisibility(View.INVISIBLE);
-                        dailyTaskView();
+                        tsp = Timestamp.now();
+                        menuScroll.removeAllViews();
+                        tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+                        menuScroll.addView(displayTaskList(tasksList));
                         break;
                     case R.id.action_weekly:
-                        //dailyView.setVisibility(View.INVISIBLE);
-                        //weeklyView.setVisibility(View.VISIBLE);
-                        //monthlyView.setVisibility(View.INVISIBLE);
-                        weeklyTaskView();
+                        tsp = Timestamp.now();
+                        menuScroll.removeAllViews();
+                        tasksList = weeklyTaskView(tsp);
+                        menuScroll.addView(displayTaskList(tasksList));
+
                         break;
                     case R.id.action_monthly:
-                        //dailyView.setVisibility(View.INVISIBLE);
-                        //weeklyView.setVisibility(View.INVISIBLE);
-                        //monthlyView.setVisibility(View.VISIBLE);
-                        monthlyTaskView();
+                        tsp = Timestamp.now();
+                        menuScroll.removeAllViews();
+                        tasksList = monthlyTaskView(tsp);
+                        menuScroll.addView(displayTaskList(tasksList));
                         break;
                 }
             }
@@ -91,110 +97,68 @@ public class MenuActivity extends AppCompatActivity {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
-    LinearLayout dailyTaskView() {
-        LinearLayout rl = (LinearLayout) findViewById(R.id.menu_content);
+    LinearLayout displayTaskList(List<Tasks> tasksList){
 
-        while(rl.getChildCount() > 0){
-            rl.removeAllViews();
+
+        LinearLayout rl = new LinearLayout(this);
+        rl.setOrientation(LinearLayout.VERTICAL);
+        for(int i=0; i<tasksList.size(); i++){
+            //create new View
+            if(!tasksList.get(i).isFinished) {
+                LinearLayout ll = new LinearLayout(this);
+                ll.setOrientation(LinearLayout.VERTICAL);
+                float density = this.getResources().getDisplayMetrics().density;
+                int paddingPixel = (int) (30 * density);
+                ll.setPadding(paddingPixel, 0, 0, 0);
+                //add color
+
+                final int id = tasksList.get(i).getId();
+                TextView tx = new TextView(this);
+                tx.setText(tasksList.get(i).getName());
+                tx.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickTask(view, id);
+                    }
+                });
+                ll.addView(tx);
+                rl.addView(ll);
+            }
+
+            //add days_remaining
         }
-        /*
-        LinearLayout l1 = (LinearLayout) rl.getChildAt(0);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) l1.getLayoutParams();
-        l1.setLayoutParams(params);*/
-
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.task_view, null);
-        view.setId(0);
-        rl.addView(view);
-
-        /*
-        LinearLayout l1 = new LinearLayout(this);
-        int menu_task_width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, R.dimen.menu_task_width, getResources().getDisplayMetrics());
-        int menu_task_height = (int) spToPx(R.dimen.menu_task_height, this.getApplicationContext());
-        l1.setLayoutParams(new LinearLayout.LayoutParams(menu_task_width, menu_task_height));
-
-        CheckBox isTaskFinished = new CheckBox(this);
-        l1.addView(isTaskFinished);
-
-        TextView taskName = new TextView(this);
-        taskName.setText("@string/string_name");
-        l1.addView(taskName);
-
-        TextView taskTime = new TextView(this);
-        taskName.setText("12 pm");
-        l1.addView(taskTime);
-
-        rl.addView(l1);*/
         return rl;
+
     }
-    LinearLayout weeklyTaskView(){
-        LinearLayout rl = (LinearLayout) findViewById(R.id.menu_content);
-
-        while(rl.getChildCount() > 0){
-            rl.removeAllViews();
+    List<Tasks> weeklyTaskView(Timestamp tsp){
+        List<Tasks> selected = new ArrayList<Tasks>();
+        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        for (int i = 0; i < 6; i++) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(tsp.toDate());
+            c.add(Calendar.DATE, 1);
+            tsp = new Timestamp(c.getTime());
+            selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         }
-
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for(int i=0; i<2; i++){
-            View view = inflater.inflate(R.layout.task_view, null);
-            view.setId(i);
-            rl.addView(view);
-        }
-        /*
-        LinearLayout l1 = new LinearLayout(this);
-        int menu_task_width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, R.dimen.menu_task_width, getResources().getDisplayMetrics());
-        int menu_task_height = (int) spToPx(R.dimen.menu_task_height, this.getApplicationContext());
-        l1.setLayoutParams(new LinearLayout.LayoutParams(menu_task_width, menu_task_height));
-
-        CheckBox isTaskFinished = new CheckBox(this);
-        l1.addView(isTaskFinished);
-
-        TextView taskName = new TextView(this);
-        taskName.setText("@string/string_name");
-        rl.addView(taskName);
-
-        TextView taskTime = new TextView(this);
-        taskName.setText("1 pm");
-        rl.addView(taskTime);*/
-
-        //rl.addView(l1);
-        return rl;
+        return selected;
     }
-    LinearLayout monthlyTaskView(){
-        LinearLayout rl = (LinearLayout) findViewById(R.id.menu_content);
-        if(rl.getChildCount() > 0){
-            rl.removeAllViews();
+    List<Tasks> monthlyTaskView(Timestamp tsp){
+        List<Tasks> selected = new ArrayList<Tasks>();
+        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        for (int i = 0; i < 30; i++) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(tsp.toDate());
+            c.add(Calendar.DATE, 1);
+            tsp = new Timestamp(c.getTime());
+            selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         }
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for(int i=0; i<3; i++){
-            View view = inflater.inflate(R.layout.task_view, null);
-            view.setId(i);
-            rl.addView(view);
-        }
+        return selected;
 
-        /*
-        LinearLayout l1 = new LinearLayout(this);
-        int menu_task_width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, R.dimen.menu_task_width, getResources().getDisplayMetrics());
-        int menu_task_height = (int) spToPx(R.dimen.menu_task_height, this.getApplicationContext());
-        l1.setLayoutParams(new LinearLayout.LayoutParams(menu_task_width, menu_task_height));
-
-        CheckBox isTaskFinished = new CheckBox(this);
-        l1.addView(isTaskFinished);
-
-        TextView taskName = new TextView(this);
-        taskName.setText("@string/string_name");
-        l1.addView(taskName);
-
-        TextView taskTime = new TextView(this);
-        taskName.setText("2 pm");
-        l1.addView(taskTime);
-
-        rl.addView(l1);*/
-        return rl;
     }
-    public void clickTask(View View){
-        Intent editTaskIntent = new Intent(getApplicationContext(),EditTaskActivity.class);
-        startActivity(editTaskIntent);
+    public void clickTask(View v, int id){
+        Intent newIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
+        newIntent.putExtra("edit_taskId",id);
+        startActivity(newIntent);
     }
     public void AddTask(View v){
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);

@@ -7,26 +7,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.widget.Toast;
+
+import java.util.Random;
 
 public class NotificationReceiver extends BroadcastReceiver {
-    User user;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String channelId = "due-now";
-        Intent repeatingIntent = new Intent(context, RepeatingActivity.class);
-        repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        String taskName = intent.getStringExtra("taskName");
+        int frequency = intent.getIntExtra("frequency", -1);
+        Intent showDueIntent = new Intent(context, CalendarActivity.class);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("You have a due NOW!")
-                .setContentText("CSCI 310 Project 2.3 due now")
+                .setContentText(taskName)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(100, builder.build());
+        notificationManagerCompat.notify(new Random().nextInt(2048), builder.build());
+        //frequency
+        if (frequency != -1) {
+            switch (frequency) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+                default:
+                    Toast.makeText(context, "frequency notification failed", Toast.LENGTH_SHORT).show();
+                    break;
+
+            }
+        }
+
     }
 }

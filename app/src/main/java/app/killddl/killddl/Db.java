@@ -1,28 +1,95 @@
 package app.killddl.killddl;
 
+import android.widget.TextView;
+
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.Vector;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 public class Db {
     //save current user in DB class
-    private User user;
     private FirebaseFirestore db;
-    public Db(){
+    TextView errorMsg;
+    private User user;
+    private List<Tasks> taskList;
+    private String uid;
+    public Db() {
         db = FirebaseFirestore.getInstance();
+    }
+    public Db(String uid, List<Tasks> taskList){
+        this.uid = uid;
+        this.taskList = taskList;
+    }
+    public void setErrorMsgMain(TextView em) {
+        this.errorMsg = em;
+    }
+    public void setID(String id){
+        this.uid = id;
+    }
+    public void setUser(User u) {
+        this.user = u;
     }
     public User getUser(){
         return this.user;
     }
-    public void setUser(User u){
-        this.user = u;
+    public List<Tasks> getTaskList(){
+        return this.taskList;
     }
+    public void setTaskList(List<Tasks> taskList){
+        this.taskList = taskList;
+    }
+
     public FirebaseFirestore getDB(){
         return this.db;
     }
-    public void addUser(User user){
-        this.db.collection("User").document(user.getName()).set(user);
+    public boolean addUser(User user){
+        this.db.collection("User").document(this.uid).set(user);
+        return true;
     }
     public void addTask(Tasks task){
-        this.user.getTaskList().add(task);
-        addUser(user);
+        this.taskList.add(task);
+        db.collection("User").document(this.uid).collection("taskList").document(task.getName()).set(task);
     }
+
+    public void removeTask(Tasks task){
+        task.isFinished = true;
+        //db.collection("User").document(this.uid).collection("taskList").document(task.getName()).delete();
+    }
+
+    public void EditTask(Tasks task){ //TODO need fixed
+        for(Tasks t : taskList){
+            if(t.getId() == task.getId()){
+                taskList.remove(t);
+                taskList.add(task);
+            }
+        }
+        db.collection("User").document(this.uid).collection("taskList").document(task.getName()).set(task);
+    }
+
+    public List<Tasks> getTaskListByTime(Timestamp tsp){
+        List<Tasks> selected = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(tsp.toDate());
+        int mYear = cal.get(Calendar.YEAR);
+        int mMonth = cal.get(Calendar.MONTH);
+        int mDay = cal.get(Calendar.DATE);
+        for(Object t : this.taskList){
+            Timestamp curr = ((Tasks) t).getDeadline();
+            System.out.println("This task id is " + ((Tasks) t).getId());
+            System.out.println("GETTASKLISTBYTIME: " + curr.toDate());
+            Calendar mCal = Calendar.getInstance();
+            mCal.setTime(curr.toDate());
+            int currYear = mCal.get(Calendar.YEAR);
+            int currMonth = mCal.get(Calendar.MONTH);
+            int currDay = mCal.get(Calendar.DATE);
+            if(mYear == currYear && mMonth == currMonth && mDay == currDay){
+                selected.add((Tasks) t);
+            }
+        }
+        return selected;
+    }
+
+
 }

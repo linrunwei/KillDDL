@@ -10,11 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
+
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
 
         //Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -38,21 +41,21 @@ public class ProfileActivity extends AppCompatActivity {
 
         //generate username and tasks they have
         //TODO fixed tasks remaining after get User
-        User u = new User("Yanxi Li", "123456");
+
+        user = MainActivity.getDatabase().getUser();
         TextView headUserName = findViewById(R.id.profile_head_username);
         TextView username = findViewById(R.id.profile_username);
         TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
-        headUserName.setText(u.name);
-        username.setText(u.name);
-        tasksRemaining.setText("12");
+        headUserName.setText(user.email);
+        username.setText(user.email);
+        tasksRemaining.setText((MainActivity.getDatabase().getTaskList().size()+ ""));
 
     }
 
     void Logout(View v){
-        //TODO user logout
-
-
+        MainActivity.quit();
         Intent login = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(login);
     }
+
 }
