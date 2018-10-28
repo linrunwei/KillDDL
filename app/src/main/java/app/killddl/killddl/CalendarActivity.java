@@ -10,36 +10,46 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Vector;
+
 
 public class CalendarActivity extends AppCompatActivity {
     User user;
-    List<Tasks> tasksList;
     private static final String TAG = "CalendarActivity";
     private CalendarView mCalendarView;
+    ScrollView calendarTasks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+        FirebaseUser currUser = MainActivity.getAuth().getCurrentUser();
+        Timestamp tsp = Timestamp.now();
 
-        user = MainActivity.getUser();
-        System.out.println(user.name);
-        Date date = new Date();
-        System.out.println("DATE:       " + date);
-
-        //displayTaskList();
-
+        calendarTasks = (ScrollView) findViewById(R.id.calendar_tasks);
+        calendarTasks.removeAllViews();
+        calendarTasks.addView(displayTaskList(tsp));
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
                 String date = (month+1) + "/" + (day) + "/" + year;
-                System.out.println(date);
-                LinearLayout ll = (LinearLayout) findViewById(R.id.calendar_tasks);
-                ll.removeAllViews();
+                Calendar calendar = new GregorianCalendar(year,month,day);
+                Timestamp tsp = new Timestamp(calendar.getTime());
+                calendarTasks.removeAllViews();
+                calendarTasks.addView(displayTaskList(tsp));
+                //ll.addView(displayTaskList(tasksList));
                 //example tasks TODO need adding vector of tasks
                 //java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0");
                 //Tasks example = new Tasks(1,timestamp);
@@ -73,28 +83,37 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
-    LinearLayout displayTaskList(final List<Tasks> tasksList){
-        LinearLayout rl = (LinearLayout) findViewById(R.id.calendar_tasks);
+    LinearLayout displayTaskList(Timestamp tsp){
+
+        List<Tasks> tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+        System.out.println("REQUIRED DATE IS: " + tsp.toDate());
+        LinearLayout rl = new LinearLayout(this);
+        rl.setOrientation(LinearLayout.VERTICAL);
         for(int i=0; i<tasksList.size(); i++){
-            //create new View
-            LinearLayout ll = new LinearLayout(this);
-            ll.setOrientation(LinearLayout.HORIZONTAL);
-            //add color
-            final int id = tasksList.get(i).getId();
-            TextView tx = new TextView(this);
-            tx.setText(tasksList.get(i).getName());
-            tx.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickTask(view, id);
-                }
-            });
-            ll.addView(tx);
+            if(!tasksList.get(i).isFinished) {
+                //create new View
+                LinearLayout ll = new LinearLayout(this);
+                ll.setOrientation(LinearLayout.VERTICAL);
+                float density = this.getResources().getDisplayMetrics().density;
+                int paddingPixel = (int) (30 * density);
+                ll.setPadding(paddingPixel, 0, 0, 0);
+                //add color
+
+                final int id = tasksList.get(i).getId();
+                TextView tx = new TextView(this);
+                tx.setText(tasksList.get(i).getName());
+                tx.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickTask(view, id);
+                    }
+                });
+                ll.addView(tx);
+                rl.addView(ll);
+            }
 
             //add days_remaining
-
         }
-        //TODO Use tasksList to display textView and setId
         return rl;
 
     }
@@ -112,7 +131,7 @@ public class CalendarActivity extends AppCompatActivity {
         ll.addView(circle);
 
         TextView taskName = new TextView(this);
-        taskName.setText(task.name);
+        //taskName.setText(task.name);
         ll.addView(taskName);
 
         return ll;
@@ -130,10 +149,6 @@ public class CalendarActivity extends AppCompatActivity {
     }
 }
 
-//TODO finish add task 3h
-//TODO finish profile page 3h
-//TODO fix calendar page 1h
-//TODO finish menu page 3h
 
 
 

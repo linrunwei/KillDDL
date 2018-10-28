@@ -1,9 +1,9 @@
 package app.killddl.killddl;
 
 import com.google.firebase.Timestamp;
+import com.google.type.Date;
 
 import java.io.Serializable;
-
 public class Tasks implements Serializable{
     protected int id;
     protected Boolean isFinished;
@@ -13,14 +13,18 @@ public class Tasks implements Serializable{
     protected int priority;
     protected Timestamp notification;
     protected int color;
-    protected int frequency = -1;
+    protected String frequency = "-1";
     protected Timestamp createTime;
+    protected String date;
+    protected String time;
     public Tasks(){
 
     }
-    public Tasks(int id, Timestamp createTime){
+    public Tasks(int id, Timestamp deadline){
         this.id = id;
-        this.createTime = createTime;
+        createTime = Timestamp.now();
+        this.deadline = deadline;
+        isFinished = false;
     }
 
     public int getId(){
@@ -67,14 +71,15 @@ public class Tasks implements Serializable{
     }
     public void EditColor(int color){
         this.color = color;
-   }
-   public int getColor(){
-       return this.color;
-   }
-    public void EditFrequency(int frequency){
+    }
+    public int getColor(){
+        return this.color;
+    }
+    public void EditFrequency(String frequency){
         this.frequency = frequency;
     }
-    public int getFrequency(){
+    public String getFrequency(){
         return this.frequency;
     }
+
 }

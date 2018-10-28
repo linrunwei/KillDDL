@@ -20,9 +20,8 @@
     <string name="frequency_prompt">Choose a frequency</string>
     <string-array name="frequency">
         <item>None</item>
-        <item>Workdays</item>
-        <item>Weekend</item>
         <item>Every Day</item>
         <item>Every Week</item>
+        <item>Every Month</item>
     </string-array>
 </resources>

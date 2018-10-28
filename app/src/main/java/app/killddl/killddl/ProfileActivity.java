@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
+
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
-        user = MainActivity.getUser();
 
         //Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -41,19 +41,21 @@ public class ProfileActivity extends AppCompatActivity {
 
         //generate username and tasks they have
         //TODO fixed tasks remaining after get User
-        user = MainActivity.getUser();
+
+        user = MainActivity.getDatabase().getUser();
         TextView headUserName = findViewById(R.id.profile_head_username);
         TextView username = findViewById(R.id.profile_username);
         TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
-        headUserName.setText(user.name);
-        username.setText(user.name);
-        tasksRemaining.setText(user.getTaskList().size()+ "");
+        headUserName.setText(user.email);
+        username.setText(user.email);
+        tasksRemaining.setText((MainActivity.getDatabase().getTaskList().size()+ ""));
 
     }
 
     void Logout(View v){
-        MainActivity.deleteUser();
+        MainActivity.quit();
         Intent login = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(login);
     }
+
 }

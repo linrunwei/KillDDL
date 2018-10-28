@@ -9,16 +9,17 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String channelId = "due-now";
         String taskName = intent.getStringExtra("taskName");
         int frequency = intent.getIntExtra("frequency", -1);
-//        Intent repeatingIntent = new Intent(context, CalendarActivity.class);
         Intent showDueIntent = new Intent(context, CalendarActivity.class);
-        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.logo)
@@ -29,7 +30,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(100, builder.build());
+        notificationManagerCompat.notify(new Random().nextInt(2048), builder.build());
         //frequency
         if (frequency != -1) {
             switch (frequency) {

@@ -1,36 +1,27 @@
 package app.killddl.killddl;
 
-import com.google.firebase.Timestamp;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable{
-    protected String name;
-    protected String password;
-    protected List<Object> taskList = new ArrayList<Object>();
 
+    protected String email;
+
+    protected List<Tasks> taskList = new ArrayList<Tasks>();
+
+    //for addValue
     public User(){
     }
-    public User(String name, String password){
-        this.name = name;
-        this.password = password;
+    public User(String email){
+        this.email = email;
     }
 
-    public String getName(){
-        return this.name;
-    }
-    public void setPassword(String ps){
-        this.password = ps;
-    }
-    public void addTask(Tasks task){
-        this.taskList.add(task);
+    public String getEmail() {
+        return email;
     }
 
-    public List<Object> getTaskList(){
-        return this.taskList;
-    }
+    /*
     public List<Tasks> getTaskListByTime(Timestamp tsp){
         List<Tasks> selected = new ArrayList<>();
         for(Object t : this.taskList){
@@ -42,5 +33,6 @@ public class User implements Serializable{
         }
         return selected;
     }
+    */
 
 }
