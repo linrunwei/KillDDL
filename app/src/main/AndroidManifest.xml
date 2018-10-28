@@ -29,14 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".RepeatingActivity" />
         <receiver android:name=".NotificationReceiver" />
 
-        <activity android:name=".AddActivity"
-                  android:label="AddActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity android:name=".CalendarActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
