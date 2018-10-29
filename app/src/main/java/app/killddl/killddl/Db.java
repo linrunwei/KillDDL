@@ -91,7 +91,7 @@ public class Db {
         return selected;
     }
 
-    public int getUnfinieshedTask(){
+    public int getUnfinishedTask(){
         int i = 0;
         for (Tasks t: taskList
              ) {

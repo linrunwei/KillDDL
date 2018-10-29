@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tasksRemaining = findViewById(R.id.profile_tasks_number);
         headUserName.setText(user.email);
         username.setText(user.email); 
-        tasksRemaining.setText((MainActivity.getDatabase().getUnfinieshedTask()+ ""));
+        tasksRemaining.setText((MainActivity.getDatabase().getUnfinishedTask()+ ""));
 
 
     }
