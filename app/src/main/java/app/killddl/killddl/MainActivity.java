@@ -269,8 +269,6 @@ public class MainActivity extends AppCompatActivity {
     public void SignIn(View v){
         UserLogin();
     }
-
-
     static Db getDatabase() {
         return dbase;
     }
