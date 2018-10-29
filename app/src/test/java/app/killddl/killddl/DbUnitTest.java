@@ -13,6 +13,25 @@ import static org.junit.Assert.assertEquals;
 
 public class DbUnitTest {
     @Test
+    public void addTask_isCorrect() throws ParseException {
+        SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date one = simFormat.parse("2018.01.23 22:45:56");
+        Date two = simFormat.parse("2008.01.23 22:45:56");
+        Date three = simFormat.parse("1998.01.23 22:45:56");
+
+        Db database1 = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", new ArrayList<Tasks>());
+        database1.addTask(new Tasks(0, new Timestamp(one)));
+        database1.addTask(new Tasks(1, new Timestamp(two)));
+        
+        Db database2 = new Db("BkYJZIdnLfcl10ANxrGyaKYQp4x1", new ArrayList<Tasks>());
+        database2.addTask(new Tasks(0, new Timestamp(three)));
+
+        assertEquals(2, database1.getTaskList().size());
+        assertEquals(1, database2.getTaskList().size());
+
+
+    }
+    @Test
     public void getListByTime_isCorrect() throws ParseException {
         SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Date one = simFormat.parse("2008.10.01 22:45:56");
@@ -40,8 +59,6 @@ public class DbUnitTest {
         tasksList.add(new Tasks(8, d));
         tasksList.add(new Tasks(9, d));
         Db database = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", tasksList);
-        database.setTaskList(tasksList);
-
 
         assertEquals(4, database.getTaskListByTime(a).size());
         assertEquals(2, database.getTaskListByTime(b).size());
@@ -77,10 +94,8 @@ public class DbUnitTest {
         tasksList.add(d);
         tasksList.add(e);
         Db database = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", tasksList);
-        database.setTaskList(tasksList);
-        
-        assertEquals(3, database.getUnfinishedTask());
 
+        assertEquals(3, database.getUnfinishedTask());
     }
 
 

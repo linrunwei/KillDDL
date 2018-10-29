@@ -50,13 +50,15 @@ public class Db {
     }
     public void addTask(Tasks task){
         this.taskList.add(task);
-        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+        if(db != null)
+            db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
 
     public void removeTask(int taskId){
         taskList.get(taskId).isFinished = true;
         Tasks task = taskList.get(taskId);
-        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+        if(db != null)
+            db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
 
     public void EditTask(int id,Tasks task){ //TODO need fixed
@@ -66,7 +68,8 @@ public class Db {
                 taskList.add(task);
             }
         }
-        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+        if(db != null)
+            db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
 
     }
 
