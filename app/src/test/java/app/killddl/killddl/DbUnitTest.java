@@ -49,4 +49,39 @@ public class DbUnitTest {
         assertEquals(3, database.getTaskListByTime(d).size());
         assertEquals(0, database.getTaskListByTime(e).size());
     }
+    @Test
+    public void getUnfinishedTask_isCorrect() throws ParseException {
+        SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date one = simFormat.parse("2008.10.01 22:45:56");
+        Date two = simFormat.parse("2009.01.23 22:45:56");
+
+        Timestamp first = new Timestamp(one);
+        Timestamp second = new Timestamp(two);
+
+        Tasks a = new Tasks(0, first);
+        Tasks b = new Tasks(1, first);
+        Tasks c = new Tasks(2, second);
+        Tasks d = new Tasks(3, second);
+        Tasks e = new Tasks(4, second);
+
+        a.EditIsFinished(true);
+        b.EditIsFinished(true);
+        c.EditIsFinished(false);
+        d.EditIsFinished(false);
+        e.EditIsFinished(false);
+
+        List<Tasks> tasksList = new ArrayList<>();
+        tasksList.add(a);
+        tasksList.add(b);
+        tasksList.add(c);
+        tasksList.add(d);
+        tasksList.add(e);
+        Db database = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", tasksList);
+        database.setTaskList(tasksList);
+        
+        assertEquals(3, database.getUnfinishedTask());
+
+    }
+
+
 }

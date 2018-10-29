@@ -93,8 +93,7 @@ public class Db {
 
     public int getUnfinishedTask(){
         int i = 0;
-        for (Tasks t: taskList
-             ) {
+        for (Tasks t: taskList) {
             if(!t.isFinished) i++;
         }
         return i;
