@@ -50,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
         username.setText(user.email); 
         tasksRemaining.setText((MainActivity.getDatabase().getUnfinishedTask()+ ""));
 
-
     }
 
     void Logout(View v){
