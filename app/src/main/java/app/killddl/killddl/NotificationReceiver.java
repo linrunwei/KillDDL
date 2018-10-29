@@ -18,12 +18,12 @@ public class NotificationReceiver extends BroadcastReceiver {
         String taskName = intent.getStringExtra("taskName");
         int frequency = intent.getIntExtra("frequency", -1);
         Intent showDueIntent = new Intent(context, CalendarActivity.class);
-        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("You have a due NOW!")
+                .setContentTitle("You have a due now!")
                 .setContentText(taskName)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentIntent(pendingIntent)
@@ -31,17 +31,23 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(new Random().nextInt(2048), builder.build());
+
+
         //frequency
-        if (frequency != -1) {
+        if (frequency == -1) {
+            // todo destroy this task using task id
+
+        }
+        else {
             switch (frequency) {
-                case 1:
+                case 1: // daily
 
                     break;
-                case 2:
+                case 2: // weekly
 
                     break;
+                case 3: // monthly
 
-                case 3:
 
                     break;
                 default:

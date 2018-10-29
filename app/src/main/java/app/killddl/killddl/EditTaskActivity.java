@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditTaskActivity extends AppCompatActivity {
+    
     User user;
     List<Tasks> tasksList;
     private EditText mTaskName;
@@ -50,6 +51,7 @@ public class EditTaskActivity extends AppCompatActivity {
         tasksList = MainActivity.getDatabase().getTaskList();
         Tasks targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
+
 
 
 
@@ -162,6 +164,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     err.setText("Some content are empty!");
                     return;
                 }
+
                 String taskName = mTaskName.getText().toString();
                 String description = mDescription.getText().toString();
                 String color = findViewById(mColor.getCheckedRadioButtonId()).getTag().toString();
@@ -191,11 +194,13 @@ public class EditTaskActivity extends AppCompatActivity {
                 task.EditName(taskName);
                 task.date = (month+1) + "/" + day + "/" + year;
                 task.time = (hour) + ":" + minute;
+     
                 int frequency = -1;
 
                 //add task in Database
                 Db database = MainActivity.getDatabase();
                 database.EditTask(taskId,task);
+
 
                 //quit
                 Intent Calendar = new Intent(getApplicationContext(),CalendarActivity.class);
@@ -227,5 +232,5 @@ public class EditTaskActivity extends AppCompatActivity {
         Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
         startActivity(calendar);
     }
-    
+
 }

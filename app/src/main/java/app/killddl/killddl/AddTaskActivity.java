@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 
+import java.util.Date;
 import java.util.Random;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -53,11 +54,11 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtask);
         user = MainActivity.getDatabase().getUser();
-        mDisplayDate = (TextView) findViewById(R.id.addtask_date);
-        mDisplayTime = (TextView) findViewById(R.id.addtask_time);
-        mDescription = (EditText) findViewById(R.id.addtask_description);
+        mDisplayDate = findViewById(R.id.addtask_date);
+        mDisplayTime = findViewById(R.id.addtask_time);
+        mDescription = findViewById(R.id.addtask_description);
         mColor = findViewById(R.id.addtask_color_group);
-        mTaskName = (EditText) findViewById(R.id.addtask_taskname);
+        mTaskName = findViewById(R.id.addtask_taskname);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +112,6 @@ public class AddTaskActivity extends AppCompatActivity {
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-
                 hour = i;
                 minute = i1;
                 String date = i + ":" + i1;
@@ -157,8 +157,11 @@ public class AddTaskActivity extends AppCompatActivity {
                 mColor = Color.GREEN;
                 break;
         }
-        year -= 1900;
-        java.util.Date date = new java.util.Date(year, month, day, hour, minute);
+
+        //TODO add frequency, fixed time spinner
+
+        //add task in Database
+        Date date = new Date(year-1900, month, day, hour, minute);
         com.google.firebase.Timestamp timestamp = new com.google.firebase.Timestamp(date);
         Tasks task = new Tasks(MainActivity.getDatabase().getTaskList().size(), timestamp);
         task.EditColor(mColor);
@@ -166,26 +169,21 @@ public class AddTaskActivity extends AppCompatActivity {
         task.EditName(taskName);
         task.date = (month + 1) + "/" + day + "/" + year;
         task.time = (hour) + ":" + minute;
-        String frequency = "-1";
-
-        //add task in Database
         MainActivity.getDatabase().addTask(task);
 
         // seed a notification
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute, 0);
 
-        //change frequency and recurrence if possible
         setNotification(calendar, false, taskName, -1);
 
-        //quit
         Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
         startActivity(Calendar);
     }
 
     public void setNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
         int date = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -210,7 +208,10 @@ public class AddTaskActivity extends AppCompatActivity {
                                 + minute + ":"
                                 + second
                         , Toast.LENGTH_LONG).show();
-            } else {
+
+            }
+            else {
+
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Toast.makeText(this,
                         "scheduled one time notification at "
@@ -222,8 +223,10 @@ public class AddTaskActivity extends AppCompatActivity {
                                 + second
                         , Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(this, "setExactAndAllowWhileIdle failed", Toast.LENGTH_LONG).show();
+
+        }
+        else {
+            Toast.makeText(this, "set notification failed", Toast.LENGTH_LONG).show();
         }
     }
 
