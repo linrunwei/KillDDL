@@ -22,7 +22,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("You have a due now!")
                 .setContentText(taskName)
                 .setDefaults(Notification.DEFAULT_SOUND)
