@@ -1,5 +1,7 @@
 package app.killddl.killddl;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class EditTaskActivity extends AppCompatActivity {
     User user;
-    ArrayList<Tasks> tasksList;
+    List<Tasks> tasksList;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;
@@ -33,6 +35,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private int day;
     private int hour;
     private int minute;
+    int taskId;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
@@ -43,9 +46,10 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittask);
         Intent intent = getIntent();
-        int taskId = intent.getIntExtra("edit_taskId",0);
+        taskId = intent.getIntExtra("edit_taskId",0);
+        tasksList = MainActivity.getDatabase().getTaskList();
         Tasks targetTask = tasksList.get(taskId);
-        user = MainActivity.getUser();
+        user = MainActivity.getDatabase().getUser();
 
 
 
@@ -158,7 +162,6 @@ public class EditTaskActivity extends AppCompatActivity {
                     err.setText("Some content are empty!");
                     return;
                 }
-                List<Object> tasksList = user.getTaskList();
                 String taskName = mTaskName.getText().toString();
                 String description = mDescription.getText().toString();
                 String color = findViewById(mColor.getCheckedRadioButtonId()).getTag().toString();
@@ -182,18 +185,17 @@ public class EditTaskActivity extends AppCompatActivity {
                 }
                 java.util.Date date = new java.util.Date(year, month, day, hour, minute);
                 com.google.firebase.Timestamp timestamp = new com.google.firebase.Timestamp(date);
-                Tasks task = new Tasks(user.getTaskList().size(),timestamp);
+                Tasks task = new Tasks(taskId,timestamp);
                 task.EditColor(mColor);
                 task.EditDescription(description);
                 task.EditName(taskName);
                 task.date = (month+1) + "/" + day + "/" + year;
                 task.time = (hour) + ":" + minute;
-                user.getTaskList().add(task);
                 int frequency = -1;
 
                 //add task in Database
                 Db database = MainActivity.getDatabase();
-                database.EditTask(task);
+                database.EditTask(taskId,task);
 
                 //quit
                 Intent Calendar = new Intent(getApplicationContext(),CalendarActivity.class);
@@ -203,11 +205,13 @@ public class EditTaskActivity extends AppCompatActivity {
         }
 
 
-    void Finish(View v, int taskId){
-        tasksList.get(taskId).EditIsFinished(true);
+    void Finish(View v){
+        MainActivity.getDatabase().removeTask(taskId);
+        System.out.println("Task Name: " + tasksList.get(taskId).getName() + " Finished task id: " + taskId);
         Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
         startActivity(calendar);
     }
+
 
     private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
@@ -217,6 +221,11 @@ public class EditTaskActivity extends AppCompatActivity {
         }
 
         return 0;
+    }
+
+    public void close(View v){
+        Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+        startActivity(calendar);
     }
     
 }

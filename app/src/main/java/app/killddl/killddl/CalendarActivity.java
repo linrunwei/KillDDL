@@ -110,7 +110,9 @@ public class CalendarActivity extends AppCompatActivity {
                 });
                 ll.addView(tx);
                 rl.addView(ll);
+                System.out.println("task name: " + tasksList.get(i).getName() + " task id: " + id);
             }
+
 
             //add days_remaining
         }

@@ -60,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Select Color"
-            android:onClick="ShowDate"
             android:layout_marginLeft="3dp"
             android:textSize="18sp"/>
         <LinearLayout

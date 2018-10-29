@@ -50,22 +50,24 @@ public class Db {
     }
     public void addTask(Tasks task){
         this.taskList.add(task);
-        db.collection("User").document(this.uid).collection("taskList").document(task.getName()).set(task);
+        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
 
-    public void removeTask(Tasks task){
-        task.isFinished = true;
-        //db.collection("User").document(this.uid).collection("taskList").document(task.getName()).delete();
+    public void removeTask(int taskId){
+        taskList.get(taskId).isFinished = true;
+        Tasks task = taskList.get(taskId);
+        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
 
-    public void EditTask(Tasks task){ //TODO need fixed
+    public void EditTask(int id,Tasks task){ //TODO need fixed
         for(Tasks t : taskList){
-            if(t.getId() == task.getId()){
+            if(t.getId() == id){
                 taskList.remove(t);
                 taskList.add(task);
             }
         }
-        db.collection("User").document(this.uid).collection("taskList").document(task.getName()).set(task);
+        db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+
     }
 
     public List<Tasks> getTaskListByTime(Timestamp tsp){
@@ -77,8 +79,6 @@ public class Db {
         int mDay = cal.get(Calendar.DATE);
         for(Object t : this.taskList){
             Timestamp curr = ((Tasks) t).getDeadline();
-            System.out.println("This task id is " + ((Tasks) t).getId());
-            System.out.println("GETTASKLISTBYTIME: " + curr.toDate());
             Calendar mCal = Calendar.getInstance();
             mCal.setTime(curr.toDate());
             int currYear = mCal.get(Calendar.YEAR);
@@ -91,5 +91,13 @@ public class Db {
         return selected;
     }
 
+    public int getUnfinieshedTask(){
+        int i = 0;
+        for (Tasks t: taskList
+             ) {
+            if(!t.isFinished) i++;
+        }
+        return i;
+    }
 
 }
