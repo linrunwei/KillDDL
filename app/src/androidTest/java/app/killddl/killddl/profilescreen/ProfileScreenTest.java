@@ -47,8 +47,10 @@ public class ProfileScreenTest {
 
     @Test
     public void clickLogOutButton_LogOut(){
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //click on logout button
-        onView(withId(R.id.profile_logoutBtn)).perform(click(), closeSoftKeyboard());
+        onView(withId(R.id.profile_logoutBtn)).perform(click());
 
         try{ Thread.sleep(3000); }catch (Exception _){}
 
