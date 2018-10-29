@@ -84,8 +84,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 month = mmonth;
                 day = mday;
                 mmonth = mmonth + 1;
-
-                String date = month + "/" + day + "/" + year;
+                String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
                 mDisplayDate.setText(content);
@@ -229,7 +228,4 @@ public class AddTaskActivity extends AppCompatActivity {
             Toast.makeText(this, "set notification failed", Toast.LENGTH_LONG).show();
         }
     }
-
-    }
-
-    //TODO add frequency, fixed time spinner
+}
