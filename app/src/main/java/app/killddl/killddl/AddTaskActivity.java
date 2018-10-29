@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 
 import java.util.Date;
@@ -39,6 +41,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
+
 
     private int year;
     private int month;
@@ -59,6 +62,7 @@ public class AddTaskActivity extends AppCompatActivity {
         mDescription = findViewById(R.id.addtask_description);
         mColor = findViewById(R.id.addtask_color_group);
         mTaskName = findViewById(R.id.addtask_taskname);
+        mFrequency = findViewById(R.id.addtask_frequency);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +89,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 day = mday;
                 mmonth = mmonth + 1;
 
-                String date = month + "/" + day + "/" + year;
+                String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
                 mDisplayDate.setText(content);
@@ -130,45 +134,54 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void AddTask(View v) {
-        if (mTaskName == null || mDescription == null || !dateSet || !timeSet || mColor == null) {
+        if (mTaskName == null || mDescription == null || !dateSet || !timeSet || findViewById(mColor.getCheckedRadioButtonId()) == null) {
             TextView err = findViewById(R.id.addtask_errormsg);
             err.setText("Some content are empty!");
             return;
         }
-        //List<Object> tasks = user.getTaskList();
+        int frequency = mFrequency.getSelectedItemPosition();
         String taskName = mTaskName.getText().toString();
         String description = mDescription.getText().toString();
-        String color = findViewById(mColor.getCheckedRadioButtonId()).getTag().toString();
-        int mColor = Color.BLACK;
+        int color = mColor.getCheckedRadioButtonId();
+
         switch (color) {
-            case "red":
-                mColor = Color.RED;
+            case R.id.addtask_red:
+                System.out.println("CHOOSE COLOR RED " );
+                color = Color.RED;
                 break;
-            case "blue":
-                mColor = Color.BLUE;
+            case R.id.addtask_blue:
+                System.out.println("CHOOSE COLOR blue " );
+                color = Color.BLUE;
                 break;
-            case "purple":
-                mColor = Color.BLACK;
+            case R.id.addtask_purple:
+                System.out.println("CHOOSE COLOR black " );
+                color = Color.BLACK;
                 break;
-            case "yellow":
-                mColor = Color.YELLOW;
+            case R.id.addtask_yellow:
+                System.out.println("CHOOSE COLOR yellow " );
+                color = Color.YELLOW;
                 break;
-            case "green":
-                mColor = Color.GREEN;
+            case R.id.addtask_green:
+                System.out.println("CHOOSE COLOR green " );
+                color = Color.GREEN;
                 break;
         }
-
-        //TODO add frequency, fixed time spinner
 
         //add task in Database
         Date date = new Date(year-1900, month, day, hour, minute);
         com.google.firebase.Timestamp timestamp = new com.google.firebase.Timestamp(date);
+        if (timestamp.compareTo(Timestamp.now()) <= 0) {
+            TextView err = findViewById(R.id.addtask_errormsg);
+            err.setText("Cannot Create task before time!");
+            return;
+        }
         Tasks task = new Tasks(MainActivity.getDatabase().getTaskList().size(), timestamp);
-        task.EditColor(mColor);
+        task.EditColor(color);
         task.EditDescription(description);
         task.EditName(taskName);
         task.date = (month + 1) + "/" + day + "/" + year;
         task.time = (hour) + ":" + minute;
+        task.EditFrequency(frequency);
         MainActivity.getDatabase().addTask(task);
 
         // seed a notification
@@ -231,5 +244,3 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     }
-
-    //TODO add frequency, fixed time spinner

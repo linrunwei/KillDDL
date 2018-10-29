@@ -82,13 +82,25 @@
             android:id="@+id/edittask_color_group"
 
             android:orientation="horizontal">
+            <RadioButton
+
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:button="@null"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/button_red"
+                android:tag="red"
+                android:id="@+id/edittask_red"
+                android:checked="false" />
 
             <RadioButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:button="@null"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/button_blue"
+                android:id="@+id/edittask_blue"
+                android:tag="blue"
                 android:checked="false" />
 
             <RadioButton
@@ -97,7 +109,9 @@
                 android:layout_height="20dp"
                 android:button="@null"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_purple"
+                android:id="@+id/edittask_purple"
+                android:tag="purple"
                 android:checked="false" />
             <RadioButton
 
@@ -106,14 +120,8 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_yellow"
-                android:checked="false" />
-            <RadioButton
-
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:button="@null"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/button_purple"
+                android:id="@+id/edittask_yellow"
+                android:tag="yellow"
                 android:checked="false" />
             <RadioButton
 
@@ -122,9 +130,9 @@
                 android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_green"
+                android:id="@+id/edittask_green"
+                android:tag="green"
                 android:checked="false" />
-
-
         </RadioGroup>
         <TextView
         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -13,12 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -41,6 +45,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
+    Tasks targetTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Display all the value
@@ -66,17 +71,37 @@ public class EditTaskActivity extends AppCompatActivity {
         mDescription.setText(targetTask.getDescription(),TextView.BufferType.EDITABLE);
         mDisplayDate.setText(targetTask.date);
         mDisplayTime.setText(targetTask.time);
-        mFrequency.setSelection(getIndex(mFrequency, "None"));
-
+        mFrequency.setSelection(targetTask.frequency);
+        switch (targetTask.getColor()){
+            case Color.RED:
+                ((RadioButton)mColor.getChildAt(0)).setChecked(true);
+                break;
+            case Color.BLUE:
+                ((RadioButton)mColor.getChildAt(1)).setChecked(true);
+                break;
+            case Color.BLACK:
+                ((RadioButton)mColor.getChildAt(2)).setChecked(true);
+                break;
+            case Color.YELLOW:
+                ((RadioButton)mColor.getChildAt(3)).setChecked(true);
+                break;
+            case Color.GREEN:
+                ((RadioButton)mColor.getChildAt(4)).setChecked(true);
+                break;
+        }
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
                         EditTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
-                        year,month,day);
+                        mYear, mMonth, mDay);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -89,6 +114,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 month = mmonth;
                 day = mday;
                 mmonth = mmonth + 1;
+
                 String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
@@ -100,11 +126,14 @@ public class EditTaskActivity extends AppCompatActivity {
         mDisplayTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mHour = calendar.get(Calendar.HOUR);
+                int mMinute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog dialog = new TimePickerDialog(
                         EditTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mTimeSetListener,
-                        hour,minute,true);
+                        mHour, mMinute, true);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -136,7 +165,10 @@ public class EditTaskActivity extends AppCompatActivity {
         mDisplayDate.setClickable(false);
         mDisplayTime.setClickable(false);
         mFrequency.setEnabled(false);
-
+        for (int i = 0; i < mColor.getChildCount(); i++){
+            RadioButton r = (RadioButton) mColor.getChildAt(i);
+            r.setEnabled(false);
+        }
 
 
 
@@ -151,6 +183,10 @@ public class EditTaskActivity extends AppCompatActivity {
         mDisplayDate.setClickable(true);
         mDisplayTime.setClickable(true);
         mFrequency.setEnabled(true);
+        for (int i = 0; i < mColor.getChildCount(); i++){
+            RadioButton r = (RadioButton) mColor.getChildAt(i);
+            r.setEnabled(true);
+        }
 
         Button mEdit = (Button) findViewById(R.id.edittask_edit);
         mEdit.setText("Save");
@@ -158,52 +194,58 @@ public class EditTaskActivity extends AppCompatActivity {
             //save
             @Override
             public void onClick(View view) {
-                if(mTaskName == null || mDescription == null || !dateSet || !timeSet || mColor == null)
-                {
-                    TextView err = findViewById(R.id.addtask_errormsg);
+                if (mTaskName == null || mDescription == null || findViewById(mColor.getCheckedRadioButtonId()) == null || !timeSet || !dateSet) {
+                    TextView err = findViewById(R.id.edittask_errormsg);
                     err.setText("Some content are empty!");
                     return;
                 }
-
+                int frequency = mFrequency.getSelectedItemPosition();
                 String taskName = mTaskName.getText().toString();
                 String description = mDescription.getText().toString();
-                String color = findViewById(mColor.getCheckedRadioButtonId()).getTag().toString();
-                int mColor = Color.BLACK;
-                switch (color){
-                    case "red":
-                        mColor = Color.RED;
+                int color = mColor.getCheckedRadioButtonId();
+
+                switch (color) {
+                    case R.id.edittask_red:
+                        System.out.println("CHOOSE COLOR RED " );
+                        color = Color.RED;
                         break;
-                    case "blue":
-                        mColor = Color.BLUE;
+                    case R.id.edittask_blue:
+                        System.out.println("CHOOSE COLOR blue " );
+                        color = Color.BLUE;
                         break;
-                    case "purple":
-                        mColor = Color.BLACK;
+                    case R.id.edittask_purple:
+                        System.out.println("CHOOSE COLOR black " );
+                        color = Color.BLACK;
                         break;
-                    case "yellow":
-                        mColor = Color.YELLOW;
+                    case R.id.edittask_yellow:
+                        System.out.println("CHOOSE COLOR yellow " );
+                        color = Color.YELLOW;
                         break;
-                    case "green":
-                        mColor = Color.GREEN;
+                    case R.id.edittask_green:
+                        System.out.println("CHOOSE COLOR green " );
+                        color = Color.GREEN;
                         break;
                 }
-                java.util.Date date = new java.util.Date(year, month, day, hour, minute);
-                com.google.firebase.Timestamp timestamp = new com.google.firebase.Timestamp(date);
-                Tasks task = new Tasks(taskId,timestamp);
-                task.EditColor(mColor);
-                task.EditDescription(description);
-                task.EditName(taskName);
-                task.date = (month+1) + "/" + day + "/" + year;
-                task.time = (hour) + ":" + minute;
-     
-                int frequency = -1;
 
                 //add task in Database
-                Db database = MainActivity.getDatabase();
-                database.EditTask(taskId,task);
-
-
-                //quit
-                Intent Calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+                Date date;
+                com.google.firebase.Timestamp timestamp;
+                date = new Date(year-1900, month, day, hour, minute);
+                timestamp = new com.google.firebase.Timestamp(date);
+                if (timestamp.compareTo(com.google.firebase.Timestamp.now()) <= 0) {
+                    TextView err = findViewById(R.id.addtask_errormsg);
+                    err.setText("Cannot Create task before time!");
+                    return;
+                }
+                Tasks task = new Tasks(taskId, timestamp);
+                task.EditColor(color);
+                task.EditDescription(description);
+                task.EditName(taskName);
+                task.date = (month + 1) + "/" + day + "/" + year;
+                task.time = (hour) + ":" + minute;
+                task.EditFrequency(frequency);
+                MainActivity.getDatabase().EditTask(taskId,task);
+                Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
                 startActivity(Calendar);
             }
         });

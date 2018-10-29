@@ -13,7 +13,7 @@ public class Tasks implements Serializable{
     protected int priority;
     protected Timestamp notification;
     protected int color;
-    protected String frequency = "-1";
+    protected int frequency = 0;
     protected Timestamp createTime;
     protected String date;
     protected String time;
@@ -75,10 +75,10 @@ public class Tasks implements Serializable{
     public int getColor(){
         return this.color;
     }
-    public void EditFrequency(String frequency){
+    public void EditFrequency(int frequency){
         this.frequency = frequency;
     }
-    public String getFrequency(){
+    public int getFrequency(){
         return this.frequency;
     }
 

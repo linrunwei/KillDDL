@@ -84,11 +84,23 @@
 
             android:orientation="horizontal">
 
+
             <RadioButton
+
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:button="@null"
                 android:layout_marginLeft="3dp"
+                android:background="@drawable/button_red"
+                android:tag="red"
+                android:id="@+id/addtask_red"
+                android:checked="false" />
+
+            <RadioButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:button="@null"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/button_blue"
                 android:id="@+id/addtask_blue"
                 android:tag="blue"
@@ -100,9 +112,9 @@
                 android:layout_height="20dp"
                 android:button="@null"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/button_red"
-                android:tag="red"
-                android:id="@+id/addtask_red"
+                android:background="@drawable/button_purple"
+                android:id="@+id/addtask_purple"
+                android:tag="purple"
                 android:checked="false" />
             <RadioButton
 
@@ -113,16 +125,6 @@
                 android:background="@drawable/button_yellow"
                 android:id="@+id/addtask_yellow"
                 android:tag="yellow"
-                android:checked="false" />
-            <RadioButton
-
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:button="@null"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/button_purple"
-                android:id="@+id/addtask_purple"
-                android:tag="purple"
                 android:checked="false" />
             <RadioButton
 
@@ -171,6 +173,7 @@
             android:layout_width="match_parent"
             android:prompt="@string/frequency_prompt"
             android:entries="@array/frequency"
+            android:id="@+id/addtask_frequency"
             android:layout_height="40dp"></Spinner>
         <Button
             android:layout_width="wrap_content"
