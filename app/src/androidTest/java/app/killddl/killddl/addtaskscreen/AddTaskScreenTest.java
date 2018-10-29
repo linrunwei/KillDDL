@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
-import app.killddl.killddl.AddActivity;
+import app.killddl.killddl.AddTaskActivity;
 import app.killddl.killddl.CalendarActivity;
 import app.killddl.killddl.MainActivity;
 import app.killddl.killddl.R;
@@ -47,8 +47,8 @@ public class AddTaskScreenTest {
     private int day = 31;
 
     @Rule
-    public ActivityTestRule<AddActivity> mAddActivityTestRule = new
-            ActivityTestRule<AddActivity>(AddActivity.class);
+    public ActivityTestRule<AddTaskActivity> mAddTaskActivityTestRule = new
+            ActivityTestRule<AddTaskActivity>(AddTaskActivity.class);
 
     @Test
     public void clickFinishButtonAfterFillingCorrectInfo_showCalendarScreen(){

@@ -46,6 +46,8 @@ public class MenuScreenTest {
         //click on daily button
         onView(withId(R.id.action_daily)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see dailyTask screen
         onView(withId(R.id.menu_daily)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
     }
@@ -55,6 +57,8 @@ public class MenuScreenTest {
         //click on weekly button
         onView(withId(R.id.action_weekly)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see weeklyTask screen
         onView(withId(R.id.menu_weekly)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
     }
@@ -63,6 +67,8 @@ public class MenuScreenTest {
     public void clickMonthlyButton_showMonthlyScreen(){
         //click on monthly button
         onView(withId(R.id.action_monthly)).perform(click(),closeSoftKeyboard());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see monthlyTask screen
         onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));

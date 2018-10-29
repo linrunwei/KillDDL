@@ -96,6 +96,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/profile_logoutBtn"
             android:background="@drawable/background_primary_blue"
             android:layout_marginTop="90dp"
             android:layout_gravity="center_horizontal"

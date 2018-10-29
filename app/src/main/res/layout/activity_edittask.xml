@@ -170,7 +170,7 @@
             android:onClick="Edit"
             android:layout_gravity="bottom|center"
             android:text="Edit"
-            android:id="@+id/edittask_edit"
+            android:id="@+id/edittask_editBtn"
             />
         <Button
             android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
             android:onClick="Finish"
             android:layout_gravity="bottom|center"
             android:text="Finish"
-            android:id="@+id/edittask_finish"
+            android:id="@+id/edittask_finishBtn"
             />
 
         <TextView
