@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,9 +41,12 @@ import static org.junit.Assert.*;
 @LargeTest
 public class CalendarScreenTest {
 
+
     @Rule
     public ActivityTestRule<CalendarActivity> mCalendarActivityTestRule = new
             ActivityTestRule<CalendarActivity>(CalendarActivity.class);
+
+
 
     @Test
     public void clickDateOnCalendar_showUpdatedCalendarScreen(){
