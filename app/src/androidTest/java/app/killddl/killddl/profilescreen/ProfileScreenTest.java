@@ -11,8 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
-import app.killddl.killddl.AddActivity;
 import app.killddl.killddl.CalendarActivity;
 import app.killddl.killddl.MainActivity;
 import app.killddl.killddl.ProfileActivity;
@@ -23,6 +21,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
+
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -44,4 +44,15 @@ public class ProfileScreenTest {
     @Rule
     public ActivityTestRule<ProfileActivity> mProfileActivityTestRule = new
             ActivityTestRule<ProfileActivity>(ProfileActivity.class);
+
+    @Test
+    public void clickLogOutButton_LogOut(){
+        //click on logout button
+        onView(withId(R.id.profile_logoutBtn)).perform(click(), closeSoftKeyboard());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
+        //check
+        onView(withId(R.id.profile_logoutBtn)).check(doesNotExist());
+    }
 }

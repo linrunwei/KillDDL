@@ -8,7 +8,7 @@
     android:paddingRight="24dp"
     android:paddingLeft="24dp"
     android:background="@drawable/background_4"
-    android:id = "@+id/loginLayout">
+    android:id = "@+id/layout_main">
     <!--android:background="@drawable/background_anim"-->
 
     <ScrollView

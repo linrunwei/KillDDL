@@ -188,7 +188,7 @@ public class EditTaskActivity extends AppCompatActivity {
             r.setEnabled(true);
         }
 
-        Button mEdit = (Button) findViewById(R.id.edittask_edit);
+        Button mEdit = (Button) findViewById(R.id.edittask_editBtn);
         mEdit.setText("Save");
         mEdit.setOnClickListener(new View.OnClickListener() {
             //save

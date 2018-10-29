@@ -37,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
 
         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
         final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
-        menuScroll.addView(displayTaskList(tasksList));
+        menuScroll.addView(displayTaskList(tasksList,1));
         //Top Navigation Bar
         BottomNavigationView topNavigationView = (BottomNavigationView) findViewById(R.id.top_navigation);
         topNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -48,20 +48,20 @@ public class MenuActivity extends AppCompatActivity {
                         tsp = Timestamp.now();
                         menuScroll.removeAllViews();
                         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
-                        menuScroll.addView(displayTaskList(tasksList));
+                        menuScroll.addView(displayTaskList(tasksList,1));
                         break;
                     case R.id.action_weekly:
                         tsp = Timestamp.now();
                         menuScroll.removeAllViews();
                         tasksList = weeklyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList));
+                        menuScroll.addView(displayTaskList(tasksList,2));
 
                         break;
                     case R.id.action_monthly:
                         tsp = Timestamp.now();
                         menuScroll.removeAllViews();
                         tasksList = monthlyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList));
+                        menuScroll.addView(displayTaskList(tasksList,3));
                         break;
                 }
             }
@@ -97,10 +97,15 @@ public class MenuActivity extends AppCompatActivity {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
-    LinearLayout displayTaskList(List<Tasks> tasksList){
-
-
+    LinearLayout displayTaskList(List<Tasks> tasksList, int displayType){
         LinearLayout rl = new LinearLayout(this);
+        if(displayType == 1){
+            rl.setId(R.id.menu_daily);
+        }else if(displayType == 2){
+            rl.setId(R.id.menu_weekly);
+        }else if(displayType == 3){
+            rl.setId(R.id.menu_monthly);
+        }
         rl.setOrientation(LinearLayout.VERTICAL);
         for(int i=0; i<tasksList.size(); i++){
             //create new View

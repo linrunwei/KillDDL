@@ -19,6 +19,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -43,7 +44,7 @@ public class SignupScreenTest {
 
     @Test
     public void clickSignUpButtonAfterFillingExistingEmail_showSignUpScreen(){
-        String email = "yanxili@usc.edu";
+        String email = "liyanxi63@gmail.com";
         String password = "yanxili";
 
         //find the email edit text and type in the email address
@@ -55,8 +56,10 @@ public class SignupScreenTest {
         //click the signup button
         onView(withId(R.id.signupBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the SignUp screen
-        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.mainLayout)),isDisplayed())));
+        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
 
     @Test
@@ -73,8 +76,10 @@ public class SignupScreenTest {
         //click the signup button
         onView(withId(R.id.signupBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the SignUp screen
-        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.mainLayout)),isDisplayed())));
+        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
 
     @Test
@@ -91,13 +96,15 @@ public class SignupScreenTest {
         //click the signup button
         onView(withId(R.id.signupBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the SignUp screen
-        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.mainLayout)),isDisplayed())));
+        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
 
     @Test
     public void clickSignUpButtonAfterFillingCorrectInfo_showCalendarScreen(){
-        String email = "yanxili123@gmail.com";
+        String email = "yanxili3@gmail.com";
         String password = "yanxili";
 
         //find the email edit text and type in the email address
@@ -109,11 +116,15 @@ public class SignupScreenTest {
         //click the signup button
         onView(withId(R.id.signupBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //click the login button
         onView(withId(R.id.loginBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the SignUp screen
-        onView(withId(R.id.calendarView)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.signupBtn)).check(doesNotExist());
     }
 
     @Test
@@ -126,13 +137,15 @@ public class SignupScreenTest {
         //click the login button
         onView(withId(R.id.loginBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the Login screen
-        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.mainLayout)),isDisplayed())));
+        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
 
     @Test
     public void clickSignUpButtonAfterLeavingPasswordEntryEmpty_showSignUpScreen(){
-        String email = "yanxili1@usc.edu";
+        String email = "yanxili0@usc.edu";
 
         //find the email edit text and type in the email address
         onView(withId(R.id.login_username)).perform(typeText(email),closeSoftKeyboard());
@@ -140,7 +153,9 @@ public class SignupScreenTest {
         //click the login button
         onView(withId(R.id.loginBtn)).perform(click(),closeSoftKeyboard());
 
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
         //check that we can see the Login screen
-        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.mainLayout)),isDisplayed())));
+        onView(withId(R.id.login_username)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
 }
