@@ -86,4 +86,22 @@ public class MenuScreenTest {
         onView(allOf(withTagValue(is((Object) "menu_monthly")), isDisplayed())).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void clickMenuButton(){
+        onView(withId(R.id.action_menu)).perform(doubleClick());
+        onView(withId(R.id.menu_scrolllist)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+    }
+
+    @Test
+    public void clickCalendarButton(){
+        onView(withId(R.id.action_calendar)).perform(doubleClick());
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+    }
+
+    @Test
+    public void clickProfileButton(){
+        onView(withId(R.id.action_profile)).perform(doubleClick());
+        onView(withId(R.id.profile_logoutBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_profile)),isDisplayed())));
+    }
+
 }

@@ -96,7 +96,7 @@ public class CalendarScreenTest {
     @Test
     public void clickCalendarButton(){
         onView(withId(R.id.action_calendar)).perform(doubleClick());
-        onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
     }
 
     @Test

@@ -57,8 +57,8 @@ public class ProfileScreenTest {
 
         //check
         onView(withId(R.id.profile_logoutBtn)).check(doesNotExist());
+        onView(withId(R.id.loginBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_main)),isDisplayed())));
     }
-
 
     @Test
     public void clickMenuButton(){
@@ -69,6 +69,12 @@ public class ProfileScreenTest {
     @Test
     public void clickCalendarButton(){
         onView(withId(R.id.action_calendar)).perform(doubleClick());
-        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+    }
+
+    @Test
+    public void clickProfileButton(){
+        onView(withId(R.id.action_profile)).perform(doubleClick());
+        onView(withId(R.id.profile_logoutBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_profile)),isDisplayed())));
     }
 }
