@@ -25,19 +25,18 @@
             />
 
         <TextView
-            android:id="@+id/txtclose"
-            android:gravity="end"
-            android:background="@drawable/background_btn2"
-                  
+            android:id="@+id/addtask_close"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+
             android:layout_gravity="end"
-                  
+            android:background="@drawable/background_btn2"
+            android:gravity="end"
             android:onClick="close"
             android:text="Cancel"
-            />
+
+            android:textColor="@color/black"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
