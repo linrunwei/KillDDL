@@ -29,6 +29,7 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG = "CalendarActivity";
     private CalendarView mCalendarView;
     ScrollView calendarTasks;
+    int tasksViewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class CalendarActivity extends AppCompatActivity {
         calendarTasks = (ScrollView) findViewById(R.id.calendar_tasks);
         calendarTasks.removeAllViews();
         calendarTasks.addView(displayTaskList(tsp));
-        mCalendarView = (CalendarView) findViewById(R.id.calendarView);
+        mCalendarView = (CalendarView) findViewById(R.id.calendar_calendarview);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
@@ -88,6 +89,8 @@ public class CalendarActivity extends AppCompatActivity {
         List<Tasks> tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
         System.out.println("REQUIRED DATE IS: " + tsp.toDate());
         LinearLayout rl = new LinearLayout(this);
+        tasksViewId = View.generateViewId();
+        rl.setId(tasksViewId);
         rl.setOrientation(LinearLayout.VERTICAL);
         for(int i=0; i<tasksList.size(); i++){
             if(!tasksList.get(i).isFinished) {
