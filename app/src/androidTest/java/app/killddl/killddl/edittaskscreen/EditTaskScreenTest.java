@@ -89,14 +89,12 @@ public class EditTaskScreenTest {
         //edit Date
         onView(withId(R.id.edittask_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
-
-        onView(withText("OK")).perform(click());
-
-        onView(withId(R.id.edittask_time)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
         onView(withText("OK")).perform(click());
 
         //edit Time
+        onView(withId(R.id.edittask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
 
         //click on finish button
         onView(withId(R.id.edittask_finishBtn)).perform(click());
@@ -112,10 +110,8 @@ public class EditTaskScreenTest {
         onView(withId(R.id.edittask_editBtn)).perform(click());
 
         //edit Date
-
         onView(withId(R.id.edittask_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
-
         onView(withText("OK")).perform(click());
 
         //click on finish button
@@ -139,7 +135,6 @@ public class EditTaskScreenTest {
         }
 
         //edit Time
-
         onView(withId(R.id.edittask_time)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
         onView(withText("OK")).perform(click());

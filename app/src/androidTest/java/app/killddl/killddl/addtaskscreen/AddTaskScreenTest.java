@@ -56,7 +56,7 @@ public class AddTaskScreenTest {
     private String description = "CSCI310 Implementation Due";
     private int year = 2018;
     private int month = 11;
-    private int day = 20;
+    private int day = 30;
     private int hour = 11;
     private int time = 23;
 
@@ -138,14 +138,12 @@ public class AddTaskScreenTest {
         //choose date
         onView(withId(R.id.addtask_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
-
-        onView(withText("OK")).perform(click());
-
-        onView(withId(R.id.addtask_time)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
         onView(withText("OK")).perform(click());
 
         //choose time
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
 
         //click on finish button
         onView(withId(R.id.addtask_finishBtn)).perform(click());
@@ -171,7 +169,6 @@ public class AddTaskScreenTest {
         onView(withText("OK")).perform(click());
 
         //choose time
-
         onView(withId(R.id.addtask_time)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
         onView(withText("OK")).perform(click());
@@ -246,7 +243,7 @@ public class AddTaskScreenTest {
     public void clickCloseButton(){
         onView(withId(R.id.addtask_close)).perform(click());
         //check  if go back to calendar
-        onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
 
     }
 }
