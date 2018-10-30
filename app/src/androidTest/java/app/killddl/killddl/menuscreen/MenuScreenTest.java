@@ -25,6 +25,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
 import static org.junit.Assert.*;
@@ -51,9 +53,10 @@ public class MenuScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see dailyTask screen
-        onView(withId(R.id.menu_daily)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
+        //onView(withId(R.id.menu_daily)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
         //onView(withId(2131296440)).check();
         //onView(withId(R.id.menu_daily)).check(matches(isDisplayed()));
+        onView(allOf(withTagValue(is((Object) "menu_daily")), isDisplayed())).check(matches(isDisplayed()));
     }
 
     @Test
