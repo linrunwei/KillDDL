@@ -11,7 +11,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class DbUnitTest {
+
     @Test
     public void addTask_isCorrect() throws ParseException {
         SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -22,7 +24,7 @@ public class DbUnitTest {
         Db database1 = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", new ArrayList<Tasks>());
         database1.addTask(new Tasks(0, new Timestamp(one)));
         database1.addTask(new Tasks(1, new Timestamp(two)));
-        
+
         Db database2 = new Db("BkYJZIdnLfcl10ANxrGyaKYQp4x1", new ArrayList<Tasks>());
         database2.addTask(new Tasks(0, new Timestamp(three)));
 

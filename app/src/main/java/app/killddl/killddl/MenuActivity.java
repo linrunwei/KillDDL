@@ -100,11 +100,14 @@ public class MenuActivity extends AppCompatActivity {
     LinearLayout displayTaskList(List<Tasks> tasksList, int displayType){
         LinearLayout rl = new LinearLayout(this);
         if(displayType == 1){
-            rl.setId(R.id.menu_daily);
+            //rl.setId(R.id.menu_daily);
+            rl.setTag("menu_daily");
         }else if(displayType == 2){
-            rl.setId(R.id.menu_weekly);
+            //rl.setId(R.id.menu_weekly);
+            rl.setTag("menu_weekly");
         }else if(displayType == 3){
-            rl.setId(R.id.menu_monthly);
+            //rl.setId(R.id.menu_monthly);
+            rl.setTag("menu_monthly");
         }
         rl.setOrientation(LinearLayout.VERTICAL);
         for(int i=0; i<tasksList.size(); i++){
