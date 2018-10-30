@@ -21,10 +21,13 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.AllOf.allOf;
 
 import static org.junit.Assert.*;
@@ -38,31 +41,78 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class EditTaskScreenTest {
+    private int year = 2018;
+    private int month = 11;
+    private int day = 20;
+    private int hour = 11;
+    private int time = 23;
+
     @Rule
     public ActivityTestRule<EditTaskActivity> mEditTaskActivityTestRule = new
             ActivityTestRule<EditTaskActivity>(EditTaskActivity.class);
 
     @Test
     public void clickEntryWithoutClickingEditButton_cannotEdit(){
-
+        onView(withId(R.id.edittask_taskname)).check(matches(not(isEnabled())));
     }
 
     @Test
-    public void clickSaveAfterEditting_showCalendarScreen(){
+    public void clickSaveAfterEditingDateAndTime_showCalendarScreen(){
         //click on edit button
-        onView(withId(R.id.edittask_editBtn)).perform(click(),closeSoftKeyboard());
+        onView(withId(R.id.edittask_editBtn)).perform(click());
 
-        //change entry
+        //edit Date
 
+        //edit Time
+
+        //click on finish button
+        onView(withId(R.id.edittask_editBtn)).perform(click());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
         onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
     }
 
     @Test
+    public void clickSaveAfterEditingOnlyDate_showEditTaskScreen(){
+        //click on edit button
+        onView(withId(R.id.edittask_editBtn)).perform(click());
+
+        //edit Date
+
+        //click on finish button
+        onView(withId(R.id.edittask_editBtn)).perform(click());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
+        //check that we stay on edit task screen
+        onView(withId(R.id.edittask_editBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_edittask)),isDisplayed())));
+    }
+
+    @Test
+    public void clickSaveAfterEditingOnlyTime_showEditTaskScreen(){
+        //click on edit button
+        onView(withId(R.id.edittask_editBtn)).perform(click());
+
+        //edit Time
+
+        //click on finish button
+        onView(withId(R.id.edittask_editBtn)).perform(click());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
+
+        //check that we stay on edit task screen
+        onView(withId(R.id.edittask_editBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_edittask)),isDisplayed())));
+
+    }
+
+    @Test
     public void clickFinish_showCalendarScreen(){
         //click on finish button
         onView(withId(R.id.edittask_finishBtn)).perform(click(),closeSoftKeyboard());
+
+        try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
         onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
