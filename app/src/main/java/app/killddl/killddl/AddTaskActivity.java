@@ -44,12 +44,12 @@ public class AddTaskActivity extends AppCompatActivity {
     int timePickerId;
     int datePickerId;
 
-
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
+    private int taskId;
 
     private CalendarView mCalendarView;
     CollectionReference mColRef;
@@ -91,8 +91,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 year = myear;
                 month = mmonth;
                 day = mday;
-                mmonth = mmonth + 1;
-
+                mmonth += 1;
                 String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
@@ -105,7 +104,7 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
-                int mHour = calendar.get(Calendar.HOUR);
+                int mHour = calendar.get(Calendar.HOUR_OF_DAY);
                 int mMinute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog dialog = new TimePickerDialog(
                         AddTaskActivity.this,
@@ -184,7 +183,8 @@ public class AddTaskActivity extends AppCompatActivity {
             err.setText("Cannot Create task before time!");
             return;
         }
-        Tasks task = new Tasks(MainActivity.getDatabase().getTaskList().size(), timestamp);
+        taskId = MainActivity.getDatabase().getTaskList().size();
+        Tasks task = new Tasks(taskId, timestamp);
         task.EditColor(color);
         task.EditDescription(description);
         task.EditName(taskName);
@@ -214,8 +214,10 @@ public class AddTaskActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra("taskName", taskName);
         intent.putExtra("frequency", frequency);
+        intent.putExtra("taskId", taskId);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {
@@ -230,10 +232,8 @@ public class AddTaskActivity extends AppCompatActivity {
                                 + minute + ":"
                                 + second
                         , Toast.LENGTH_LONG).show();
-
             }
             else {
-
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Toast.makeText(this,
                         "scheduled one time notification at "
@@ -245,12 +245,9 @@ public class AddTaskActivity extends AppCompatActivity {
                                 + second
                         , Toast.LENGTH_LONG).show();
             }
-
         }
         else {
             Toast.makeText(this, "set notification failed", Toast.LENGTH_LONG).show();
         }
     }
-
 }
-

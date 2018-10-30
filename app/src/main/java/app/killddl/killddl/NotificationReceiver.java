@@ -17,6 +17,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         String channelId = "due-now";
         String taskName = intent.getStringExtra("taskName");
         int frequency = intent.getIntExtra("frequency", -1);
+        int taskId = intent.getIntExtra("taskId", -1);
+        // todo jump to the task associated with that task id
         Intent showDueIntent = new Intent(context, CalendarActivity.class);
         showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
