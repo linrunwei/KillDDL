@@ -71,7 +71,7 @@ public class EditTaskScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
-        onView(withId(R.id.calendarView)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
     }
 
     @Test
@@ -115,6 +115,6 @@ public class EditTaskScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
-        onView(withId(R.id.calendarView)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
     }
 }

@@ -21,6 +21,7 @@
         android:layout_gravity="center"/>
 
     <LinearLayout
+        android:id="@+id/calendar_calendarview_parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="24dp"
@@ -28,7 +29,7 @@
         >
 
         <CalendarView
-            android:id="@+id/calendarView"
+            android:id="@+id/calendar_calendarview"
             android:layout_width="300dp"
             android:layout_height="295dp"
             android:layout_marginLeft="20dp"
@@ -36,7 +37,7 @@
             android:background="@drawable/bg_calen"
             android:gravity="center_vertical|left|start"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="0dp"></CalendarView>
+            tools:layout_editor_absoluteY="0dp"/>
     </LinearLayout>
 
     <LinearLayout
