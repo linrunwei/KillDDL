@@ -66,7 +66,7 @@ public class CalendarScreenTest {
     public ActivityTestRule<CalendarActivity> mCalendarActivityTestRule = new
             ActivityTestRule<CalendarActivity>(CalendarActivity.class);
 
-
+    /*
     @Test
     @Ignore
     public void clickDateOnCalendar_showUpdatedCalendarScreen(){
@@ -81,7 +81,7 @@ public class CalendarScreenTest {
         }catch (Exception _){
 
         }
-    }
+    }*/
 
 
     @Test
