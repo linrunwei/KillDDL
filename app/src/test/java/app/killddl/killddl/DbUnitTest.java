@@ -108,14 +108,14 @@ public class DbUnitTest {
 
         Db database = new Db("ZTWmtHyGR1SxFnttlRNBUkii09C3", tasksList);
         database.EditTask(3, new Tasks(3, b));
-//        database.EditTask(6, new Tasks(6, d));
-//        database.EditTask(9, new Tasks(9, e));
+        database.EditTask(6, new Tasks(6, d));
+        database.EditTask(9, new Tasks(9, e));
 
         assertEquals(3, database.getTaskListByTime(a).size());
         assertEquals(3, database.getTaskListByTime(b).size());
-        assertEquals(1, database.getTaskListByTime(c).size());
+        assertEquals(0, database.getTaskListByTime(c).size());
         assertEquals(3, database.getTaskListByTime(d).size());
-        assertEquals(0, database.getTaskListByTime(e).size());
+        assertEquals(1, database.getTaskListByTime(e).size());
     }
     @Test
     public void getListByTime_isCorrect() throws ParseException {
