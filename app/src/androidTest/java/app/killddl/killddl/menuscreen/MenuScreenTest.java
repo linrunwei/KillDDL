@@ -81,7 +81,9 @@ public class MenuScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see monthlyTask screen
+
         //onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
         onView(allOf(withTagValue(is((Object) "menu_monthly")), isDisplayed())).check(matches(isDisplayed()));
     }
+
 }
