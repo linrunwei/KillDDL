@@ -178,7 +178,8 @@
             android:prompt="@string/frequency_prompt"
             android:entries="@array/frequency"
             android:id="@+id/addtask_frequency"
-            android:layout_height="40dp"></Spinner>
+                 
+            android:layout_height="40dp"/>
 
         <Button
             android:id="@+id/addtask_finishBtn"

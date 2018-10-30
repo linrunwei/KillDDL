@@ -123,7 +123,7 @@ public class AddTaskScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we stay on AddTask page anymore
-        onView(withId(R.id.addtask_finishBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_addtask)),isDisplayed())));
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
 
     }
 
@@ -151,7 +151,7 @@ public class AddTaskScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we stay on AddTask page anymore
-        onView(withId(R.id.addtask_finishBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_addtask)),isDisplayed())));
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
 
     }
 
