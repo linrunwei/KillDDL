@@ -1,5 +1,7 @@
 package app.killddl.killddl.addtaskscreen;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -7,6 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,15 +25,21 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
+
+import java.sql.Time;
 
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.*;
 
@@ -47,7 +56,7 @@ public class AddTaskScreenTest {
     private String description = "CSCI310 Implementation Due";
     private int year = 2018;
     private int month = 11;
-    private int day = 20;
+    private int day = 30;
     private int hour = 11;
     private int time = 23;
 
@@ -57,6 +66,7 @@ public class AddTaskScreenTest {
 
     @Test
     public void clickFinishButtonAfterFillingCorrectInfo_showCalendarScreen(){
+        mAddTaskActivityTestRule.getActivity();
         //find the task name edit text and type in the task name
         onView(withId(R.id.addtask_taskname)).perform(typeText(taskName),closeSoftKeyboard());
 
@@ -67,8 +77,14 @@ public class AddTaskScreenTest {
         onView(withId(R.id.addtask_purple)).perform(click());
 
         //choose date
-        onView(withId(R.id.addtask_date));
+        onView(withId(R.id.addtask_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
 
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
         //choose time
 
         //click on finish button
@@ -90,6 +106,14 @@ public class AddTaskScreenTest {
         onView(withId(R.id.addtask_purple)).perform(click());
 
         //choose date
+        onView(withId(R.id.addtask_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
+
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
 
         //choose time
 
@@ -112,8 +136,14 @@ public class AddTaskScreenTest {
         onView(withId(R.id.addtask_purple)).perform(click());
 
         //choose date
+        onView(withId(R.id.addtask_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
+        onView(withText("OK")).perform(click());
 
         //choose time
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
 
         //click on finish button
         onView(withId(R.id.addtask_finishBtn)).perform(click());
@@ -134,8 +164,14 @@ public class AddTaskScreenTest {
         onView(withId(R.id.addtask_description)).perform(typeText(description),closeSoftKeyboard());
 
         //choose date
+        onView(withId(R.id.addtask_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
+        onView(withText("OK")).perform(click());
 
         //choose time
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
 
         //click on finish button
         onView(withId(R.id.addtask_finishBtn)).perform(click());
@@ -157,6 +193,13 @@ public class AddTaskScreenTest {
 
         //find the color radiobutton and choose one
         onView(withId(R.id.addtask_purple)).perform(click());
+
+        onView(withId(R.id.addtask_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
+
+        onView(withText("OK")).perform(click());
+
+
 
         //choose time
 
@@ -182,6 +225,11 @@ public class AddTaskScreenTest {
 
         //choose date
 
+
+        onView(withId(R.id.addtask_time)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
+        onView(withText("OK")).perform(click());
+
         //click on finish button
         onView(withId(R.id.addtask_finishBtn)).perform(click());
 
@@ -189,5 +237,13 @@ public class AddTaskScreenTest {
 
         //check that we stay on AddTask page anymore
         onView(withId(R.id.addtask_finishBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_addtask)),isDisplayed())));
+    }
+
+    @Test
+    public void clickCloseButton(){
+        onView(withId(R.id.addtask_close)).perform(click());
+        //check  if go back to calendar
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+
     }
 }

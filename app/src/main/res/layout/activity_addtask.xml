@@ -26,15 +26,18 @@
 
         <TextView
             android:id="@+id/txtclose"
+            android:gravity="end"
+            android:background="@drawable/background_btn2"
+                  
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_gravity="end"
-            android:background="@drawable/background_btn2"
-            android:gravity="end"
+                  
             android:onClick="close"
             android:text="Cancel"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -147,7 +150,6 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="20dp"
         android:textSize="18sp"
-        android:onClick="ShowDate"
         android:id="@+id/addtask_date"
         android:text="Choose Date"
         />

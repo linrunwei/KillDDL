@@ -41,6 +41,8 @@ public class AddTaskActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
+    int timePickerId;
+    int datePickerId;
 
     private int year;
     private int month;
@@ -76,6 +78,8 @@ public class AddTaskActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
                         mYear, mMonth, mDay);
+                datePickerId = getTaskId();
+
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
