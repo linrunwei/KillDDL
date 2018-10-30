@@ -33,12 +33,14 @@ public class EditTaskActivity extends AppCompatActivity {
     User user;
     List<Tasks> tasksList;
 
+    private Tasks targetTask;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private Spinner mFrequency;
+
 
     private int year;
     private int month;
@@ -61,7 +63,7 @@ public class EditTaskActivity extends AppCompatActivity {
         Intent intent = getIntent();
         taskId = intent.getIntExtra("edit_taskId",0);
         tasksList = MainActivity.getDatabase().getTaskList();
-        Tasks targetTask = tasksList.get(taskId);
+        targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
 
         mTaskName = findViewById(R.id.edittask_taskname);
