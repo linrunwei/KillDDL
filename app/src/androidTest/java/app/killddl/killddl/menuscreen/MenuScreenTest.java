@@ -49,7 +49,8 @@ public class MenuScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see dailyTask screen
-        onView(withId(R.id.menu_daily)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+        onView(withId(R.id.menu_daily)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
+        //onView(withId(2131296440)).check();
     }
 
     @Test
@@ -60,7 +61,7 @@ public class MenuScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see weeklyTask screen
-        onView(withId(R.id.menu_weekly)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+        onView(withId(R.id.menu_weekly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
     }
 
     @Test
@@ -71,6 +72,6 @@ public class MenuScreenTest {
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see monthlyTask screen
-        onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+        onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
     }
 }

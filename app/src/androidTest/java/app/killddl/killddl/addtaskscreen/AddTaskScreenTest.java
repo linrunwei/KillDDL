@@ -54,6 +54,7 @@ public class AddTaskScreenTest {
     public void clickFinishButtonAfterFillingCorrectInfo_showCalendarScreen(){
         //find the task name edit text and type in the task name
 
+
         //find the description edit text and type in the description
 
         //

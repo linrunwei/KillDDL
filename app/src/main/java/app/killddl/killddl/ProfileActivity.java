@@ -52,10 +52,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    void Logout(View v){
+    public void Logout(View v){
         MainActivity.quit();
         Intent login = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(login);
     }
-
 }
