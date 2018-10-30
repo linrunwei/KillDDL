@@ -24,16 +24,19 @@
             />
 
         <TextView
-        android:id="@+id/edittask_close"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:textColor="@color/black"
-        android:text="X"
-        android:textStyle="bold"
-        android:layout_gravity="end"
+            android:id="@+id/txtclose"
+            android:background="@drawable/background_btn2"
+            android:gravity="end"
+      
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+
             android:onClick="close"
-        android:gravity="end"
-        android:background="@drawable/background_btn2" />
+            android:text="Cancel"
+/>
     </LinearLayout>
 
     <LinearLayout
@@ -180,17 +183,17 @@
             android:text="Edit"
             android:id="@+id/edittask_editBtn"
             />
+
         <Button
+            android:id="@+id/edittask_finishBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
-            android:textSize="18sp"
             android:onClick="Finish"
-            android:layout_gravity="bottom|center"
-            android:text="Finish"
-            android:id="@+id/edittask_finishBtn"
-            />
+            android:text="Mark As Done"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
