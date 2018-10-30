@@ -57,28 +57,31 @@ public class MenuScreenTest {
         //onView(withId(2131296440)).check();
         //onView(withId(R.id.menu_daily)).check(matches(isDisplayed()));
         onView(allOf(withTagValue(is((Object) "menu_daily")), isDisplayed())).check(matches(isDisplayed()));
+
     }
 
     @Test
     public void clickWeeklyButton_showWeeklyScreen(){
         //click on weekly button
-        onView(withId(R.id.action_daily)).perform(doubleClick());
+        onView(withId(R.id.action_weekly)).perform(doubleClick());
 
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see weeklyTask screen
         //onView(withId(R.id.menu_weekly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
         //onView(withId(R.id.menu_weekly)).check(matches(isDisplayed()));
+        onView(allOf(withTagValue(is((Object) "menu_weekly")), isDisplayed())).check(matches(isDisplayed()));
     }
-    /*
+
     @Test
     public void clickMonthlyButton_showMonthlyScreen(){
         //click on monthly button
-        onView(withId(R.id.action_monthly)).perform(click());
+        onView(withId(R.id.action_monthly)).perform(doubleClick());
 
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see monthlyTask screen
-        onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
-    }*/
+        //onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
+        onView(allOf(withTagValue(is((Object) "menu_monthly")), isDisplayed())).check(matches(isDisplayed()));
+    }
 }
