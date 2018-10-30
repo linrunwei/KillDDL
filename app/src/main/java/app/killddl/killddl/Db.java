@@ -62,10 +62,9 @@ public class Db {
     }
 
     public void EditTask(int id,Tasks task){ //TODO need fixed
-        for(Tasks t : taskList){
-            if(t.getId() == id){
-                taskList.remove(t);
-                taskList.add(task);
+        for(int i =0; i < taskList.size();i++){
+            if(taskList.get(i).getId() == id){
+                taskList.set(i, task);
             }
         }
         if(db != null)
