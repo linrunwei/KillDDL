@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -69,8 +70,17 @@ public class EditTaskActivity extends AppCompatActivity {
 
         mTaskName.setText(targetTask.getName(),TextView.BufferType.EDITABLE);
         mDescription.setText(targetTask.getDescription(),TextView.BufferType.EDITABLE);
-        mDisplayDate.setText(targetTask.date);
-        mDisplayTime.setText(targetTask.time);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(targetTask.getDeadline().toDate());
+        int mmyear = calendar.get(Calendar.YEAR);
+        int mmmonth = calendar.get(Calendar.MONTH)+1;
+        int mmdate = calendar.get(Calendar.DAY_OF_MONTH);
+        int mmhour = calendar.get(Calendar.HOUR_OF_DAY);
+        int mmminute = calendar.get(Calendar.MINUTE);
+        String dateString = mmmonth + "/" + mmdate + "/" + mmyear;
+        String timeString = mmhour + ":" + mmminute;
+        mDisplayDate.setText(dateString);
+        mDisplayTime.setText(timeString);
         mFrequency.setSelection(targetTask.frequency);
         switch (targetTask.getColor()){
             case Color.RED:
@@ -241,8 +251,14 @@ public class EditTaskActivity extends AppCompatActivity {
                 task.EditColor(color);
                 task.EditDescription(description);
                 task.EditName(taskName);
-                task.date = (month + 1) + "/" + day + "/" + year;
-                task.time = (hour) + ":" + minute;
+                if(dateSet)
+                    task.date = (month + 1) + "/" + day + "/" + year;
+                else
+                    task.date = targetTask.date;
+                if(timeSet)
+                    task.time = (hour) + ":" + minute;
+                else
+                    task.time = targetTask.time;
                 task.EditFrequency(frequency);
                 MainActivity.getDatabase().EditTask(taskId,task);
                 Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
@@ -252,7 +268,7 @@ public class EditTaskActivity extends AppCompatActivity {
         }
 
 
-    void Finish(View v){
+    public void Finish(View v){
         MainActivity.getDatabase().removeTask(taskId);
         System.out.println("Task Name: " + tasksList.get(taskId).getName() + " Finished task id: " + taskId);
         Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
@@ -260,7 +276,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
 
-    private int getIndex(Spinner spinner, String myString){
+    public int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
                 return i;

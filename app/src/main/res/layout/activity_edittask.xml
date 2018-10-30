@@ -24,7 +24,7 @@
             />
 
         <TextView
-        android:id="@+id/txtclose"
+        android:id="@+id/edittask_close"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@color/black"
@@ -141,7 +141,6 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="20dp"
         android:textSize="18sp"
-        android:onClick="ShowDate"
         android:id="@+id/edittask_date"
         android:text="Choose Date"
         />

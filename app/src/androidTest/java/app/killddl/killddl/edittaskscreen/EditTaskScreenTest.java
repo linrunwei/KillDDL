@@ -1,6 +1,7 @@
 package app.killddl.killddl.edittaskscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -21,7 +22,9 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
+import android.support.v4.widget.TextViewCompat;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -55,13 +58,22 @@ public class EditTaskScreenTest {
 
     @Rule
     public ActivityTestRule<EditTaskActivity> mEditTaskActivityTestRule = new
-            ActivityTestRule<EditTaskActivity>(EditTaskActivity.class);
+            ActivityTestRule<EditTaskActivity>(EditTaskActivity.class) {
+
+
+                @Override
+                protected Intent getActivityIntent() {
+                    Intent intent = new Intent();
+                    intent.putExtra("edit_taskId",4);
+                    return intent;
+                }
+            };
+
+
 
     @Test
     public void clickEntryWithoutClickingEditButton_cannotEdit(){
         onView(withId(R.id.edittask_taskname)).check(matches(not(isEnabled())));
-        onView(withId(R.id.edittask_red)).check(matches(not(isEnabled())));
-        onView(withId(R.id.edittask_frequency)).check(matches(not(isEnabled())));
     }
 
     @Test
@@ -82,13 +94,12 @@ public class EditTaskScreenTest {
         //edit Time
 
         //click on finish button
-        onView(withId(R.id.edittask_editBtn)).perform(click());
+        onView(withId(R.id.edittask_finishBtn)).perform(click());
 
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
-        //onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
-    }
+        onView(withId(R.id.calendar_addTaskBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));    }
 
     @Test
     public void clickSaveAfterEditingOnlyDate_showEditTaskScreen(){
@@ -115,6 +126,12 @@ public class EditTaskScreenTest {
     public void clickSaveAfterEditingOnlyTime_showEditTaskScreen(){
         //click on edit button
         onView(withId(R.id.edittask_editBtn)).perform(click());
+        try {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException ie){
+
+        }
 
         //edit Time
 
@@ -125,8 +142,7 @@ public class EditTaskScreenTest {
         //click on finish button
         onView(withId(R.id.edittask_editBtn)).perform(click());
 
-        try{ Thread.sleep(3000); }catch (Exception _){}
-
+        //try{ Thread.sleep(3000); }catch (Exception _){}
         //check that we stay on edit task screen
         onView(withId(R.id.edittask_editBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_edittask)),isDisplayed())));
 
@@ -136,11 +152,11 @@ public class EditTaskScreenTest {
     public void clickFinish_showCalendarScreen(){
         //click on finish button
 
-        onView(withId(R.id.edittask_finishBtn)).perform(click(),closeSoftKeyboard());
+        onView(withId(R.id.edittask_finishBtn)).perform(click());
 
         try{ Thread.sleep(3000); }catch (Exception _){}
 
         //check that we can see the Calendar screen
-        onView(withId(R.id.calendar_calendarview)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
+        onView(withId(R.id.calendar_addTaskBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_calendar)),isDisplayed())));
     }
 }
