@@ -168,14 +168,13 @@ public class AddTaskScreenTest {
         //choose date
         onView(withId(R.id.addtask_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020,3,20));
-
         onView(withText("OK")).perform(click());
+
+        //choose time
 
         onView(withId(R.id.addtask_time)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20,3));
         onView(withText("OK")).perform(click());
-
-        //choose time
 
         //click on finish button
         onView(withId(R.id.addtask_finishBtn)).perform(click());

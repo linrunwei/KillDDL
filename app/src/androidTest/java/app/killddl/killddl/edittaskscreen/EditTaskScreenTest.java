@@ -74,6 +74,11 @@ public class EditTaskScreenTest {
     @Test
     public void clickEntryWithoutClickingEditButton_cannotEdit(){
         onView(withId(R.id.edittask_taskname)).check(matches(not(isEnabled())));
+        onView(withId(R.id.edittask_description)).check(matches(not(isEnabled())));
+        onView(withId(R.id.edittask_color_group)).check(matches(not(isClickable())));
+        onView(withId(R.id.edittask_date)).check(matches(not(isClickable())));
+        onView(withId(R.id.edittask_time)).check(matches(not(isClickable())));
+        onView(withId(R.id.edittask_frequency)).check(matches(not(isEnabled())));
     }
 
     @Test
