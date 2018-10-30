@@ -147,6 +147,11 @@ public class AddTaskActivity extends AppCompatActivity {
         String taskName = mTaskName.getText().toString();
         String description = mDescription.getText().toString();
         int color = mColor.getCheckedRadioButtonId();
+        if (taskName == "" || description == "" || !dateSet || !timeSet || findViewById(mColor.getCheckedRadioButtonId()) == null) {
+            TextView err = findViewById(R.id.addtask_errormsg);
+            err.setText("Some content are empty!");
+            return;
+        }
 
         switch (color) {
             case R.id.addtask_red:
