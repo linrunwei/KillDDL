@@ -19,6 +19,7 @@ import app.killddl.killddl.R;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.doubleClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
 
@@ -56,5 +57,18 @@ public class ProfileScreenTest {
 
         //check
         onView(withId(R.id.profile_logoutBtn)).check(doesNotExist());
+    }
+
+
+    @Test
+    public void clickMenuButton(){
+        onView(withId(R.id.action_menu)).perform(doubleClick());
+        onView(withId(R.id.menu_scrolllist)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
+    }
+
+    @Test
+    public void clickCalendarButton(){
+        onView(withId(R.id.action_calendar)).perform(doubleClick());
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
     }
 }

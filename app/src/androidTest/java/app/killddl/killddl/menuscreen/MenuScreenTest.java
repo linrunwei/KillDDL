@@ -17,6 +17,7 @@ import app.killddl.killddl.R;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.doubleClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import android.support.test.espresso.contrib.PickerActions;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -73,5 +74,17 @@ public class MenuScreenTest {
 
         //check that we can see monthlyTask screen
         onView(withId(R.id.menu_monthly)).check(matches(allOf(isDescendantOfA(withId(R.id.menu_scrolllist)),isDisplayed())));
+    }
+
+    @Test
+    public void clickProfileButton(){
+        onView(withId(R.id.action_profile)).perform(doubleClick());
+        onView(withId(R.id.profile_logoutBtn)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_profile)),isDisplayed())));
+    }
+
+    @Test
+    public void clickCalendarButton(){
+        onView(withId(R.id.action_calendar)).perform(doubleClick());
+        onView(withId(R.id.calendar_tasks)).check(matches(allOf(isDescendantOfA(withId(R.id.layout_menu)),isDisplayed())));
     }
 }
