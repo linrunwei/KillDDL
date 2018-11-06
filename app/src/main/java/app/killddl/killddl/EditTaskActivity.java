@@ -283,6 +283,10 @@ public class EditTaskActivity extends AppCompatActivity {
         startActivity(calendarView);
     }
 
+    public void Delete(View v) {
+        Finish(v);
+    }
+
     public int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
