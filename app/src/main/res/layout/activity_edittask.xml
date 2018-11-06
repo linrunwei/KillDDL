@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_edittask"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -44,144 +45,158 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/edittask_taskname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Task Name"
-            android:id="@+id/edittask_taskname"
             android:inputType="text"
             android:maxLines="1" />
+
         <EditText
+            android:id="@+id/edittask_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Description"
-            android:id="@+id/edittask_description"
             android:inputType="text"
             android:maxLines="3"
-            android:minLines="3"/>
+            android:minLines="3" />
+
         <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Select Color"
             android:layout_marginLeft="3dp"
-            android:textSize="18sp"/>
+            android:layout_marginTop="20dp"
+            android:hint="Select Color"
+            android:textSize="18sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
         </LinearLayout>
+
         <TextView
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            />
+            android:layout_height="match_parent" />
 
         <RadioGroup
+            android:id="@+id/edittask_color_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:layout_below="@+id/button"
-            android:id="@+id/edittask_color_group"
+            android:layout_marginTop="0dp"
 
             android:orientation="horizontal">
+
             <RadioButton
 
+                android:id="@+id/edittask_red"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:button="@null"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/button_red"
-                android:tag="red"
-                android:id="@+id/edittask_red"
-                android:checked="false" />
+                android:button="@null"
+                android:checked="false"
+                android:tag="red" />
 
             <RadioButton
+                android:id="@+id/edittask_blue"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_blue"
-                android:id="@+id/edittask_blue"
-                android:tag="blue"
-                android:checked="false" />
+                android:button="@null"
+                android:checked="false"
+                android:tag="blue" />
 
             <RadioButton
 
+                android:id="@+id/edittask_purple"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_purple"
-                android:id="@+id/edittask_purple"
-                android:tag="purple"
-                android:checked="false" />
+                android:button="@null"
+                android:checked="false"
+                android:tag="purple" />
+
             <RadioButton
 
+                android:id="@+id/edittask_yellow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_yellow"
-                android:id="@+id/edittask_yellow"
-                android:tag="yellow"
-                android:checked="false" />
+                android:button="@null"
+                android:checked="false"
+                android:tag="yellow" />
+
             <RadioButton
 
+                android:id="@+id/edittask_green"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/button_green"
-                android:id="@+id/edittask_green"
-                android:tag="green"
-                android:checked="false" />
+                android:button="@null"
+                android:checked="false"
+                android:tag="green" />
         </RadioGroup>
+
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:id="@+id/edittask_date"
-        android:text="Choose Date"
-        />
-        <TextView
+            android:id="@+id/edittask_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
-            android:textSize="18sp"
+            android:text="Choose Date"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/edittask_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
             android:text="Choose Time"
-            />
+            android:textSize="18sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
-            android:textSize="18sp"
             android:text="Choose Frequency"
-            />
+            android:textSize="18sp" />
+
         <Spinner
 
-            android:layout_marginTop="0dp"
-            android:layout_width="match_parent"
-            android:prompt="@string/frequency_prompt"
-            android:entries="@array/frequency"
             android:id="@+id/edittask_frequency"
-            android:layout_height="40dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0dp"
+            android:entries="@array/frequency"
+            android:prompt="@string/frequency_prompt" />
+
         <Button
+            android:id="@+id/edittask_editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
-            android:textSize="18sp"
             android:onClick="Edit"
-            android:layout_gravity="bottom|center"
             android:text="Edit"
-            android:id="@+id/edittask_editBtn"
-            />
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/task_deleteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:onClick="Delete"
+            android:text="Delete" />
 
         <Button
             android:id="@+id/edittask_finishBtn"
@@ -195,12 +210,10 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/edittask_errormsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/red_primary"
-            android:id="@+id/edittask_errormsg"/>
-
-
+            android:textColor="@color/red_primary" />
 
 
     </LinearLayout>
