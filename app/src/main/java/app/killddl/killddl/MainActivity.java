@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void SignUp(View v){
-        System.out.println("Hellllllo");
         RegisterUser();
     }
 
@@ -265,7 +264,10 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-
+    public void ForgetPassword(View v){
+        Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+        startActivity(intent);
+    }
     public void SignIn(View v){
         UserLogin();
     }
