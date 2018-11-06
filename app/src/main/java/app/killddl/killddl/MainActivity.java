@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         //UI elements
         userEmail = (EditText) findViewById(R.id.login_username);
         userPassword = (EditText) findViewById(R.id.login_password);
-        loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
+        loginLayout = (LinearLayout) findViewById(R.id.layout_main);
 
         errorMsg = (TextView) findViewById(R.id.login_errorMsg);
         // register notification channel
