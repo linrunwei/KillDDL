@@ -38,6 +38,7 @@ public class CalendarActivity extends AppCompatActivity {
         FirebaseUser currUser = MainActivity.getAuth().getCurrentUser();
         Timestamp tsp = Timestamp.now();
 
+
         calendarTasks = (ScrollView) findViewById(R.id.calendar_tasks);
         calendarTasks.removeAllViews();
         calendarTasks.addView(displayTaskList(tsp));

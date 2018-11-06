@@ -95,6 +95,7 @@ public class AddTaskScreenTest {
         //check that we don't stay on AddTask page anymore
         onView(withId(R.id.addtask_finishBtn)).check(doesNotExist());
 
+
     }
 
     @Test
