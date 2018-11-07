@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -189,11 +190,17 @@ public class MenuActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recycler view.");
+
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-//        recyclerView.removeAllViews();
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
+        DragAndDropHelper dragAndDropHelper = new DragAndDropHelper(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(dragAndDropHelper);
+        adapter.setTouchHelper(touchHelper);
+        recyclerView.setAdapter(adapter);
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 }

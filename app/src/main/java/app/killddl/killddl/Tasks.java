@@ -1,85 +1,107 @@
 package app.killddl.killddl;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.type.Date;
 
 import java.io.Serializable;
 public class Tasks implements Serializable{
+    // member variables
     protected int id;
+    protected int priority;
+    protected int color;
+    protected int frequency = -1;
     protected Boolean isFinished;
     protected String name;
     protected String description;
-    protected Timestamp deadline;
-    protected int priority;
-    protected Timestamp notification;
-    protected int color;
-    protected int frequency = 0;
-    protected Timestamp createTime;
     protected String date;
     protected String time;
-    public Tasks(){
+    protected Timestamp deadline;
+    protected Timestamp createTime;
+    protected Timestamp notification;
 
-    }
+    // default constructor
+    public Tasks(){}
+
+    // override default constructor
     public Tasks(int id, Timestamp deadline){
         this.id = id;
-        createTime = Timestamp.now();
+        this.createTime = Timestamp.now();
         this.deadline = deadline;
-        isFinished = false;
+        this.isFinished = false;
     }
 
-    public int getId(){
-        return this.id;
+    // copy constructor
+    public Tasks(Tasks rhs) {
+        this.id = rhs.id;
+        this.isFinished = rhs.isFinished;
+        this.name = rhs.name;
+        this.description = rhs.description;
+        this.deadline = rhs.deadline;
+        this.priority = rhs.priority;
+        this.notification = rhs.notification;
+        this.color = rhs.color;
+        this.frequency = rhs.frequency;
+        this.createTime = rhs.createTime;
+        this.date = rhs.date;
+        this.time = rhs.time;
     }
-    public Timestamp getCreateTime(){
-        return this.createTime;
+
+    // setters
+    public void EditName(String name){
+        this.name = name;
     }
     public void EditIsFinished(Boolean isFinished){
         this.isFinished = isFinished;
     }
-    public Boolean getIsFinished(){
-        return this.isFinished;
-    }
-    public void EditName(String name){
-        this.name = name;
-    }
-    public String getName(){
-        return this.name;
-    }
     public void EditDescription(String description){
         this.description = description;
-    }
-    public String getDescription(){
-        return this.description;
     }
     public void EditDeadline(Timestamp deadline){
         this.deadline = deadline;
     }
-    public Timestamp getDeadline(){
-        return this.deadline;
-    }
     public void EditPriority(int priority){
         this.priority = priority;
-    }
-    public int getPriority(){
-        return this.priority;
     }
     public void EditNotification(Timestamp notification){
         this.notification = notification;
     }
-    public Timestamp getNotification(){
-        return this.notification;
-    }
     public void EditColor(int color){
         this.color = color;
-    }
-    public int getColor(){
-        return this.color;
     }
     public void EditFrequency(int frequency){
         this.frequency = frequency;
     }
+
+    // getters
+    public int getId(){
+        return this.id;
+    }
+    public int getPriority(){
+        return this.priority;
+    }
+    public int getColor(){
+        return this.color;
+    }
     public int getFrequency(){
         return this.frequency;
     }
-
+    public Boolean getIsFinished(){
+        return this.isFinished;
+    }
+    public String getDescription(){
+        return this.description;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public Timestamp getCreateTime(){
+        return this.createTime;
+    }
+    public Timestamp getDeadline(){
+        return this.deadline;
+    }
+    public Timestamp getNotification(){
+        return this.notification;
+    }
 }
