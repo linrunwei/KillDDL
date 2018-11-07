@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
     User user = MainActivity.getDatabase().getUser();
     List<Tasks> tasksList = new ArrayList<Tasks>();
     Timestamp tsp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,9 @@ public class MenuActivity extends AppCompatActivity {
 //        menuScroll.addView(displayTaskList(tasksList,1));
 
         // Recycler View
-        initRecyclerView();
+        final RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        initRecyclerView(recyclerView);
 
         // Top Navigation Bar
         BottomNavigationView topNavigationView = findViewById(R.id.top_navigation);
@@ -59,21 +62,21 @@ public class MenuActivity extends AppCompatActivity {
 //                        menuScroll.removeAllViews();
                         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,1));
-                        initRecyclerView();
+                        initRecyclerView(recyclerView);
                         break;
                     case R.id.action_weekly:
                         tsp = Timestamp.now();
 //                        menuScroll.removeAllViews();
                         tasksList = weeklyTaskView(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,2));
-                        initRecyclerView();
+                        initRecyclerView(recyclerView);
                         break;
                     case R.id.action_monthly:
                         tsp = Timestamp.now();
 //                        menuScroll.removeAllViews();
                         tasksList = monthlyTaskView(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,3));
-                        initRecyclerView();
+                        initRecyclerView(recyclerView);
                         break;
                 }
             }
@@ -188,13 +191,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(addTask);
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerView(RecyclerView recyclerView) {
         Log.d(TAG, "initRecyclerView: init recycler view.");
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.removeAllViews();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
         DragAndDropHelper dragAndDropHelper = new DragAndDropHelper(adapter);

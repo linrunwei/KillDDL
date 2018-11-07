@@ -2,6 +2,7 @@ package app.killddl.killddl;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,13 +11,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements  DragAndDropHelper.ActionCompletionContract {
@@ -38,13 +37,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.taskName.setText(mTasks.get(position).getName());
+        holder.taskName.setText(mTasks.get(holder.getAdapterPosition()).getName());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mTasks.get(position).getDeadline().toDate());
+        calendar.setTime(mTasks.get(holder.getAdapterPosition()).getDeadline().toDate());
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH)+1;
         int date = calendar.get(Calendar.DAY_OF_MONTH);
@@ -55,14 +54,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String dateAndTime = "Due on " + dateString + " " + timeString;
         holder.taskDateTime.setText(dateAndTime);
 
+//        holder..setOnTouchListener(new View.OnTouchListener() {
+         holder.reorderer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    touchHelper.startDrag(holder);
+                }
+                return false;
+            }
+        });
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on " + mTasks.get(position).getName());
-                Toast.makeText(mContext, mTasks.get(position).getName(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onClick: clicked on " + mTasks.get(holder.getAdapterPosition()).getName());
+//                Toast.makeText(mContext, mTasks.get(holder.getAdapterPosition()).getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mContext, EditTaskActivity.class);
-                intent.putExtra("taskId", mTasks.get(position).getId());
+                intent.putExtra("taskId", mTasks.get(holder.getAdapterPosition()).getId());
                 mContext.startActivity(intent);
             }
         });
@@ -76,11 +86,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView taskName;
         TextView taskDateTime;
+        ImageView reorderer;
         RelativeLayout parentLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.task_name);
             taskDateTime = itemView.findViewById(R.id.task_date_time);
+            reorderer = itemView.findViewById(R.id.task_reorderer);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
