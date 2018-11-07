@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -26,6 +30,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class MenuActivity extends AppCompatActivity {
+    private static final String TAG = "MenuActivity";
     User user = MainActivity.getDatabase().getUser();
     List<Tasks> tasksList = new ArrayList<Tasks>();
     Timestamp tsp;
@@ -36,39 +41,45 @@ public class MenuActivity extends AppCompatActivity {
         tsp = Timestamp.now();
 
         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
-        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
-        menuScroll.addView(displayTaskList(tasksList,1));
-        //Top Navigation Bar
-        BottomNavigationView topNavigationView = (BottomNavigationView) findViewById(R.id.top_navigation);
+//        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
+//        menuScroll.addView(displayTaskList(tasksList,1));
+
+        // Recycler View
+        initRecyclerView();
+
+        // Top Navigation Bar
+        BottomNavigationView topNavigationView = findViewById(R.id.top_navigation);
         topNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.action_daily:
                         tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
+//                        menuScroll.removeAllViews();
                         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,1));
+//                        menuScroll.addView(displayTaskList(tasksList,1));
+                        initRecyclerView();
                         break;
                     case R.id.action_weekly:
                         tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
+//                        menuScroll.removeAllViews();
                         tasksList = weeklyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,2));
-
+//                        menuScroll.addView(displayTaskList(tasksList,2));
+                        initRecyclerView();
                         break;
                     case R.id.action_monthly:
                         tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
+//                        menuScroll.removeAllViews();
                         tasksList = monthlyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,3));
+//                        menuScroll.addView(displayTaskList(tasksList,3));
+                        initRecyclerView();
                         break;
                 }
             }
         });
 
-        //Bottom Navigation Bar
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        // Bottom Navigation Bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
@@ -87,17 +98,19 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
+
     public static float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
+
     public static int spToPx(float sp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
-    LinearLayout displayTaskList(List<Tasks> tasksList, int displayType){
+    private LinearLayout displayTaskList(List<Tasks> tasksList, int displayType){
         LinearLayout rl = new LinearLayout(this);
         if(displayType == 1){
             //rl.setId(R.id.menu_daily);
@@ -132,13 +145,11 @@ public class MenuActivity extends AppCompatActivity {
                 ll.addView(tx);
                 rl.addView(ll);
             }
-
-            //add days_remaining
         }
         return rl;
-
     }
-    List<Tasks> weeklyTaskView(Timestamp tsp){
+
+    private List<Tasks> weeklyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
         selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         for (int i = 0; i < 6; i++) {
@@ -150,7 +161,8 @@ public class MenuActivity extends AppCompatActivity {
         }
         return selected;
     }
-    List<Tasks> monthlyTaskView(Timestamp tsp){
+
+    private List<Tasks> monthlyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
         selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         for (int i = 0; i < 30; i++) {
@@ -161,16 +173,27 @@ public class MenuActivity extends AppCompatActivity {
             selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         }
         return selected;
-
     }
+
     public void clickTask(View v, int id){
         Intent newIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
         newIntent.putExtra("edit_taskId",id);
         startActivity(newIntent);
     }
+
     public void AddTask(View v){
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
         //TODO add extra info
         startActivity(addTask);
+    }
+
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView: init recycler view.");
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+//        recyclerView.removeAllViews();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

@@ -41,7 +41,6 @@ public class EditTaskActivity extends AppCompatActivity {
     private TextView mDisplayTime;
     private Spinner mFrequency;
 
-
     private int year;
     private int month;
     private int day;
@@ -61,7 +60,8 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittask);
         Intent intent = getIntent();
-        taskId = intent.getIntExtra("edit_taskId",0);
+//        taskId = intent.getIntExtra("edit_taskId",0);
+        taskId = intent.getIntExtra("taskId",0);
         tasksList = MainActivity.getDatabase().getTaskList();
         targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
