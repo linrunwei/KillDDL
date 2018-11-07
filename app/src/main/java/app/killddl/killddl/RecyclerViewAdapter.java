@@ -40,10 +40,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.taskName.setText(mTasks.get(holder.getAdapterPosition()).getName());
+        Tasks task = mTasks.get(holder.getAdapterPosition());
+        holder.taskName.setText(task.getName());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mTasks.get(holder.getAdapterPosition()).getDeadline().toDate());
+        calendar.setTime(task.getDeadline().toDate());
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH)+1;
         int date = calendar.get(Calendar.DAY_OF_MONTH);
@@ -53,6 +54,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String timeString = hour + ":" + minute;
         String dateAndTime = "Due on " + dateString + " " + timeString;
         holder.taskDateTime.setText(dateAndTime);
+
+
+        switch (task.getColor()){
+            case Color.RED:
+                holder.colorDot.setImageResource(R.drawable.button_red);
+                break;
+            case Color.BLUE:
+                holder.colorDot.setImageResource(R.drawable.button_blue);
+                break;
+            case Color.BLACK:
+                holder.colorDot.setImageResource(R.drawable.button_purple);
+                break;
+            case Color.YELLOW:
+                holder.colorDot.setImageResource(R.drawable.button_yellow);
+                break;
+            case Color.GREEN:
+                holder.colorDot.setImageResource(R.drawable.button_green);
+                break;
+        }
 
 //        holder..setOnTouchListener(new View.OnTouchListener() {
          holder.reorderer.setOnTouchListener(new View.OnTouchListener() {
@@ -86,6 +106,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView taskName;
         TextView taskDateTime;
+        ImageView colorDot;
         ImageView reorderer;
         RelativeLayout parentLayout;
         public ViewHolder(View itemView) {
@@ -93,6 +114,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             taskName = itemView.findViewById(R.id.task_name);
             taskDateTime = itemView.findViewById(R.id.task_date_time);
             reorderer = itemView.findViewById(R.id.task_reorderer);
+            colorDot = itemView.findViewById(R.id.color_dot);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
