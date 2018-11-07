@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -17,11 +19,12 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements  DragAndDropHelper.ActionCompletionContract {
     private static final String TAG = "RecyclerViewAdapter";
 
     private List<Tasks> mTasks;
     private Context mContext;
+    private ItemTouchHelper touchHelper;
 
     public RecyclerViewAdapter(Context mContext, List<Tasks> mTasks) {
         this.mTasks = mTasks;
@@ -80,5 +83,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             taskDateTime = itemView.findViewById(R.id.task_date_time);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
+    }
+
+    @Override
+    public void onViewMoved(int oldPosition, int newPosition) {
+        Tasks targetTask = mTasks.get(oldPosition);
+        Tasks task = new Tasks(targetTask);
+        mTasks.remove(oldPosition);
+        mTasks.add(newPosition, task);
+        notifyItemMoved(oldPosition, newPosition);
+    }
+
+    @Override
+    public void onViewSwiped(int position) {
+//        usersList.remove(position);
+//        notifyItemRemoved(position);
+    }
+
+    public void setTouchHelper(ItemTouchHelper touchHelper) {
+        this.touchHelper = touchHelper;
     }
 }
