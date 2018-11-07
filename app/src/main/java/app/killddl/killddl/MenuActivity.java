@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +32,8 @@ public class MenuActivity extends AppCompatActivity {
     User user = MainActivity.getDatabase().getUser();
     List<Tasks> tasksList = new ArrayList<Tasks>();
     Timestamp tsp;
+    private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,36 +41,36 @@ public class MenuActivity extends AppCompatActivity {
         tsp = Timestamp.now();
 
         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
-        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
-        menuScroll.addView(displayTaskList(tasksList,1));
-        //Top Navigation Bar
-        BottomNavigationView topNavigationView = (BottomNavigationView) findViewById(R.id.top_navigation);
-        topNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_daily:
-                        tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
-                        tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,1));
-                        break;
-                    case R.id.action_weekly:
-                        tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
-                        tasksList = weeklyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,2));
-
-                        break;
-                    case R.id.action_monthly:
-                        tsp = Timestamp.now();
-                        menuScroll.removeAllViews();
-                        tasksList = monthlyTaskView(tsp);
-                        menuScroll.addView(displayTaskList(tasksList,3));
-                        break;
-                }
-            }
-        });
+//        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
+//        menuScroll.addView(displayTaskList(tasksList,1));
+//        //Top Navigation Bar
+//        BottomNavigationView topNavigationView = (BottomNavigationView) findViewById(R.id.top_navigation);
+//        topNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+//            @Override
+//            public void onNavigationItemReselected(@NonNull MenuItem item) {
+//                switch (item.getItemId()){
+//                    case R.id.action_daily:
+//                        tsp = Timestamp.now();
+//                        menuScroll.removeAllViews();
+//                        tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+//                        menuScroll.addView(displayTaskList(tasksList,1));
+//                        break;
+//                    case R.id.action_weekly:
+//                        tsp = Timestamp.now();
+//                        menuScroll.removeAllViews();
+//                        tasksList = weeklyTaskView(tsp);
+//                        menuScroll.addView(displayTaskList(tasksList,2));
+//
+//                        break;
+//                    case R.id.action_monthly:
+//                        tsp = Timestamp.now();
+//                        menuScroll.removeAllViews();
+//                        tasksList = monthlyTaskView(tsp);
+//                        menuScroll.addView(displayTaskList(tasksList,3));
+//                        break;
+//                }
+//            }
+//        });
 
         //Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -86,6 +91,15 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        initRecyclerView();
+
+        // initialize recycler view
+        Log.d(TAG, "initRecyclerView: init recycler view.");
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
     public static float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
@@ -173,4 +187,12 @@ public class MenuActivity extends AppCompatActivity {
         //TODO add extra info
         startActivity(addTask);
     }
+
+//    private void initRecyclerView() {
+//        Log.d(TAG, "initRecyclerView: init recycler view.");
+//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//    }
 }
