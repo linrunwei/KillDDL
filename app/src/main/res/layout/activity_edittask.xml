@@ -92,7 +92,7 @@
             <RadioButton
 
                 android:id="@+id/edittask_red"
-                android:layout_width="20dp"
+                android:layout_width="17dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/button_red"
