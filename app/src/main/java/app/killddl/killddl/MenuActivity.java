@@ -39,9 +39,11 @@ public class MenuActivity extends AppCompatActivity {
     User user = MainActivity.getDatabase().getUser();
     List<Tasks> tasksList = new ArrayList<Tasks>();
     Timestamp tsp;
+    String menustate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        menustate = getIntent().getStringExtra("menuState");
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.AppThemeDark);
         }else{
@@ -74,7 +76,18 @@ public class MenuActivity extends AppCompatActivity {
 
         tsp = Timestamp.now();
 
-        tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+        switch(menustate){
+            case "daily":
+                tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+                break;
+            case "weekly":
+                tasksList = weeklyTaskView(tsp);
+                break;
+            case "monthly":
+                tasksList = monthlyTaskView(tsp);
+        }
+
+
 //        final ScrollView menuScroll = (ScrollView) findViewById(R.id.menu_scrolllist);
 //        menuScroll.addView(displayTaskList(tasksList,1));
 
@@ -95,6 +108,7 @@ public class MenuActivity extends AppCompatActivity {
                         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,1));
                         initRecyclerView(recyclerView);
+                        menustate="daily";
                         break;
                     case R.id.action_weekly:
                         tsp = Timestamp.now();
@@ -102,6 +116,7 @@ public class MenuActivity extends AppCompatActivity {
                         tasksList = weeklyTaskView(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,2));
                         initRecyclerView(recyclerView);
+                        menustate="weekly";
                         break;
                     case R.id.action_monthly:
                         tsp = Timestamp.now();
@@ -109,6 +124,7 @@ public class MenuActivity extends AppCompatActivity {
                         tasksList = monthlyTaskView(tsp);
 //                        menuScroll.addView(displayTaskList(tasksList,3));
                         initRecyclerView(recyclerView);
+                        menustate="monthly";
                         break;
                 }
             }
@@ -240,6 +256,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void restartApp(){
         Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+        i.putExtra("menuState",menustate);
         startActivity(i);
         finish();
     }

@@ -112,6 +112,7 @@ public class CalendarActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_menu:
                         Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
+                        menuIntent.putExtra("menuState","daily");
                         startActivity(menuIntent);
                         break;
                     case R.id.action_calendar:
