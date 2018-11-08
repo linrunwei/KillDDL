@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +19,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.Timestamp;
@@ -31,6 +34,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class MenuActivity extends AppCompatActivity {
+
     private static final String TAG = "MenuActivity";
     User user = MainActivity.getDatabase().getUser();
     List<Tasks> tasksList = new ArrayList<Tasks>();
@@ -38,8 +42,36 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.AppThemeDark);
+        }else{
+            setTheme(R.style.AppTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        Switch toggle = (Switch) findViewById(R.id.switch1);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            toggle.setChecked(true);
+        }
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            /*
+            public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+                toggleTheme(isChecked);
+            }*/
+            public void onCheckedChanged(CompoundButton view, boolean isChecked){
+                if(isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    restartApp();
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    restartApp();
+                }
+            }
+        });
+
         tsp = Timestamp.now();
 
         tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
@@ -204,5 +236,11 @@ public class MenuActivity extends AppCompatActivity {
         adapter.setTouchHelper(touchHelper);
         recyclerView.setAdapter(adapter);
         touchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void restartApp(){
+        Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(i);
+        finish();
     }
 }

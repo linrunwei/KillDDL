@@ -7,18 +7,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuActivity"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="?attr/backGroundColor">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/top_navigation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
-        app:menu="@menu/top_menu_navigation">
-    </android.support.design.widget.BottomNavigationView>
+        android:orientation="vertical"
+        android:id="@+id/ll">
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/top_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@drawable/nav_item_color_state"
+            app:itemTextColor="@drawable/nav_item_color_state"
+            app:menu="@menu/top_menu_navigation">
+        </android.support.design.widget.BottomNavigationView>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            android:id="@+id/switch1"
+            android:layout_gravity="right"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
 
     <!--<ScrollView-->
         <!--android:layout_width="match_parent"-->
@@ -31,16 +47,17 @@
         <!--android:layout_marginTop="1dp"-->
         <!--android:layout_marginBottom="54dp">-->
     <!--</ScrollView>-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/top_navigation"
+        android:layout_below="@+id/ll"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="54dp">
+        android:layout_marginBottom="54dp"
+        android:background="?attr/backGroundColor">
     </android.support.v7.widget.RecyclerView>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -52,7 +69,7 @@
         android:layout_marginEnd="20dp"
         android:clickable="true"
         android:onClick="AddTask"
-        app:backgroundTint="@color/amber_primary_dark"
+        app:backgroundTint="?attr/addTaskButtonColor"
         app:srcCompat="@drawable/ic_baseline_add_24px">
     </android.support.design.widget.FloatingActionButton>
 
