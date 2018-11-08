@@ -36,5 +36,6 @@
         <activity android:name=".AddTaskActivity"/>
         <activity android:name=".EditTaskActivity"/>
         <activity android:name=".ForgetPasswordActivity"/>
+        <activity android:name=".EditPasswordActivity"/>
     </application>
 </manifest>

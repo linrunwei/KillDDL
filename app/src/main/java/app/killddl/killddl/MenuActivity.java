@@ -246,7 +246,7 @@ public class MenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tasksList);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, displayTaskList(tasksList));
         DragAndDropHelper dragAndDropHelper = new DragAndDropHelper(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(dragAndDropHelper);
         adapter.setTouchHelper(touchHelper);
@@ -259,5 +259,15 @@ public class MenuActivity extends AppCompatActivity {
         i.putExtra("menuState",menustate);
         startActivity(i);
         finish();
+    }
+
+    private List<Tasks> displayTaskList(List<Tasks> tasksList) {
+        List<Tasks> displayTasks = new ArrayList<>();
+        for(int i=0; i<tasksList.size(); i++) {
+            if(!tasksList.get(i).isFinished) {
+                displayTasks.add(tasksList.get(i));
+            }
+        }
+        return displayTasks;
     }
 }

@@ -94,4 +94,9 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    public void EditPassword(View v){
+        Intent login = new Intent(getApplicationContext(),EditPasswordActivity.class);
+        startActivity(login);
+    }
 }
