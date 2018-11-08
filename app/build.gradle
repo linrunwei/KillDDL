@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:28.0.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    implementation 'site.gemus:openingstartanimation:1.0.0'
 
 
     /**
