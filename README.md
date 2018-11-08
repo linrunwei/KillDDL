@@ -30,3 +30,12 @@ Similar applications in market includes Things, Wunderlist, Omnifocus, etc. Thes
 10. Select the virtual device you just added under `Available Virtual Device`;  
 11. Wait until the system finish booting up. It should take less than a minute;  
 12. Once loaded, our application will automatically show up on the virtual device. Please enjoy!
+
+## V. Spring #1 Improvements  
+1. Overhaul `Menu` from scratch. Now `Task` items in `menu` now support drag and drop to re-order. It also shows due date and time for each `Task` item. Added a color dot, which is selected by user when a `Task` is created by user, for each `Task` item.
+2. Add `Forgot Password` functionality that allows user to reset his or her password if forgot.
+3. Add functionalities to add user's profile picture and display it in the user's `Profile`.
+4. Add `Delete` button that allows user to delete a task when editing a `Task`.
+5. Add the ability to change between Light theme and Dark theme.
+6. Add the ability to edit user's password.
+7. Remove deprecated files and refactor code.
