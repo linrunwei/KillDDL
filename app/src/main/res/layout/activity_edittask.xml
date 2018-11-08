@@ -178,36 +178,53 @@
             android:layout_marginTop="0dp"
             android:entries="@array/frequency"
             android:prompt="@string/frequency_prompt" />
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <Button
             android:id="@+id/edittask_editBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+
             android:onClick="Edit"
             android:text="Edit"
+            android:textColor="@color/white"
+            android:background="@drawable/background_btn_blue_rounded"
+            android:drawableLeft="@drawable/ic_baseline_edit_24px"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/task_deleteBtn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
             android:baselineAligned="false"
+            android:layout_marginStart="20dp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:background="@drawable/background_btn_red_rounded"
+            android:drawableLeft="@drawable/ic_sharp_delete_outline_24px"
             android:onClick="Delete"
-            android:text="Delete" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/edittask_finishBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:text="Finish"
+            android:drawableLeft="@drawable/ic_baseline_done_24px"
+            android:background="@drawable/background_btn_white_rounded"
             android:onClick="Finish"
-            android:text="Mark As Done"
             android:textSize="18sp" />
+        </android.support.v7.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/edittask_errormsg"
