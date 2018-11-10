@@ -99,6 +99,7 @@ public class EditPasswordActivity extends AppCompatActivity{
                     Toast.makeText(getApplicationContext(), "An error occurred for user.", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 cuser.updatePassword(NewPassword)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
