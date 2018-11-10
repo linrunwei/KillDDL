@@ -1,8 +1,6 @@
 package app.killddl.killddl;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,17 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
-
-
-import java.util.Date;
 
 public class EditPasswordActivity extends AppCompatActivity{
 
     User user;
     FirebaseAuth mAuth;
-    private EditText mOldPassword;
     private EditText mNewPassword;
+    private EditText mNewPasswordConfirm;
     private Button mChangePassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +62,10 @@ public class EditPasswordActivity extends AppCompatActivity{
         TextView headUserName = findViewById(R.id.profile_head_username);
         headUserName.setText(user.email);
 
-        mOldPassword = findViewById(R.id.editpassword_oldpassword);
         mNewPassword = findViewById(R.id.editpassword_newpassword);
-        mOldPassword.setEnabled(true);
+        mNewPasswordConfirm = findViewById(R.id.editpassword_newpasswordconfirm);
         mNewPassword.setEnabled(true);
+        mNewPasswordConfirm.setEnabled(true);
 
         final FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -80,15 +74,31 @@ public class EditPasswordActivity extends AppCompatActivity{
             //save
             @Override
             public void onClick(View view) {
-                if (mOldPassword == null || mNewPassword == null) {
+                if (mNewPassword == null || mNewPasswordConfirm == null || mNewPassword.length() == 0 || mNewPasswordConfirm.length() == 0) {
                     TextView err = findViewById(R.id.editpassword_errormsg);
-                    err.setText("Some contents are empty!");
+                    //err.setText("Some contents are empty!");
+                    Toast.makeText(getApplicationContext(), "Some contents are empty!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                String OldPassword = mOldPassword.getText().toString();
                 String NewPassword = mNewPassword.getText().toString();
+                String NewPasswordConfirm = mNewPasswordConfirm.getText().toString();
 
+                if (NewPassword.length() == 0 || NewPasswordConfirm.length() == 0) {
+                    TextView err = findViewById(R.id.editpassword_errormsg);
+                    //err.setText("Some contents are empty!");
+                    Toast.makeText(getApplicationContext(), "Some contents are empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(!NewPassword.equals(NewPasswordConfirm)){
+                    Toast.makeText(getApplicationContext(), "Passwords Don't Match.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 //add password in Database
+                if(cuser == null){
+                    Toast.makeText(getApplicationContext(), "An error occurred for user.", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 cuser.updatePassword(NewPassword)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -99,9 +109,10 @@ public class EditPasswordActivity extends AppCompatActivity{
                                     Toast.makeText(getApplicationContext(), "Password Changed.", Toast.LENGTH_LONG).show();
                                     Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
                                     startActivity(Profile);
-                                } else {
-                                    //Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
                                 }
+//                                else {
+//                                    Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
+//                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -119,10 +130,4 @@ public class EditPasswordActivity extends AppCompatActivity{
         });
     }
 
-
-//    public void Logout(View v){
-//        MainActivity.quit();
-//        Intent login = new Intent(getApplicationContext(),MainActivity.class);
-//        startActivity(login);
-//    }
 }
