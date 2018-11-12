@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -33,6 +34,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import site.gemus.openingstartanimation.OpeningStartAnimation;
@@ -244,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                             dbase.setID(uid);
                             User user = new User(email);
                             dbase.setUser(user);
+
                             dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -251,11 +255,21 @@ public class MainActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 List<Tasks> tasksList = new ArrayList<>();
+                                                HashMap<String, Integer> finishedTasks = new HashMap<>();
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                                     Tasks t = document.toObject(Tasks.class);
+                                                    if(t.isFinished){
+                                                        String date = timestampToString(t.finishTime);
+                                                        if(finishedTasks.get(date) == null)
+                                                            finishedTasks.put(date, 1);
+                                                        else
+                                                            finishedTasks.put(date, finishedTasks.get(date)+1);
+
+                                                    }
                                                     tasksList.add(t);
                                                 }
                                                 dbase.setTaskList(tasksList);
+                                                dbase.setFinishedTasks(finishedTasks);
                                                 finish();
                                                 Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
                                                 startActivity(intent);
@@ -291,5 +305,14 @@ public class MainActivity extends AppCompatActivity {
     }
     static void quit() {
         mAuth.signOut();
+    }
+    static String timestampToString(Timestamp t){
+        Calendar mCal = Calendar.getInstance();
+        mCal.setTime(t.toDate());
+        int currYear = mCal.get(Calendar.YEAR);
+        int currMonth = mCal.get(Calendar.MONTH);
+        int currDay = mCal.get(Calendar.DATE);
+        String date = currYear + "/" + currMonth + "/" + currDay;
+        return date;
     }
 }

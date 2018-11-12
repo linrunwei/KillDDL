@@ -3,26 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/action_menu"
+        android:id="@+id/action_daily"
         android:enabled="true"
-        android:icon="@drawable/ic_menu"
-        android:title="Menu"
+        android:title="Past Four Day"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_calendar"
+        android:id="@+id/action_weekly"
         android:enabled="true"
-        android:icon="@drawable/ic_calendar"
-        android:title="Calendar"
+        android:title="Past Week"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_profile"
+        android:id="@+id/action_monthly"
         android:enabled="true"
-        android:icon="@drawable/ic_user"
-        android:title="Profile"
+        android:title="Past Month"
         app:showAsAction="ifRoom" />
-
-
-
 
 
 </menu>

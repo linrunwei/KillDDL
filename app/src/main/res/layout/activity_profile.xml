@@ -131,7 +131,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="Logout"
             android:text="Log Out"
@@ -150,8 +150,22 @@
             android:textColor="@color/mdtp_white"
             android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/profile_analyticsBtn"
+            android:layout_width="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_primary_blue"
+            android:onClick="openAnalytics"
+            android:text="Analytics"
+            android:textColor="@color/mdtp_white"
+            android:textStyle="bold"/>
+
 
     </LinearLayout>
+
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

@@ -19,6 +19,7 @@ public class Tasks implements Serializable{
     protected Timestamp deadline;
     protected Timestamp createTime;
     protected Timestamp notification;
+    protected Timestamp finishTime;
 
     // default constructor
     public Tasks(){}
@@ -72,6 +73,7 @@ public class Tasks implements Serializable{
     public void EditFrequency(int frequency){
         this.frequency = frequency;
     }
+    public void EditFinishTime(Timestamp time) {this.finishTime = time;}
 
     // getters
     public int getId(){
@@ -104,4 +106,5 @@ public class Tasks implements Serializable{
     public Timestamp getNotification(){
         return this.notification;
     }
+    public Timestamp getFinishTime() { return this.finishTime; }
 }
