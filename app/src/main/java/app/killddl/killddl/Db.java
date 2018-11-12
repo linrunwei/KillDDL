@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 public class Db {
     //save current user in DB class
@@ -15,6 +16,7 @@ public class Db {
     private User user;
     private List<Tasks> taskList;
     private String uid;
+    private HashMap<String,Integer> finishedTasks;
     public Db() {
         db = FirebaseFirestore.getInstance();
     }
@@ -56,12 +58,16 @@ public class Db {
 
     public void removeTask(int taskId){
         taskList.get(taskId).isFinished = true;
+        //putting finish time to the finished tasklist for analytics
+        taskList.get(taskId).finishTime = Timestamp.now();
+        String date = MainActivity.timestampToString(taskList.get(taskId).finishTime);
+        finishedTasks.put(date, finishedTasks.get(date)+1);
         Tasks task = taskList.get(taskId);
         if(db != null)
             db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
 
-    public void EditTask(int id,Tasks task){ //TODO need fixed
+    public void EditTask(int id,Tasks task){
         for(int i =0; i < taskList.size();i++){
             if(taskList.get(i).getId() == id){
                 taskList.set(i, task);
@@ -99,6 +105,14 @@ public class Db {
             if(!t.isFinished) i++;
         }
         return i;
+    }
+
+    public void setFinishedTasks(HashMap<String,Integer> map){
+        finishedTasks = map;
+    }
+
+    public HashMap<String,Integer> getFinshedTasks(){
+        return finishedTasks;
     }
 
 

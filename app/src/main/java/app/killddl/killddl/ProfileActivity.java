@@ -126,4 +126,9 @@ public class ProfileActivity extends AppCompatActivity {
         Intent login = new Intent(getApplicationContext(),EditPasswordActivity.class);
         startActivity(login);
     }
+
+    public void openAnalytics(View v){
+        Intent Analytics = new Intent(getApplicationContext(),AnalyticsActivity.class);
+        startActivity(Analytics);
+    }
 }
