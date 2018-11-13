@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference myRef;
     DocumentReference myDocRef;
 
-
-
-
 /*
     static void setUser(User u) {
         user = u;
@@ -71,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
         user = null;
     }
     */
-
-
-
 
     static FirebaseAuth getAuth(){return mAuth;}
 
@@ -98,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
         //TODO if user didnt quit, automatically logged in
-
 
 
         //UI elements
@@ -198,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
                             //display some message here
 
                         }
-
                     }
                 });
         mAuth.createUserWithEmailAndPassword(email, password)
