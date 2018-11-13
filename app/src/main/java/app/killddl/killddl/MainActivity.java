@@ -33,8 +33,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -307,12 +309,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
     }
     static String timestampToString(Timestamp t){
-        Calendar mCal = Calendar.getInstance();
-        mCal.setTime(t.toDate());
-        int currYear = mCal.get(Calendar.YEAR);
-        int currMonth = mCal.get(Calendar.MONTH);
-        int currDay = mCal.get(Calendar.DATE);
-        String date = currYear + "/" + currMonth + "/" + currDay;
-        return date;
+        Date date = t.toDate();
+        String pattern = "yyyy/MM/dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        System.out.println(format.format(date));
+        return format.format(date);
     }
 }

@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/action_daily"
+        android:id="@+id/analytics_fourday"
         android:enabled="true"
         android:title="Past Four Day"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_weekly"
+        android:id="@+id/analytics_week"
         android:enabled="true"
         android:title="Past Week"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_monthly"
+        android:id="@+id/analytics_month"
         android:enabled="true"
         android:title="Past Month"
         app:showAsAction="ifRoom" />

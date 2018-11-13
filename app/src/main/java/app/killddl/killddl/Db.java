@@ -61,7 +61,10 @@ public class Db {
         //putting finish time to the finished tasklist for analytics
         taskList.get(taskId).finishTime = Timestamp.now();
         String date = MainActivity.timestampToString(taskList.get(taskId).finishTime);
-        finishedTasks.put(date, finishedTasks.get(date)+1);
+        if(finishedTasks.get(date) == null)
+            finishedTasks.put(date, 1);
+        else
+            finishedTasks.put(date, finishedTasks.get(date)+1);
         Tasks task = taskList.get(taskId);
         if(db != null)
             db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
