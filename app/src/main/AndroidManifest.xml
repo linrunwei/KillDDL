@@ -36,6 +36,10 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".AddTaskActivity"/>
         <activity android:name=".EditTaskActivity"/>
+        <activity android:name=".ForgetPasswordActivity"/>
+        <activity android:name=".EditPasswordActivity"/>
+        <activity android:name=".AvatarChangeActivity"/>
+        <activity android:name=".AnalyticsActivity"/>
     </application>
 
 

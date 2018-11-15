@@ -7,7 +7,7 @@ import java.util.List;
 public class User implements Serializable{
 
     protected String email;
-
+    protected int avatar = 0;
     protected List<Tasks> taskList = new ArrayList<Tasks>();
 
     //for addValue
@@ -20,7 +20,12 @@ public class User implements Serializable{
     public String getEmail() {
         return email;
     }
-
+    public int getAvatar(){
+        return this.avatar;
+    }
+    public void setAvatar(int a){
+        this.avatar = a;
+    }
     /*
     public List<Tasks> getTaskListByTime(Timestamp tsp){
         List<Tasks> selected = new ArrayList<>();

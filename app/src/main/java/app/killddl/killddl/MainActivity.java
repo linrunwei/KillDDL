@@ -7,10 +7,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -29,8 +33,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
+import site.gemus.openingstartanimation.OpeningStartAnimation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     DocumentReference myDocRef;
-
-
-
 
 /*
     static void setUser(User u) {
@@ -62,29 +69,35 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
-
-
-
     static FirebaseAuth getAuth(){return mAuth;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        View view = this.getCurrentFocus();
+        //close keyboard
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        OpeningStartAnimation openAnime = new OpeningStartAnimation.Builder(this).
+                setAppIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.open_logo)).create();
+        openAnime.show(this);
 
-        //DATABASE
+
+                //DATABASE
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
         //TODO if user didnt quit, automatically logged in
 
 
-
         //UI elements
         userEmail = (EditText) findViewById(R.id.login_username);
         userPassword = (EditText) findViewById(R.id.login_password);
-        loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
+        loginLayout = (LinearLayout) findViewById(R.id.layout_main);
 
         errorMsg = (TextView) findViewById(R.id.login_errorMsg);
         // register notification channel
@@ -127,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void SignUp(View v){
-        System.out.println("Hellllllo");
         RegisterUser();
     }
 
@@ -179,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
                             //display some message here
 
                         }
-
                     }
                 });
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -230,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                             dbase.setID(uid);
                             User user = new User(email);
                             dbase.setUser(user);
+
                             dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -237,11 +249,21 @@ public class MainActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 List<Tasks> tasksList = new ArrayList<>();
+                                                HashMap<String, Integer> finishedTasks = new HashMap<>();
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                                     Tasks t = document.toObject(Tasks.class);
+                                                    if(t.isFinished){
+                                                        String date = timestampToString(t.finishTime);
+                                                        if(finishedTasks.get(date) == null)
+                                                            finishedTasks.put(date, 1);
+                                                        else
+                                                            finishedTasks.put(date, finishedTasks.get(date)+1);
+
+                                                    }
                                                     tasksList.add(t);
                                                 }
                                                 dbase.setTaskList(tasksList);
+                                                dbase.setFinishedTasks(finishedTasks);
                                                 finish();
                                                 Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
                                                 startActivity(intent);
@@ -265,7 +287,10 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-
+    public void ForgetPassword(View v){
+        Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+        startActivity(intent);
+    }
     public void SignIn(View v){
         UserLogin();
     }
@@ -274,5 +299,12 @@ public class MainActivity extends AppCompatActivity {
     }
     static void quit() {
         mAuth.signOut();
+    }
+    static String timestampToString(Timestamp t){
+        Date date = t.toDate();
+        String pattern = "yyyy/MM/dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        System.out.println(format.format(date));
+        return format.format(date);
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="backGroundColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="addTaskButtonColor" format="color"/>
+        <attr name="naviColor" format="color"/>
+        <attr name="logOutButtonColor" format="color"/>
+        <attr name="blueBackgroundColor" format="color"/>
+    </declare-styleable>
+</resources>

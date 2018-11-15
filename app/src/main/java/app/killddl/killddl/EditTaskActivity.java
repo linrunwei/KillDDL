@@ -53,7 +53,8 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittask);
         Intent intent = getIntent();
-        taskId = intent.getIntExtra("edit_taskId",0);
+//        taskId = intent.getIntExtra("edit_taskId",0);
+        taskId = intent.getIntExtra("taskId",0);
         tasksList = MainActivity.getDatabase().getTaskList();
         Tasks targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
@@ -275,6 +276,9 @@ public class EditTaskActivity extends AppCompatActivity {
         startActivity(calendar);
     }
 
+    public void Delete(View v) {
+        Finish(v);
+    }
 
     public int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
