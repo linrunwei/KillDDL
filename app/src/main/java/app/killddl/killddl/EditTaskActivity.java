@@ -1,8 +1,6 @@
 package app.killddl.killddl;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +20,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -30,31 +27,26 @@ import java.util.Date;
 import java.util.List;
 
 public class EditTaskActivity extends AppCompatActivity {
+    
     User user;
     List<Tasks> tasksList;
-
-    private Tasks targetTask;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private Spinner mFrequency;
-
-
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
-    private int taskId;
-
+    int taskId;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
-//    Tasks targetTask;
-
+    Tasks targetTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Display all the value
@@ -63,15 +55,18 @@ public class EditTaskActivity extends AppCompatActivity {
         Intent intent = getIntent();
         taskId = intent.getIntExtra("edit_taskId",0);
         tasksList = MainActivity.getDatabase().getTaskList();
-        targetTask = tasksList.get(taskId);
+        Tasks targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
 
-        mTaskName = findViewById(R.id.edittask_taskname);
-        mDescription = findViewById(R.id.edittask_description);
-        mColor = findViewById(R.id.edittask_color_group);
-        mDisplayDate = findViewById(R.id.edittask_date);
-        mDisplayTime = findViewById(R.id.edittask_time);
-        mFrequency = findViewById(R.id.edittask_frequency);
+
+
+
+        mTaskName = (EditText) findViewById(R.id.edittask_taskname);
+        mDescription = (EditText) findViewById(R.id.edittask_description);
+        mColor = (RadioGroup) findViewById(R.id.edittask_color_group);
+        mDisplayDate = (TextView) findViewById(R.id.edittask_date);
+        mDisplayTime = (TextView) findViewById(R.id.edittask_time);
+        mFrequency = (Spinner) findViewById(R.id.edittask_frequency);
 
         mTaskName.setText(targetTask.getName(),TextView.BufferType.EDITABLE);
         mDescription.setText(targetTask.getDescription(),TextView.BufferType.EDITABLE);
@@ -128,7 +123,8 @@ public class EditTaskActivity extends AppCompatActivity {
                 year = myear;
                 month = mmonth;
                 day = mday;
-                mmonth += 1;
+                mmonth = mmonth + 1;
+
                 String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
@@ -141,7 +137,7 @@ public class EditTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
-                int mHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int mHour = calendar.get(Calendar.HOUR);
                 int mMinute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog dialog = new TimePickerDialog(
                         EditTaskActivity.this,
@@ -183,9 +179,14 @@ public class EditTaskActivity extends AppCompatActivity {
             RadioButton r = (RadioButton) mColor.getChildAt(i);
             r.setEnabled(false);
         }
+
+
+
     }
 
+
     public void Edit(View v){
+
         mTaskName.setEnabled(true);
         mDescription.setEnabled(true);
         mColor.setClickable(true);
@@ -260,28 +261,20 @@ public class EditTaskActivity extends AppCompatActivity {
                     task.time = targetTask.time;
                 task.EditFrequency(frequency);
                 MainActivity.getDatabase().EditTask(taskId,task);
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, day, hour, minute, 0);
-                updateNotification(calendar, false, mTaskName.getText().toString(), -1);
-
                 Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
                 startActivity(Calendar);
             }
         });
-    }
+        }
+
 
     public void Finish(View v){
         MainActivity.getDatabase().removeTask(taskId);
         System.out.println("Task Name: " + tasksList.get(taskId).getName() + " Finished task id: " + taskId);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hour, minute, 0);
-        cancelNotification(calendar, false, mTaskName.getText().toString(), -1);
-
-        Intent calendarView = new Intent(getApplicationContext(),CalendarActivity.class);
-        startActivity(calendarView);
+        Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
+        startActivity(calendar);
     }
+
 
     public int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
@@ -289,6 +282,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 return i;
             }
         }
+
         return 0;
     }
 
@@ -297,105 +291,4 @@ public class EditTaskActivity extends AppCompatActivity {
         startActivity(calendar);
     }
 
-    public void updateNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
-        int date = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = 0;
-
-        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        intent.putExtra("taskName", taskName);
-        intent.putExtra("frequency", frequency);
-        intent.putExtra("taskId", taskId);
-
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        if (alarmManager != null) {
-            if (isRecurring) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
-                Toast.makeText(this,
-                        "rescheduled recurring notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
-                                + hour + ":"
-                                + minute + ":"
-                                + second
-                        , Toast.LENGTH_LONG).show();
-
-            }
-            else {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                Toast.makeText(this,
-                        "rescheduled one time notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
-                                + hour + ":"
-                                + minute + ":"
-                                + second
-                        , Toast.LENGTH_LONG).show();
-            }
-
-        }
-        else {
-            Toast.makeText(this, "update notification failed", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void cancelNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH)+1;
-//        int date = calendar.get(Calendar.DAY_OF_MONTH);
-//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        int minute = calendar.get(Calendar.MINUTE);
-//        int second = 0;
-
-        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        intent.putExtra("taskName", taskName);
-        intent.putExtra("frequency", frequency);
-        intent.putExtra("taskId", taskId);
-
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        if (alarmManager != null) {
-            if (isRecurring) {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
-                alarmManager.cancel(pendingIntent);
-                Toast.makeText(this, taskName + " has been marked as done", Toast.LENGTH_LONG).show();
-//                Toast.makeText(this,
-//                        "canceled recurring notification at "
-//                                + year + "."
-//                                + month + "."
-//                                + date + " "
-//                                + hour + ":"
-//                                + minute + ":"
-//                                + second
-//                        , Toast.LENGTH_LONG).show();
-            }
-            else {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                alarmManager.cancel(pendingIntent);
-                Toast.makeText(this, taskName + " has been marked as done", Toast.LENGTH_LONG).show();
-//                Toast.makeText(this,
-//                        "canceled one time notification at "
-//                                + year + "."
-//                                + month + "."
-//                                + date + " "
-//                                + hour + ":"
-//                                + minute + ":"
-//                                + second
-//                        , Toast.LENGTH_LONG).show();
-            }
-        }
-        else {
-            Toast.makeText(this, "cancel notification failed", Toast.LENGTH_LONG).show();
-        }
-    }
 }
