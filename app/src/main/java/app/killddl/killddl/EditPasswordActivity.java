@@ -63,7 +63,7 @@ public class EditPasswordActivity extends AppCompatActivity{
         headUserName.setText(user.email);
 
         mNewPassword = findViewById(R.id.editpassword_newpassword);
-        mNewPasswordConfirm = findViewById(R.id.editpassword_newpasswordconfirm);
+        mNewPasswordConfirm = mNewPassword;
         mNewPassword.setEnabled(true);
         mNewPasswordConfirm.setEnabled(true);
 
