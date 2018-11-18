@@ -105,7 +105,7 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
-                int mHour = calendar.get(Calendar.HOUR);
+                int mHour = calendar.get(Calendar.HOUR_OF_DAY);
                 int mMinute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog dialog = new TimePickerDialog(
                         AddTaskActivity.this,
@@ -222,13 +222,12 @@ public class AddTaskActivity extends AppCompatActivity {
             if (isRecurring) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
                 Toast.makeText(this,
-                        "scheduled recurring notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
+                        "You will be notified at "
+                                + month + "/"
+                                + date + "/"
+                                + year + " "
                                 + hour + ":"
-                                + minute + ":"
-                                + second
+                                + minute
                         , Toast.LENGTH_LONG).show();
 
             }
@@ -236,13 +235,12 @@ public class AddTaskActivity extends AppCompatActivity {
 
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Toast.makeText(this,
-                        "scheduled one time notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
+                        "You will be notified at "
+                                + month + "/"
+                                + date + "/"
+                                + year + " "
                                 + hour + ":"
-                                + minute + ":"
-                                + second
+                                + minute
                         , Toast.LENGTH_LONG).show();
             }
 
