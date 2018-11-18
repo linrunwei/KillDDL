@@ -57,13 +57,10 @@ public class EditTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edittask);
         Intent intent = getIntent();
 //        taskId = intent.getIntExtra("edit_taskId",0);
-        taskId = intent.getIntExtra("taskId",0);
+        taskId = intent.getIntExtra("taskId",-1);
         tasksList = MainActivity.getDatabase().getTaskList();
         Tasks targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
-
-
-
 
         mTaskName = (EditText) findViewById(R.id.edittask_taskname);
         mDescription = (EditText) findViewById(R.id.edittask_description);
@@ -167,12 +164,6 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         };
 
-        //Get all value
-
-        //Display all the value
-
-        //Disable edit functionality
-
         mTaskName.setEnabled(false);
         mDescription.setEnabled(false);
         mColor.setClickable(false);
@@ -184,7 +175,6 @@ public class EditTaskActivity extends AppCompatActivity {
             r.setEnabled(false);
         }
     }
-
 
     public void Edit(View v){
         mTaskName.setEnabled(true);
@@ -365,12 +355,12 @@ public class EditTaskActivity extends AppCompatActivity {
             if (isRecurring) {
                 //                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
                 alarmManager.cancel(pendingIntent);
-                Toast.makeText(this, taskName + " has been marked as done", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, taskName + " has been marked as finished", Toast.LENGTH_LONG).show();
             }
             else {
                 //                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 alarmManager.cancel(pendingIntent);
-                Toast.makeText(this, taskName + " has been marked as done", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, taskName + " has been marked as finished", Toast.LENGTH_LONG).show();
             }
         }
         else {
