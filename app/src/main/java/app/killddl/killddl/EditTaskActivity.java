@@ -183,9 +183,6 @@ public class EditTaskActivity extends AppCompatActivity {
             RadioButton r = (RadioButton) mColor.getChildAt(i);
             r.setEnabled(false);
         }
-
-
-
     }
 
 

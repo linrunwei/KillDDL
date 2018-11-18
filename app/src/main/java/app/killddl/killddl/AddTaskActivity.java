@@ -41,15 +41,14 @@ public class AddTaskActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
-    int timePickerId;
     int datePickerId;
-
 
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
+    private int taskId;
 
     private CalendarView mCalendarView;
     CollectionReference mColRef;
@@ -184,7 +183,8 @@ public class AddTaskActivity extends AppCompatActivity {
             err.setText("Cannot Create task before time!");
             return;
         }
-        Tasks task = new Tasks(MainActivity.getDatabase().getTaskList().size(), timestamp);
+        taskId = MainActivity.getDatabase().getTaskList().size();
+        Tasks task = new Tasks(taskId, timestamp);
         task.EditColor(color);
         task.EditDescription(description);
         task.EditName(taskName);
@@ -209,13 +209,13 @@ public class AddTaskActivity extends AppCompatActivity {
         int date = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        int second = 0;
 
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra("taskName", taskName);
         intent.putExtra("frequency", frequency);
+        intent.putExtra("taskId", taskId);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {
