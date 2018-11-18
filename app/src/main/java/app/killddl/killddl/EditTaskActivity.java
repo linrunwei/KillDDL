@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,44 +31,52 @@ import java.util.Date;
 import java.util.List;
 
 public class EditTaskActivity extends AppCompatActivity {
-    
-    User user;
-    List<Tasks> tasksList;
+    private User user;
+    private Tasks targetTask;
+    private List<Tasks> tasksList;
     private EditText mTaskName;
     private EditText mDescription;
     private RadioGroup mColor;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private Spinner mFrequency;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+
+    private String menustate;
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
-    int taskId;
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    Boolean dateSet = false;
-    Boolean timeSet = false;
-    Tasks targetTask;
+    private int taskId;
+    private Boolean dateSet = false;
+    private Boolean timeSet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Display all the value
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittask);
         Intent intent = getIntent();
+        if (intent.hasExtra("menuState")) {
+            menustate = intent.getStringExtra("menuState");
+        }
+        else {
+            menustate = "daily";
+        }
 //        taskId = intent.getIntExtra("edit_taskId",0);
         taskId = intent.getIntExtra("taskId",-1);
         tasksList = MainActivity.getDatabase().getTaskList();
-        Tasks targetTask = tasksList.get(taskId);
+        targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
 
-        mTaskName = (EditText) findViewById(R.id.edittask_taskname);
-        mDescription = (EditText) findViewById(R.id.edittask_description);
-        mColor = (RadioGroup) findViewById(R.id.edittask_color_group);
-        mDisplayDate = (TextView) findViewById(R.id.edittask_date);
-        mDisplayTime = (TextView) findViewById(R.id.edittask_time);
-        mFrequency = (Spinner) findViewById(R.id.edittask_frequency);
+        mTaskName = findViewById(R.id.edittask_taskname);
+        mDescription = findViewById(R.id.edittask_description);
+        mColor = findViewById(R.id.edittask_color_group);
+        mDisplayDate = findViewById(R.id.edittask_date);
+        mDisplayTime = findViewById(R.id.edittask_time);
+        mFrequency = findViewById(R.id.edittask_frequency);
 
         mTaskName.setText(targetTask.getName(),TextView.BufferType.EDITABLE);
         mDescription.setText(targetTask.getDescription(),TextView.BufferType.EDITABLE);
@@ -256,8 +265,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 calendar.set(year, month, day, hour, minute, 0);
                 updateNotification(calendar, false, mTaskName.getText().toString(), -1);
 
-                Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
-                startActivity(Calendar);
+                Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+                menu.putExtra("menuState", menustate);
+                startActivity(menu);
             }
         });
         }
@@ -271,27 +281,29 @@ public class EditTaskActivity extends AppCompatActivity {
         calendar.set(year, month, day, hour, minute, 0);
         cancelNotification(false, mTaskName.getText().toString(), -1);
 
-        Intent calendarView = new Intent(getApplicationContext(),CalendarActivity.class);
-        startActivity(calendarView);
+        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+        menu.putExtra("menuState", menustate);
+        startActivity(menu);
     }
 
     public void Delete(View v) {
         Finish(v);
     }
 
-    public int getIndex(Spinner spinner, String myString){
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-                return i;
-            }
-        }
-
-        return 0;
-    }
+//    public int getIndex(Spinner spinner, String myString){
+////        for (int i=0;i<spinner.getCount();i++){
+////            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+////                return i;
+////            }
+////        }
+////
+////        return 0;
+////    }
 
     public void close(View v){
-        Intent calendar = new Intent(getApplicationContext(),CalendarActivity.class);
-        startActivity(calendar);
+        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+        menu.putExtra("menuState", menustate);
+        startActivity(menu);
     }
 
     public void updateNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {
