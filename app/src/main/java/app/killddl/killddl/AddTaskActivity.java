@@ -13,8 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -22,12 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.CollectionReference;
-
 import java.util.Date;
-import java.util.Random;
+import com.google.firebase.Timestamp;
 
 public class AddTaskActivity extends AppCompatActivity {
     User user;
@@ -41,7 +35,6 @@ public class AddTaskActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     Boolean dateSet = false;
     Boolean timeSet = false;
-    int timePickerId;
     int datePickerId;
 
     private int year;
@@ -50,14 +43,20 @@ public class AddTaskActivity extends AppCompatActivity {
     private int hour;
     private int minute;
     private int taskId;
-
-    private CalendarView mCalendarView;
-    CollectionReference mColRef;
+    private String menustate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtask);
+        Intent intent = getIntent();
+        if (intent.hasExtra("menuState")) {
+            menustate = intent.getStringExtra("menuState");
+        }
+        else {
+//            menustate = "daily";
+            System.err.println("!!! No extra in menu");
+        }
         user = MainActivity.getDatabase().getUser();
         mDisplayDate = findViewById(R.id.addtask_date);
         mDisplayTime = findViewById(R.id.addtask_time);
@@ -91,7 +90,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 year = myear;
                 month = mmonth;
                 day = mday;
-                mmonth += 1;
+                mmonth = mmonth + 1;
+
                 String date = mmonth + "/" + day + "/" + year;
                 SpannableString content = new SpannableString(date);
                 content.setSpan(new UnderlineSpan(), 0, date.length(), 0);
@@ -132,8 +132,9 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void close(View v) {
-        Intent calendar = new Intent(getApplicationContext(), CalendarActivity.class);
-        startActivity(calendar);
+        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+        menu.putExtra("menuState", menustate);
+        startActivity(menu);
     }
 
     public void AddTask(View v) {
@@ -199,8 +200,9 @@ public class AddTaskActivity extends AppCompatActivity {
 
         setNotification(calendar, false, taskName, -1);
 
-        Intent Calendar = new Intent(getApplicationContext(), CalendarActivity.class);
-        startActivity(Calendar);
+        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+        menu.putExtra("menuState", menustate);
+        startActivity(menu);
     }
 
     public void setNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {
@@ -209,14 +211,12 @@ public class AddTaskActivity extends AppCompatActivity {
         int date = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        int second = 0;
 
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra("taskName", taskName);
         intent.putExtra("frequency", frequency);
         intent.putExtra("taskId", taskId);
 
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -224,30 +224,33 @@ public class AddTaskActivity extends AppCompatActivity {
             if (isRecurring) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
                 Toast.makeText(this,
-                        "scheduled recurring notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
+                        "You will be notified at "
+                                + month + "/"
+                                + date + "/"
+                                + year + " "
                                 + hour + ":"
-                                + minute + ":"
-                                + second
+                                + minute
                         , Toast.LENGTH_LONG).show();
+
             }
             else {
+
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Toast.makeText(this,
-                        "scheduled one time notification at "
-                                + year + "."
-                                + month + "."
-                                + date + " "
+                        "You will be notified at "
+                                + month + "/"
+                                + date + "/"
+                                + year + " "
                                 + hour + ":"
-                                + minute + ":"
-                                + second
+                                + minute
                         , Toast.LENGTH_LONG).show();
             }
+
         }
         else {
             Toast.makeText(this, "set notification failed", Toast.LENGTH_LONG).show();
         }
     }
+
 }
+

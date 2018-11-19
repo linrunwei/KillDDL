@@ -14,20 +14,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements  DragAndDropHelper.ActionCompletionContract {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements  GestureHelper.ActionCompletionContract {
     private static final String TAG = "RecyclerViewAdapter";
 
     private List<Tasks> mTasks;
     private Context mContext;
     private ItemTouchHelper touchHelper;
+    private String menustate;
 
-    public RecyclerViewAdapter(Context mContext, List<Tasks> mTasks) {
+    public RecyclerViewAdapter(Context mContext, List<Tasks> mTasks, String menustate) {
         this.mTasks = mTasks;
         this.mContext = mContext;
+        this.menustate = menustate;
     }
 
     @Override
@@ -88,11 +89,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on " + mTasks.get(holder.getAdapterPosition()).getName());
+//                Log.d(TAG, "onClick: clicked on " + mTasks.get(holder.getAdapterPosition()).getName());
 //                Toast.makeText(mContext, mTasks.get(holder.getAdapterPosition()).getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mContext, EditTaskActivity.class);
                 intent.putExtra("taskId", mTasks.get(holder.getAdapterPosition()).getId());
+                intent.putExtra("menuState", menustate);
                 mContext.startActivity(intent);
             }
         });
@@ -130,8 +132,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onViewSwiped(int position) {
-//        usersList.remove(position);
-//        notifyItemRemoved(position);
+        if (mTasks.size() == 0) {
+            System.err.println("size == 0");
+        }
+        else {
+            MainActivity.getDatabase().removeTask(mTasks.get(position).getId());
+            mTasks.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     public void setTouchHelper(ItemTouchHelper touchHelper) {

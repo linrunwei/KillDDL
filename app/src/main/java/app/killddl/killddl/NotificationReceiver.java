@@ -15,18 +15,20 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String channelId = "due-now";
+
         String taskName = intent.getStringExtra("taskName");
         int frequency = intent.getIntExtra("frequency", -1);
         int taskId = intent.getIntExtra("taskId", -1);
-        // todo jump to the task associated with that task id
-        Intent showDueIntent = new Intent(context, CalendarActivity.class);
-        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        Intent showDueIntent = new Intent(context, EditTaskActivity.class);
+        showDueIntent.putExtra("taskId", taskId);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("You have a due now!")
-                .setContentText(taskName)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(taskName + " is due now!")
+                .setContentText("Tap to open this task.")
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
