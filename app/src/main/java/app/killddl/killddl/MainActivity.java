@@ -82,9 +82,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
-
                 //DATABASE
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -233,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("succesfully saved");
 
                         }else{
-
                             //display some message here
 
                         }
@@ -256,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
         final String email = userEmail.getText().toString().trim();
         final String password  = userPassword.getText().toString().trim();
 
-
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
@@ -269,13 +264,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         //logging in the user
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         //if the task is successfull
                         if(task.isSuccessful()){
                             //start the profile activity
