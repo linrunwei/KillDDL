@@ -76,7 +76,7 @@
     <color name="colorPrimaryDark1">#303F9F</color>
     <color name="darkColorPrimary">#1e2756</color>
     <color name="darkColorPrimaryDark">#141831</color>
-    <color name="darkColorAccent">#2aac4b</color>
+    <color name="darkColorAccent">#1e2756</color>
 
 
 </resources>

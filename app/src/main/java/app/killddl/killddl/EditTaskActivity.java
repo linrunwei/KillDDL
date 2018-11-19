@@ -52,6 +52,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private int taskId;
     private Boolean dateSet = false;
     private Boolean timeSet = false;
+    private String toPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,14 @@ public class EditTaskActivity extends AppCompatActivity {
         tasksList = MainActivity.getDatabase().getTaskList();
         targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
+
+        //to which page
+        if (intent.hasExtra("page")) {
+            toPage = intent.getStringExtra("page");
+        }
+        else {
+            toPage = "calendarPage";
+        }
 
         mTaskName = findViewById(R.id.edittask_taskname);
         mDescription = findViewById(R.id.edittask_description);
@@ -265,12 +274,21 @@ public class EditTaskActivity extends AppCompatActivity {
                 calendar.set(year, month, day, hour, minute, 0);
                 updateNotification(calendar, false, mTaskName.getText().toString(), -1);
 
+                if(toPage.equals("calendarPage")){
+                    Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+                    startActivity(newIntent);
+                }else if(toPage.equals("menuPage")){
+                    Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                    newIntent.putExtra("menuState", menustate);
+                    startActivity(newIntent);
+                }
+                /*
                 Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
                 menu.putExtra("menuState", menustate);
-                startActivity(menu);
+                startActivity(menu);*/
             }
         });
-        }
+    }
 
 
     public void Finish(View v){
@@ -281,9 +299,19 @@ public class EditTaskActivity extends AppCompatActivity {
         calendar.set(year, month, day, hour, minute, 0);
         cancelNotification(false, mTaskName.getText().toString(), -1);
 
+        if(toPage.equals("calendarPage")){
+            Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(newIntent);
+        }else if(toPage.equals("menuPage")){
+            Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+            newIntent.putExtra("menuState", menustate);
+            startActivity(newIntent);
+        }
+        /*
         Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
         menu.putExtra("menuState", menustate);
         startActivity(menu);
+        */
     }
 
     public void Delete(View v) {
@@ -301,9 +329,14 @@ public class EditTaskActivity extends AppCompatActivity {
 ////    }
 
     public void close(View v){
-        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
-        menu.putExtra("menuState", menustate);
-        startActivity(menu);
+        if(toPage.equals("calendarPage")){
+            Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(newIntent);
+        }else if(toPage.equals("menuPage")){
+            Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+            newIntent.putExtra("menuState", menustate);
+            startActivity(newIntent);
+        }
     }
 
     public void updateNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {

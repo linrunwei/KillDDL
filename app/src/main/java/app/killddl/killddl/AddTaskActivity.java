@@ -44,6 +44,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private int minute;
     private int taskId;
     private String menustate;
+    private String toPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,15 @@ public class AddTaskActivity extends AppCompatActivity {
 //            menustate = "daily";
             System.err.println("!!! No extra in menu");
         }
+
+        //to which page
+        if (intent.hasExtra("page")) {
+            toPage = intent.getStringExtra("page");
+        }
+        else {
+            toPage = "calendarPage";
+        }
+
         user = MainActivity.getDatabase().getUser();
         mDisplayDate = findViewById(R.id.addtask_date);
         mDisplayTime = findViewById(R.id.addtask_time);
@@ -132,9 +142,14 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void close(View v) {
-        Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
-        menu.putExtra("menuState", menustate);
-        startActivity(menu);
+        if(toPage.equals("calendarPage")){
+            Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(newIntent);
+        }else if(toPage.equals("menuPage")){
+            Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+            newIntent.putExtra("menuState", menustate);
+            startActivity(newIntent);
+        }
     }
 
     public void AddTask(View v) {
@@ -200,9 +215,19 @@ public class AddTaskActivity extends AppCompatActivity {
 
         setNotification(calendar, false, taskName, -1);
 
+        if(toPage.equals("calendarPage")){
+            Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(newIntent);
+        }else if(toPage.equals("menuPage")){
+            Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+            newIntent.putExtra("menuState", menustate);
+            startActivity(newIntent);
+        }
+        /*
         Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
         menu.putExtra("menuState", menustate);
         startActivity(menu);
+        */
     }
 
     public void setNotification(Calendar calendar, boolean isRecurring, String taskName, int frequency) {

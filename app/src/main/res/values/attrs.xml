@@ -8,5 +8,6 @@
         <attr name="logOutButtonColor" format="color"/>
         <attr name="blueBackgroundColor" format="color"/>
         <attr name="textBlack" format="color"/>
+        <attr name="killddlTitle" format="color"/>
     </declare-styleable>
 </resources>

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="KILLDDL"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/killddlTitle"
             android:textSize="24sp"
             android:layout_gravity="center"
             android:paddingLeft="140dp"/>

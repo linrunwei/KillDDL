@@ -59,17 +59,39 @@ public class Db {
             db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
     }
     public void removeTask(int taskId){
-        taskList.get(taskId).isFinished = true;
+        Tasks task;
+        for(int i =0; i < taskList.size();i++){
+            if(taskList.get(i).getId() == taskId){
+                task = taskList.get(i);
+                task.EditIsFinished(true);
+                task.EditFinishTime(Timestamp.now());
+                taskList.get(taskId).EditFinishTime(Timestamp.now());
+                String date = MainActivity.timestampToString(task.getFinishTime());
+                if(finishedTasks.get(date) == null)
+                    finishedTasks.put(date, 1);
+                else
+                    finishedTasks.put(date, finishedTasks.get(date)+1);
+                taskList.set(i, task);
+                if(db != null)
+                    db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+            }
+        }
+        /*
+        taskList.get(taskId).EditIsFinished(true);
         //putting finish time to the finished tasklist for analytics
-        taskList.get(taskId).finishTime = Timestamp.now();
+        taskList.get(taskId).EditFinishTime(Timestamp.now());
         String date = MainActivity.timestampToString(taskList.get(taskId).finishTime);
         if(finishedTasks.get(date) == null)
             finishedTasks.put(date, 1);
         else
             finishedTasks.put(date, finishedTasks.get(date)+1);
         Tasks task = taskList.get(taskId);
+        if(task.getIsFinished()){
+            System.out.println("FINISHED");
+        }
         if(db != null)
             db.collection("User").document(this.uid).collection("taskList").document(""+task.getId()).set(task);
+            */
     }
 
     public void EditTask(int id,Tasks task){

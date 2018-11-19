@@ -193,12 +193,13 @@ public class CalendarActivity extends AppCompatActivity {
 
     public void AddTask(View v){
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
-        addTask.putExtra("menuState", "daily");
+        addTask.putExtra("page", "calendarPage");
         startActivity(addTask);
     }
     public void clickTask(View v, int id){
         Intent newIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
-        newIntent.putExtra("edit_taskId",id);
+        newIntent.putExtra("taskId",id);
+        newIntent.putExtra("page","calendarPage");
         startActivity(newIntent);
     }
     public void toggleTheme(boolean darkTheme) {

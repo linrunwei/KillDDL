@@ -76,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
 //        holder..setOnTouchListener(new View.OnTouchListener() {
-         holder.reorderer.setOnTouchListener(new View.OnTouchListener() {
+        holder.reorderer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
@@ -95,6 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(mContext, EditTaskActivity.class);
                 intent.putExtra("taskId", mTasks.get(holder.getAdapterPosition()).getId());
                 intent.putExtra("menuState", menustate);
+                intent.putExtra("page","menuPage");
                 mContext.startActivity(intent);
             }
         });

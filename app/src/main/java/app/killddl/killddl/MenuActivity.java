@@ -29,7 +29,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MenuActivity";
     private User user = MainActivity.getDatabase().getUser();
-//    List<Tasks> tasksList = new ArrayList<Tasks>();
+    //    List<Tasks> tasksList = new ArrayList<Tasks>();
 //    Timestamp tsp;
     private String menustate;
     private boolean init;
@@ -252,6 +252,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void AddTask(View v){
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
+        addTask.putExtra("page","menuPage");
         addTask.putExtra("menuState", menustate);
         startActivity(addTask);
     }
