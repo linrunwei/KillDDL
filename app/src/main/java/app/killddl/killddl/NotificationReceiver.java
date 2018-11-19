@@ -22,7 +22,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Intent showDueIntent = new Intent(context, EditTaskActivity.class);
         showDueIntent.putExtra("taskId", taskId);
-        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        showDueIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(2048), showDueIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)

@@ -265,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
                                                 dbase.setTaskList(tasksList);
                                                 dbase.setFinishedTasks(finishedTasks);
                                                 finish();
-                                                Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                                intent.putExtra("menuState", "daily");
                                                 startActivity(intent);
                                             }
 

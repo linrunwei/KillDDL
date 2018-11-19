@@ -1,4 +1,4 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-
+    <dimen name="ic_clear_margin">18dp</dimen>
 </resources>
