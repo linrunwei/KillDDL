@@ -193,7 +193,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     public void AddTask(View v){
         Intent addTask = new Intent(getApplicationContext(),AddTaskActivity.class);
-        //TODO add extra info
+        addTask.putExtra("menuState", "daily");
         startActivity(addTask);
     }
     public void clickTask(View v, int id){

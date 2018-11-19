@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
@@ -113,6 +116,8 @@ public class ProfileActivity extends AppCompatActivity {
     public void Logout(View v){
         MainActivity.quit();
         Intent login = new Intent(getApplicationContext(),MainActivity.class);
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
         startActivity(login);
     }
 
