@@ -82,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        OpeningStartAnimation openAnime = new OpeningStartAnimation.Builder(this).
-                setAppIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.open_logo)).create();
-        openAnime.show(this);
+
 
 
                 //DATABASE
@@ -137,7 +135,55 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        OpeningStartAnimation openAnime = new OpeningStartAnimation.Builder(this).
+                setAppIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.open_logo)).create();
+        openAnime.show(this);
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currUser = mAuth.getCurrentUser();
+        String uid = "";
+        if(currUser!= null){
+            uid = currUser.getUid();
+
+        dbase.setID(uid);
+        User user = new User(currUser.getEmail());
+        dbase.setUser(user);
+
+        dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Tasks> tasksList = new ArrayList<>();
+                            HashMap<String, Integer> finishedTasks = new HashMap<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Tasks t = document.toObject(Tasks.class);
+                                if(t.isFinished){
+                                    String date = timestampToString(t.finishTime);
+                                    if(finishedTasks.get(date) == null)
+                                        finishedTasks.put(date, 1);
+                                    else
+                                        finishedTasks.put(date, finishedTasks.get(date)+1);
+
+                                }
+                                tasksList.add(t);
+                            }
+                            dbase.setTaskList(tasksList);
+                            dbase.setFinishedTasks(finishedTasks);
+                            finish();
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            intent.putExtra("menuState", "daily");
+                            startActivity(intent);
+                        }
+
+                    }
+                });
+        }
+    }
 
     public void SignUp(View v){
         RegisterUser();
