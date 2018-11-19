@@ -9,6 +9,7 @@
         <item name="addTaskButtonColor">@color/amber_primary_dark</item>
         <item name="logOutButtonColor">@color/colorPrimary</item>
         <item name="blueBackgroundColor">@color/colorPrimary</item>
+        <item name="textBlack">@color/black</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -28,6 +29,7 @@
         <item name="backGroundColor">@color/gray</item>
         <item name="addTaskButtonColor">@color/lime_primary</item>
         <item name="blueBackgroundColor">@color/gray</item>
+        <item name="textBlack">@color/white</item>
     </style>
 
     <style name="AppThemeDark.NoActionBar">

@@ -64,17 +64,18 @@ public class CalendarActivity extends AppCompatActivity {
         FirebaseUser currUser = MainActivity.getAuth().getCurrentUser();
         Timestamp tsp = Timestamp.now();
 
+        /*
         Switch toggle = (Switch) findViewById(R.id.switch1);
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             toggle.setChecked(true);
         }
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
+            @Override*/
             /*
             public void onCheckedChanged(CompoundButton view, boolean isChecked) {
                 toggleTheme(isChecked);
             }*/
-            public void onCheckedChanged(CompoundButton view, boolean isChecked){
+            /*public void onCheckedChanged(CompoundButton view, boolean isChecked){
                 if(isChecked){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     restartApp();
@@ -83,7 +84,8 @@ public class CalendarActivity extends AppCompatActivity {
                     restartApp();
                 }
             }
-        });
+        });*/
+
 
         calendarTasks = (ScrollView) findViewById(R.id.calendar_tasks);
         calendarTasks.removeAllViews();

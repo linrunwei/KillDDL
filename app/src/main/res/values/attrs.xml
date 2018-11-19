@@ -7,5 +7,6 @@
         <attr name="naviColor" format="color"/>
         <attr name="logOutButtonColor" format="color"/>
         <attr name="blueBackgroundColor" format="color"/>
+        <attr name="textBlack" format="color"/>
     </declare-styleable>
 </resources>

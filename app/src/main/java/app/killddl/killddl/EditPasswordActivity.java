@@ -90,10 +90,12 @@ public class EditPasswordActivity extends AppCompatActivity{
                     return;
                 }
 
+                /*
                 if(!NewPassword.equals(NewPasswordConfirm)){
                     Toast.makeText(getApplicationContext(), "Passwords Don't Match.", Toast.LENGTH_LONG).show();
                     return;
-                }
+                }*/
+
                 //add password in Database
                 if(cuser == null){
                     Toast.makeText(getApplicationContext(), "An error occurred for user.", Toast.LENGTH_LONG).show();
@@ -110,9 +112,9 @@ public class EditPasswordActivity extends AppCompatActivity{
                                     Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
                                     startActivity(Profile);
                                 }
-//                                else {
-//                                    Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
-//                                }
+//                               else {
+//                                   Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
+//                               }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

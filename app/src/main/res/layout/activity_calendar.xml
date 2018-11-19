@@ -21,16 +21,7 @@
             android:textSize="24sp"
             android:layout_gravity="center"
             android:paddingLeft="140dp"/>
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme"
-            android:id="@+id/switch1"
-            android:layout_gravity="right"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"/>
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/calendar_calendarview_parent"
@@ -64,7 +55,8 @@
             android:layout_width="218dp"
             android:layout_height="match_parent"
             android:text="Tasks of the day"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="?attr/textBlack"/>
 
     </LinearLayout>
     <RelativeLayout
