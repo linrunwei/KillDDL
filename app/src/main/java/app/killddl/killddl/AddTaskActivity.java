@@ -54,7 +54,8 @@ public class AddTaskActivity extends AppCompatActivity {
             menustate = intent.getStringExtra("menuState");
         }
         else {
-            menustate = "daily";
+//            menustate = "daily";
+            System.err.println("!!! No extra in menu");
         }
         user = MainActivity.getDatabase().getUser();
         mDisplayDate = findViewById(R.id.addtask_date);
