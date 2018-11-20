@@ -40,7 +40,12 @@
     </style>
 
     <style name="AppTheme.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

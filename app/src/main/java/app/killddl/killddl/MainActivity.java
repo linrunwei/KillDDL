@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         View view = this.getCurrentFocus();
         //close keyboard
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         super.onCreate(savedInstanceState);
@@ -218,22 +218,22 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         OpeningStartAnimation openAnime = new OpeningStartAnimation.Builder(this).
-                setAppIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.open_logo)).create();
+                setAppIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.open_logo)).create();
         openAnime.show(this);
         // Check if user is signed in (non-null) and update UI accordingly.
         completeLogin(mAuth.getCurrentUser());
     }
 
-    public void SignUp(View v) {
+    public void SignUp(View v){
         RegisterUser();
     }
 
-    private void RegisterUser() {
+    private void RegisterUser(){
 
         //getting email and password from edit texts
         final String email = userEmail.getText().toString().trim();
-        final String password = userPassword.getText().toString().trim();
-        System.out.println("Email: " + email + " password:" + password);
+        final String password  = userPassword.getText().toString().trim();
+//        System.out.println("Email: " + email + " password:" + password);
 
         //checking if email and passwords are empty
         if (TextUtils.isEmpty(email)) {
@@ -337,12 +337,12 @@ public class MainActivity extends AppCompatActivity {
                                                         HashMap<String, Integer> finishedTasks = new HashMap<>();
                                                         for (QueryDocumentSnapshot document : task.getResult()) {
                                                             Tasks t = document.toObject(Tasks.class);
-                                                            if (t.isFinished) {
+                                                            if(t.isFinished){
                                                                 String date = timestampToString(t.finishTime);
-                                                                if (finishedTasks.get(date) == null)
+                                                                if(finishedTasks.get(date) == null)
                                                                     finishedTasks.put(date, 1);
                                                                 else
-                                                                    finishedTasks.put(date, finishedTasks.get(date) + 1);
+                                                                    finishedTasks.put(date, finishedTasks.get(date)+1);
 
                                                             }
                                                             tasksList.add(t);

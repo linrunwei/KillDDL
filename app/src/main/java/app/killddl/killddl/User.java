@@ -7,7 +7,7 @@ import java.util.List;
 public class User implements Serializable{
 
     protected String email;
-    protected int avatar = 0;
+    protected int avatar;
 //    protected List<Tasks> taskList = new ArrayList<Tasks>();
 
     //for addValue
@@ -23,6 +23,9 @@ public class User implements Serializable{
 
     public String getEmail() {
         return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public int getAvatar(){
         return this.avatar;
