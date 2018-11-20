@@ -2,6 +2,8 @@ package app.killddl.killddl;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -10,8 +12,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -25,11 +29,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 
 public class CalendarActivity extends AppCompatActivity {
@@ -146,7 +152,7 @@ public class CalendarActivity extends AppCompatActivity {
             if(!tasksList.get(i).isFinished) {
                 //create new View
                 LinearLayout ll = new LinearLayout(this);
-                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.setOrientation(LinearLayout.HORIZONTAL);
                 float density = this.getResources().getDisplayMetrics().density;
                 int paddingPixel = (int) (30 * density);
                 ll.setPadding(paddingPixel, 0, 0, 0);
@@ -155,18 +161,46 @@ public class CalendarActivity extends AppCompatActivity {
                 final int id = tasksList.get(i).getId();
                 TextView tx = new TextView(this);
                 tx.setText(tasksList.get(i).getName());
+                tx.setTextSize(20);
+                tx.setTypeface(tx.getTypeface(), Typeface.BOLD);
+                tx.setWidth(600);
                 tx.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         clickTask(view, id);
                     }
                 });
+
+                //days_remaining
+                android.icu.util.Calendar calendar = android.icu.util.Calendar.getInstance();
+                calendar.setTime(tasksList.get(i).getDeadline().toDate());
+                int ddlYear = calendar.get(android.icu.util.Calendar.YEAR);
+                int ddlMonth = calendar.get(android.icu.util.Calendar.MONTH) + 1;
+                int ddlDate = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH);
+
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
+                String inputString2 = "";
+                inputString2 = inputString2 + ddlDate + " " + ddlMonth + " " + ddlYear;
+
+                TextView tx2 = new TextView(this);
+
+                try {
+                    Date date1 = new Date();
+                    Date date2 = myFormat.parse(inputString2);
+                    long diff = date2.getTime() - date1.getTime();
+                    System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                    long daysLeft = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
+                    String daysRemaining = "";
+                    daysRemaining += daysLeft + " " + getResources().getString(R.string.daysRemains);
+                    tx2.setText(daysRemaining);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 ll.addView(tx);
+                ll.addView(tx2);
                 rl.addView(ll);
-
             }
-
-            //add days_remaining
         }
         return rl;
 
