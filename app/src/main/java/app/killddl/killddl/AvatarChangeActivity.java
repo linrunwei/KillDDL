@@ -45,6 +45,10 @@ public class AvatarChangeActivity extends AppCompatActivity {
 //                avatar.setImageResource(image[count%image.length]);
                 curr_avatar.setImageResource(image[count%image.length]);
                 user.setAvatar(count);
+
+                System.out.println(user.getAvatar());
+                MainActivity.getDatabase().setUser(user);
+                MainActivity.getDatabase().updateUser(user);
             }
         });
 

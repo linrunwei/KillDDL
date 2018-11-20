@@ -8,7 +8,7 @@ public class User implements Serializable{
 
     protected String email;
     protected int avatar = 0;
-    protected List<Tasks> taskList = new ArrayList<Tasks>();
+//    protected List<Tasks> taskList = new ArrayList<Tasks>();
 
     //for addValue
     public User(){
