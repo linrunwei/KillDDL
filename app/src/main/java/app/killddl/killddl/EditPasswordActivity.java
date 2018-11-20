@@ -63,7 +63,7 @@ public class EditPasswordActivity extends AppCompatActivity{
         headUserName.setText(user.email);
 
         mNewPassword = findViewById(R.id.editpassword_newpassword);
-        mNewPasswordConfirm = mNewPassword;
+        mNewPasswordConfirm = findViewById(R.id.editpassword_newpasswordconfirm);;
         mNewPassword.setEnabled(true);
         mNewPasswordConfirm.setEnabled(true);
 
@@ -90,11 +90,11 @@ public class EditPasswordActivity extends AppCompatActivity{
                     return;
                 }
 
-                /*
+
                 if(!NewPassword.equals(NewPasswordConfirm)){
                     Toast.makeText(getApplicationContext(), "Passwords Don't Match.", Toast.LENGTH_LONG).show();
                     return;
-                }*/
+                }
 
                 //add password in Database
                 if(cuser == null){
