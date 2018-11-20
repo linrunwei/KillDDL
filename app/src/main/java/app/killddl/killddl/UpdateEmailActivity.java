@@ -124,32 +124,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
                     }
                 });
 
-//                currUser.updatePassword(newEmail)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//                                    //Toast.makeText(EditPasswordActivity.this,"Password Changed.",Toast.LENGTH_LONG).show();
-//                                    Toast.makeText(getApplicationContext(), "Password Changed.", Toast.LENGTH_LONG).show();
-//                                    Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
-//                                    startActivity(Profile);
-//                                }
-////                               else {
-////                                   Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
-////                               }
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        if (e instanceof FirebaseAuthException) {
-//                            ((FirebaseAuthException) e).getErrorCode();
-//                            Toast.makeText(UpdateEmailActivity.this,((FirebaseAuthException) e).getErrorCode(),Toast.LENGTH_LONG).show();
-//                        }
-//                        else{
-//                            Toast.makeText(getApplicationContext(), "Password Could Not Be Changed.", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
+
             }
         });
     }
