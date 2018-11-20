@@ -100,6 +100,8 @@ public class MenuActivity extends AppCompatActivity {
 
         // Top Navigation Bar
         BottomNavigationView topNavigationView = findViewById(R.id.top_navigation);
+//        topNavigationView.setItemBackgroundResource(R.drawable.menubackground);
+
         topNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -108,21 +110,21 @@ public class MenuActivity extends AppCompatActivity {
                         menustate="daily";
                         Intent daily = new Intent(getApplicationContext(), MenuActivity.class);
                         daily.putExtra("menuState",menustate);
-                        daily.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        daily.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(daily);
                         break;
                     case R.id.action_weekly:
                         menustate="weekly";
                         Intent weekly = new Intent(getApplicationContext(), MenuActivity.class);
                         weekly.putExtra("menuState",menustate);
-                        weekly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        weekly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(weekly);
                         break;
                     case R.id.action_monthly:
                         menustate="monthly";
                         Intent monthly = new Intent(getApplicationContext(), MenuActivity.class);
                         monthly.putExtra("menuState",menustate);
-                        monthly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        monthly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(monthly);
                         break;
                 }
