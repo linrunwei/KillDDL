@@ -435,10 +435,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                             tasksList.add(t);
                                         }
-                                        int avatar = 0;
-                                        if (loginUser != null)
-                                            avatar = loginUser.getAvatar();
-                                        User user = new User(currUser.getEmail(), avatar);
+                                        User user = new User(currUser.getEmail(), loginUser != null ? loginUser.getAvatar() : 0);
                                         dbase.setUser(user);
                                         dbase.setTaskList(tasksList);
                                         dbase.setFinishedTasks(finishedTasks);
