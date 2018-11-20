@@ -27,7 +27,6 @@ public class UpdateEmailActivity extends AppCompatActivity {
 
     User user;
     ImageView avatar;
-    int count;
     FirebaseAuth mAuth;
     private EditText mNewEmail;
     private Button mChangeEmail;
@@ -64,8 +63,8 @@ public class UpdateEmailActivity extends AppCompatActivity {
         //TODO fixed tasks remaining after get User
 
         user = MainActivity.getDatabase().getUser();
-//        TextView headUserName = findViewById(R.id.profile_head_username);
-//        headUserName.setText(user.email);
+        TextView headUserName = findViewById(R.id.profile_head_username);
+        headUserName.setText(user.email);
         avatar = (ImageView) findViewById(R.id.avatar);
         final int image[] = new int[]{
                 R.drawable.ic_person_white_24dp,
