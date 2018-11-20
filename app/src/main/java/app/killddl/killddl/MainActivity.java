@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     TextView errorMsg;
     static Db dbase = new Db();
     static private FirebaseAuth mAuth;
-    EditText userEmail,userPassword;
+    EditText userEmail, userPassword;
     FirebaseDatabase database;
     DatabaseReference myRef;
     DocumentReference myDocRef;
@@ -85,14 +85,16 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
-    static FirebaseAuth getAuth(){return mAuth;}
+    static FirebaseAuth getAuth() {
+        return mAuth;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         View view = this.getCurrentFocus();
         //close keyboard
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         super.onCreate(savedInstanceState);
@@ -216,31 +218,31 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         OpeningStartAnimation openAnime = new OpeningStartAnimation.Builder(this).
-                setAppIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.open_logo)).create();
+                setAppIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.open_logo)).create();
         openAnime.show(this);
         // Check if user is signed in (non-null) and update UI accordingly.
         completeLogin(mAuth.getCurrentUser());
     }
 
-    public void SignUp(View v){
+    public void SignUp(View v) {
         RegisterUser();
     }
 
-    private void RegisterUser(){
+    private void RegisterUser() {
 
         //getting email and password from edit texts
         final String email = userEmail.getText().toString().trim();
-        final String password  = userPassword.getText().toString().trim();
+        final String password = userPassword.getText().toString().trim();
         System.out.println("Email: " + email + " password:" + password);
 
         //checking if email and passwords are empty
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -254,12 +256,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             //display some message here
-                            Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
                             FirebaseUser currUser = mAuth.getCurrentUser();
                             String uid = "";
-                            if(currUser!= null){
+                            if (currUser != null) {
                                 uid = currUser.getUid();
                             }
                             dbase.setID(uid);
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                             myDocRef.set(user);
                             System.out.println("succesfully saved");
 
-                        }else{
+                        } else {
                             //display some message here
 
                         }
@@ -282,24 +284,24 @@ public class MainActivity extends AppCompatActivity {
                         if (e instanceof FirebaseAuthException) {
                             ((FirebaseAuthException) e).getErrorCode();
                             //System.out.println(((FirebaseAuthException) e).getErrorCode());
-                            Toast.makeText(MainActivity.this,((FirebaseAuthException) e).getErrorCode(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, ((FirebaseAuthException) e).getErrorCode(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 
-    private void UserLogin(){
+    private void UserLogin() {
         final String email = userEmail.getText().toString().trim();
-        final String password  = userPassword.getText().toString().trim();
+        final String password = userPassword.getText().toString().trim();
 
         //checking if email and passwords are empty
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -310,11 +312,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //if the task is successfull
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             //start the profile activity
                             final FirebaseUser currUser = mAuth.getCurrentUser();
                             String uid = "";
-                            if(currUser!= null){
+                            if (currUser != null) {
                                 uid = currUser.getUid();
                             }
                             dbase.setID(uid);
@@ -335,12 +337,12 @@ public class MainActivity extends AppCompatActivity {
                                                         HashMap<String, Integer> finishedTasks = new HashMap<>();
                                                         for (QueryDocumentSnapshot document : task.getResult()) {
                                                             Tasks t = document.toObject(Tasks.class);
-                                                            if(t.isFinished){
+                                                            if (t.isFinished) {
                                                                 String date = timestampToString(t.finishTime);
-                                                                if(finishedTasks.get(date) == null)
+                                                                if (finishedTasks.get(date) == null)
                                                                     finishedTasks.put(date, 1);
                                                                 else
-                                                                    finishedTasks.put(date, finishedTasks.get(date)+1);
+                                                                    finishedTasks.put(date, finishedTasks.get(date) + 1);
 
                                                             }
                                                             tasksList.add(t);
@@ -370,26 +372,31 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         if (e instanceof FirebaseAuthException) {
                             ((FirebaseAuthException) e).getErrorCode();
-                            Toast.makeText(MainActivity.this,((FirebaseAuthException) e).getErrorCode(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, ((FirebaseAuthException) e).getErrorCode(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
 
     }
-    public void ForgetPassword(View v){
-        Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+
+    public void ForgetPassword(View v) {
+        Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
         startActivity(intent);
     }
-    public void SignIn(View v){
+
+    public void SignIn(View v) {
         UserLogin();
     }
+
     static Db getDatabase() {
         return dbase;
     }
+
     static void quit() {
         mAuth.signOut();
     }
-    static String timestampToString(Timestamp t){
+
+    static String timestampToString(Timestamp t) {
         Date date = t.toDate();
         String pattern = "yyyy/MM/dd";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
@@ -397,47 +404,53 @@ public class MainActivity extends AppCompatActivity {
         return format.format(date);
     }
 
-    private void completeLogin(FirebaseUser currUser)
-    {
+    private void completeLogin(final FirebaseUser currUser) {
         String uid = "";
-        if(currUser!= null){
-            finish();
+        if (currUser != null) {
             uid = currUser.getUid();
-
-            dbase.setID(uid);
-            User user = new User(currUser.getEmail());
-            dbase.setUser(user);
-
-            dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                List<Tasks> tasksList = new ArrayList<>();
-                                HashMap<String, Integer> finishedTasks = new HashMap<>();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Tasks t = document.toObject(Tasks.class);
-                                    if(t.isFinished){
-                                        String date = timestampToString(t.finishTime);
-                                        if(finishedTasks.get(date) == null)
-                                            finishedTasks.put(date, 1);
-                                        else
-                                            finishedTasks.put(date, finishedTasks.get(date)+1);
-
-                                    }
-                                    tasksList.add(t);
-                                }
-                                dbase.setTaskList(tasksList);
-                                dbase.setFinishedTasks(finishedTasks);
-
-                                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                                intent.putExtra("menuState", "daily");
-                                startActivity(intent);
-                            }
-
-                        }
-                    });
         }
+        dbase.setID(uid);
+//                            final User user = new User(email);
+
+
+        dbase.getDB().collection("User").document(currUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                final User loginUser = documentSnapshot.toObject(User.class);
+                dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    List<Tasks> tasksList = new ArrayList<>();
+                                    HashMap<String, Integer> finishedTasks = new HashMap<>();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Tasks t = document.toObject(Tasks.class);
+                                        if (t.isFinished) {
+                                            String date = timestampToString(t.finishTime);
+                                            if (finishedTasks.get(date) == null)
+                                                finishedTasks.put(date, 1);
+                                            else
+                                                finishedTasks.put(date, finishedTasks.get(date) + 1);
+
+                                        }
+                                        tasksList.add(t);
+                                    }
+                                    User user = new User(loginUser.getEmail(), loginUser.getAvatar());
+                                    dbase.setUser(user);
+                                    dbase.setTaskList(tasksList);
+                                    dbase.setFinishedTasks(finishedTasks);
+                                    finish();
+                                    Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                    intent.putExtra("menuState", "daily");
+                                    startActivity(intent);
+                                }
+
+                            }
+                        });
+            }
+        });
+
     }
 }
