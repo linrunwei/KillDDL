@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class UpdateEmailActivity extends AppCompatActivity {
 
     User user;
+    ImageView avatar;
+    int count;
     FirebaseAuth mAuth;
     private EditText mNewEmail;
     private Button mChangeEmail;
@@ -61,10 +64,22 @@ public class UpdateEmailActivity extends AppCompatActivity {
         //TODO fixed tasks remaining after get User
 
         user = MainActivity.getDatabase().getUser();
-        TextView headUserName = findViewById(R.id.profile_head_username);
-        headUserName.setText(user.email);
-
-
+//        TextView headUserName = findViewById(R.id.profile_head_username);
+//        headUserName.setText(user.email);
+        avatar = (ImageView) findViewById(R.id.avatar);
+        final int image[] = new int[]{
+                R.drawable.ic_person_white_24dp,
+                R.drawable.dog,
+                R.drawable.cat,
+                R.drawable.turtle,
+                R.drawable.student,
+                R.drawable.basketball,
+                R.drawable.baseball,
+                R.drawable.americanfootball,
+                R.drawable.soccer_ball,
+                R.drawable.goal
+        };
+        avatar.setImageResource(image[user.getAvatar()%image.length]);
         mNewEmail = findViewById(R.id.newemail);
 
         mNewEmail.setEnabled(true);
