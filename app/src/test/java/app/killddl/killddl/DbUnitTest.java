@@ -14,6 +14,16 @@ import static org.junit.Assert.assertEquals;
 
 public class DbUnitTest {
     @Test
+    public void updateUser_isCorrect() throws ParseException  {
+        List<Tasks> list = new ArrayList<>();
+        String uid = "OVhQAIElVtcQMFXu6dn7O43ZI593";
+        Db database = new Db(uid, list);
+        User user = new User("abcd@usc.edu", 2);
+        database.setUser(user);
+        User newUser = new User("abcd@usc.edu", 4);
+        assertEquals(4, database.getUser().getAvatar());
+    }
+    @Test
     public void getTaskList_isCorrect() throws ParseException  {
         SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Date one = simFormat.parse("2008.10.01 22:45:56");
