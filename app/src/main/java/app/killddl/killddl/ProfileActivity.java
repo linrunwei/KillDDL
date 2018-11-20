@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
                 R.drawable.soccer_ball,
                 R.drawable.goal
         };
+        System.out.println(user.getAvatar());
         avatar.setImageResource(image[user.getAvatar()%image.length]);
         count = 0;
         avatar.setOnClickListener(new View.OnClickListener() {

@@ -50,7 +50,8 @@ public class Db {
         this.db.collection("User").document(this.uid).set(user);
         return true;
     }
-    public void updateUser(User user){
+    public void updateUser(User user)
+    {
         this.db.collection("User").document(this.uid).set(user);
     }
     public void addTask(Tasks task){

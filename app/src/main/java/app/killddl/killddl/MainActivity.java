@@ -30,6 +30,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthCredential;
@@ -41,6 +42,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -310,45 +312,54 @@ public class MainActivity extends AppCompatActivity {
                         //if the task is successfull
                         if(task.isSuccessful()){
                             //start the profile activity
-                            FirebaseUser currUser = mAuth.getCurrentUser();
+                            final FirebaseUser currUser = mAuth.getCurrentUser();
                             String uid = "";
                             if(currUser!= null){
                                 uid = currUser.getUid();
                             }
                             dbase.setID(uid);
-                            User user = new User(email);
-                            dbase.setUser(user);
+//                            final User user = new User(email);
 
-                            dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                List<Tasks> tasksList = new ArrayList<>();
-                                                HashMap<String, Integer> finishedTasks = new HashMap<>();
-                                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    Tasks t = document.toObject(Tasks.class);
-                                                    if(t.isFinished){
-                                                        String date = timestampToString(t.finishTime);
-                                                        if(finishedTasks.get(date) == null)
-                                                            finishedTasks.put(date, 1);
-                                                        else
-                                                            finishedTasks.put(date, finishedTasks.get(date)+1);
 
+                            dbase.getDB().collection("User").document(currUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    final User loginUser = documentSnapshot.toObject(User.class);
+                                    dbase.getDB().collection("User").document(currUser.getUid()).collection("taskList")
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        List<Tasks> tasksList = new ArrayList<>();
+                                                        HashMap<String, Integer> finishedTasks = new HashMap<>();
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                                            Tasks t = document.toObject(Tasks.class);
+                                                            if(t.isFinished){
+                                                                String date = timestampToString(t.finishTime);
+                                                                if(finishedTasks.get(date) == null)
+                                                                    finishedTasks.put(date, 1);
+                                                                else
+                                                                    finishedTasks.put(date, finishedTasks.get(date)+1);
+
+                                                            }
+                                                            tasksList.add(t);
+                                                        }
+                                                        User user = new User(email, loginUser.getAvatar());
+                                                        dbase.setUser(user);
+                                                        dbase.setTaskList(tasksList);
+                                                        dbase.setFinishedTasks(finishedTasks);
+                                                        finish();
+                                                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                                        intent.putExtra("menuState", "daily");
+                                                        startActivity(intent);
                                                     }
-                                                    tasksList.add(t);
-                                                }
-                                                dbase.setTaskList(tasksList);
-                                                dbase.setFinishedTasks(finishedTasks);
-                                                finish();
-                                                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                                                intent.putExtra("menuState", "daily");
-                                                startActivity(intent);
-                                            }
 
-                                        }
-                                    });
+                                                }
+                                            });
+                                }
+                            });
+
                         }
                     }
                 });
