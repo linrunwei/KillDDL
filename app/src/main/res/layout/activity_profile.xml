@@ -131,36 +131,52 @@
         <Button
             android:id="@+id/profile_logoutBtn"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="Logout"
             android:text="Log Out"
+            android:textSize="10sp"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/profile_changeemailBtn"
+            android:layout_width="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="32dp"
+            android:background="@drawable/background_primary_blue"
+            android:onClick="UpdateEmail"
+            android:text="CHANGE EMAIL"
+            android:textSize="10sp"
+            android:textColor="@color/mdtp_white"
+            android:textStyle="bold"/>
+
+        <Button
             android:id="@+id/profile_changepasswordBtn"
             android:layout_width="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="EditPassword"
             android:text="CHANGE PASSWORD"
+            android:textSize="10sp"
             android:textColor="@color/mdtp_white"
             android:textStyle="bold"/>
 
         <Button
             android:id="@+id/profile_analyticsBtn"
             android:layout_width="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="openAnalytics"
             android:text="Analytics"
+            android:textSize="10sp"
             android:textColor="@color/mdtp_white"
             android:textStyle="bold"/>
 

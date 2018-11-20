@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         //getting email and password from edit texts
         final String email = userEmail.getText().toString().trim();
         final String password  = userPassword.getText().toString().trim();
-        System.out.println("Email: " + email + " password:" + password);
+//        System.out.println("Email: " + email + " password:" + password);
 
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
