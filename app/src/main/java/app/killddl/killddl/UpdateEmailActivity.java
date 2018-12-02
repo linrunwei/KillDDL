@@ -122,7 +122,18 @@ public class UpdateEmailActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Email Updated.", Toast.LENGTH_LONG).show();
                                     user.setEmail(newEmail);
-                                    MainActivity.getDatabase().updateUser(user);;
+                                    MainActivity.getDatabase().updateUser(user);
+                                    FirebaseUser cuser = mAuth.getCurrentUser();
+
+                                    cuser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        System.out.print("success!!!!!!");
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
