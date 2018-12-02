@@ -12,15 +12,21 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
     ImageView avatar;
     int count;
+    int ifFacebook = 0;
+    FirebaseUser cuser = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        cuser = FirebaseAuth.getInstance().getCurrentUser();
         user = MainActivity.getDatabase().getUser();
         avatar = (ImageView) findViewById(R.id.avatar);
         final int image[] = new int[]{
@@ -128,11 +135,27 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void UpdateEmail(View v){
+        if (cuser == null) return;
+        for (UserInfo userInfo : cuser.getProviderData()) {
+            if (userInfo.getProviderId().equals("facebook.com")) {
+                ifFacebook = 1;
+                Toast.makeText(getApplicationContext(), "You logged in with Facebook.\nEmail cannot be changed.", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
         Intent login = new Intent(getApplicationContext(),UpdateEmailActivity.class);
         startActivity(login);
     }
 
     public void EditPassword(View v){
+        if (cuser == null) return;
+        for (UserInfo userInfo : cuser.getProviderData()) {
+            if (userInfo.getProviderId().equals("facebook.com")) {
+                ifFacebook = 1;
+                Toast.makeText(getApplicationContext(), "You logged in with Facebook.\nPassword cannot be changed.", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
         Intent login = new Intent(getApplicationContext(),EditPasswordActivity.class);
         startActivity(login);
     }
@@ -142,3 +165,5 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(Analytics);
     }
 }
+
+
