@@ -19,6 +19,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import android.util.Log;
+
+
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
@@ -163,6 +168,22 @@ public class ProfileActivity extends AppCompatActivity {
     public void openAnalytics(View v){
         Intent Analytics = new Intent(getApplicationContext(),AnalyticsActivity.class);
         startActivity(Analytics);
+    }
+    public void deleteAccount(View v){
+//        MainActivity.quit();
+        final Intent login = new Intent(getApplicationContext(),MainActivity.class);
+        cuser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Delete Successful!", Toast.LENGTH_LONG).show();
+                    startActivity(login);
+                }
+            }
+        });
+
+
+
     }
 }
 

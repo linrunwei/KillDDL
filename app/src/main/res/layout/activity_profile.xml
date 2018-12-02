@@ -98,7 +98,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="270dp"
         android:layout_gravity="center"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="255dp"
@@ -130,8 +130,8 @@
 
         <Button
             android:id="@+id/profile_logoutBtn"
-            android:layout_width="100dp"
-            android:layout_height="32dp"
+            android:layout_width="120dp"
+            android:layout_height="27dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp"
             android:background="@drawable/background_primary_blue"
@@ -143,10 +143,10 @@
 
         <Button
             android:id="@+id/profile_changeemailBtn"
-            android:layout_width="100dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="120dp"
+            android:layout_marginTop="12dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="32dp"
+            android:layout_height="27dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="UpdateEmail"
             android:text="CHANGE EMAIL"
@@ -156,10 +156,10 @@
 
         <Button
             android:id="@+id/profile_changepasswordBtn"
-            android:layout_width="100dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="120dp"
+            android:layout_marginTop="12dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="32dp"
+            android:layout_height="27dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="EditPassword"
             android:text="CHANGE PASSWORD"
@@ -169,13 +169,26 @@
 
         <Button
             android:id="@+id/profile_analyticsBtn"
-            android:layout_width="100dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="120dp"
+            android:layout_marginTop="12dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="32dp"
+            android:layout_height="27dp"
             android:background="@drawable/background_primary_blue"
             android:onClick="openAnalytics"
             android:text="Analytics"
+            android:textSize="10sp"
+            android:textColor="@color/mdtp_white"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/profile_deleteBtn"
+            android:layout_width="120dp"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="27dp"
+            android:background="@drawable/background_primary_blue"
+            android:onClick="deleteAccount"
+            android:text="Delete Account"
             android:textSize="10sp"
             android:textColor="@color/mdtp_white"
             android:textStyle="bold"/>
