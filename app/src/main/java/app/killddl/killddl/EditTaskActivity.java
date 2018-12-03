@@ -315,18 +315,22 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     public void Delete(View v) {
-        Finish(v);
-    }
+        MainActivity.getDatabase().deleteTask(taskId);
+//        System.out.println("Task Name: " + tasksList.get(taskId).getName() + " Finished task id: " + taskId);
 
-//    public int getIndex(Spinner spinner, String myString){
-////        for (int i=0;i<spinner.getCount();i++){
-////            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-////                return i;
-////            }
-////        }
-////
-////        return 0;
-////    }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute, 0);
+        cancelNotification(false, mTaskName.getText().toString(), -1);
+
+        if(toPage.equals("calendarPage")){
+            Intent newIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(newIntent);
+        }else if(toPage.equals("menuPage")){
+            Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+            newIntent.putExtra("menuState", menustate);
+            startActivity(newIntent);
+        }
+    }
 
     public void close(View v){
         if(toPage.equals("calendarPage")){
