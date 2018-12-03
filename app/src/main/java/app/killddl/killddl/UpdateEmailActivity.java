@@ -27,7 +27,6 @@ public class UpdateEmailActivity extends AppCompatActivity {
 
     User user;
     ImageView avatar;
-    int count;
     FirebaseAuth mAuth;
     private EditText mNewEmail;
     private Button mChangeEmail;
@@ -64,8 +63,8 @@ public class UpdateEmailActivity extends AppCompatActivity {
         //TODO fixed tasks remaining after get User
 
         user = MainActivity.getDatabase().getUser();
-//        TextView headUserName = findViewById(R.id.profile_head_username);
-//        headUserName.setText(user.email);
+        TextView headUserName = findViewById(R.id.profile_head_username);
+        headUserName.setText(user.email);
         avatar = (ImageView) findViewById(R.id.avatar);
         final int image[] = new int[]{
                 R.drawable.ic_person_white_24dp,
@@ -123,7 +122,18 @@ public class UpdateEmailActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Email Updated.", Toast.LENGTH_LONG).show();
                                     user.setEmail(newEmail);
-                                    MainActivity.getDatabase().updateUser(user);;
+                                    MainActivity.getDatabase().updateUser(user);
+                                    FirebaseUser cuser = mAuth.getCurrentUser();
+
+                                    cuser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        System.out.print("success!!!!!!");
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {

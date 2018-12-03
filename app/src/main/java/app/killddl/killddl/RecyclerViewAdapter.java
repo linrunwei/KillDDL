@@ -132,14 +132,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onViewSwiped(int position) {
+    public void onViewSwiped(int position, int direction) {
         if (mTasks.size() == 0) {
             System.err.println("size == 0");
         }
         else {
-            MainActivity.getDatabase().removeTask(mTasks.get(position).getId());
-            mTasks.remove(position);
-            notifyItemRemoved(position);
+            if (direction == ItemTouchHelper.LEFT) {
+                MainActivity.getDatabase().deleteTask(mTasks.get(position).getId());
+                mTasks.remove(position);
+                notifyItemRemoved(position);
+            }
+            else if (direction == ItemTouchHelper.RIGHT) {
+                MainActivity.getDatabase().removeTask(mTasks.get(position).getId());
+                mTasks.remove(position);
+                notifyItemRemoved(position);
+            }
         }
     }
 

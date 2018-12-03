@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class EditPasswordActivity extends AppCompatActivity{
 
     User user;
     FirebaseAuth mAuth;
+    ImageView avatar;
     private EditText mNewPassword;
     private EditText mNewPasswordConfirm;
     private Button mChangePassword;
@@ -62,8 +64,22 @@ public class EditPasswordActivity extends AppCompatActivity{
         TextView headUserName = findViewById(R.id.profile_head_username);
         headUserName.setText(user.email);
 
+        avatar = (ImageView) findViewById(R.id.avatar);
+        final int image[] = new int[]{
+                R.drawable.ic_person_white_24dp,
+                R.drawable.dog,
+                R.drawable.cat,
+                R.drawable.turtle,
+                R.drawable.student,
+                R.drawable.basketball,
+                R.drawable.baseball,
+                R.drawable.americanfootball,
+                R.drawable.soccer_ball,
+                R.drawable.goal
+        };
+        avatar.setImageResource(image[user.getAvatar()%image.length]);
         mNewPassword = findViewById(R.id.editpassword_newpassword);
-        mNewPasswordConfirm = mNewPassword;
+        mNewPasswordConfirm = findViewById(R.id.editpassword_newpasswordconfirm);;
         mNewPassword.setEnabled(true);
         mNewPasswordConfirm.setEnabled(true);
 
@@ -90,11 +106,11 @@ public class EditPasswordActivity extends AppCompatActivity{
                     return;
                 }
 
-                /*
+
                 if(!NewPassword.equals(NewPasswordConfirm)){
                     Toast.makeText(getApplicationContext(), "Passwords Don't Match.", Toast.LENGTH_LONG).show();
                     return;
-                }*/
+                }
 
                 //add password in Database
                 if(cuser == null){

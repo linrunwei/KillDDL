@@ -31,7 +31,19 @@ Similar applications in market includes Things, Wunderlist, Omnifocus, etc. Thes
 11. Wait until the system finish booting up. It should take less than a minute;  
 12. Once loaded, our application will automatically show up on the virtual device. Please enjoy!
 
-## V. Spring #1 Improvements  
+## V. Sprint #2 Improvements 
+1. Add `visualization` of task completion statistics.
+2. When tapping on a task due `notification`, open that specific task.
+3. Add `swipe` to mark a task as finished and remove it from menu view.
+4. Add the ability to log in with `Google`.
+5. Add the ability to sign in with `Facebook`.
+6. Add the ability to login automatically if the user was logged in before on the same phone with email login.
+7. Add the ability to login automatically if the user was logged in before on the same phone with Facebook login.
+8. Add the ability to save the `profile picture` in database.
+9. Add the ability to `change email` if using email login.
+
+
+## VI. Sprint #1 Improvements  
 1. Overhaul `Menu` from scratch. Now `Task` items in `menu` now support drag and drop to re-order. It also shows due date and time for each `Task` item. Added a color dot, which is selected by user when a `Task` is created by user, for each `Task` item.
 2. Add `Forgot Password` functionality that allows user to reset his or her password if forgot.
 3. Add functionalities to add user's profile picture and display it in the user's `Profile`.

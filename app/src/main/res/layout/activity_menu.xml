@@ -23,10 +23,12 @@
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@drawable/nav_item_color_state"
             app:itemTextColor="@drawable/nav_item_color_state"
-            app:menu="@menu/top_menu_navigation">
+            app:menu="@menu/top_menu_navigation"
+            >
         </android.support.design.widget.BottomNavigationView>
     </LinearLayout>
 
+    <!--app:labelVisibilityMode="labeled"-->
 
     <!--<ScrollView-->
         <!--android:layout_width="match_parent"-->

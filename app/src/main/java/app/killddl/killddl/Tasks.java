@@ -1,11 +1,11 @@
 package app.killddl.killddl;
 
-import com.google.android.gms.tasks.Task;
+import android.support.annotation.NonNull;
+
 import com.google.firebase.Timestamp;
-import com.google.type.Date;
 
 import java.io.Serializable;
-public class Tasks implements Serializable{
+public class Tasks implements Serializable, Comparable{
     // member variables
     protected int id;
     protected int priority;
@@ -107,4 +107,10 @@ public class Tasks implements Serializable{
         return this.notification;
     }
     public Timestamp getFinishTime() { return this.finishTime; }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Tasks other = (Tasks) o;
+        return other.getDeadline().compareTo(this.getDeadline());
+    }
 }

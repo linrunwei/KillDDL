@@ -1,11 +1,12 @@
 package app.killddl.killddl;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -13,15 +14,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import com.google.firebase.Timestamp;
 
-import java.sql.Time;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +99,9 @@ public class MenuActivity extends AppCompatActivity {
 
         // Top Navigation Bar
         BottomNavigationView topNavigationView = findViewById(R.id.top_navigation);
+        BottomNavigationViewHelper.removeShiftMode(topNavigationView);
+//        topNavigationView.setItemBackgroundResource(R.drawable.menubackground);
+
         topNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -108,22 +110,29 @@ public class MenuActivity extends AppCompatActivity {
                         menustate="daily";
                         Intent daily = new Intent(getApplicationContext(), MenuActivity.class);
                         daily.putExtra("menuState",menustate);
-                        daily.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        daily.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(daily);
                         break;
                     case R.id.action_weekly:
                         menustate="weekly";
                         Intent weekly = new Intent(getApplicationContext(), MenuActivity.class);
                         weekly.putExtra("menuState",menustate);
-                        weekly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        weekly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(weekly);
                         break;
                     case R.id.action_monthly:
                         menustate="monthly";
                         Intent monthly = new Intent(getApplicationContext(), MenuActivity.class);
                         monthly.putExtra("menuState",menustate);
-                        monthly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        monthly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(monthly);
+                        break;
+                    case R.id.action_past:
+                        menustate="past";
+                        Intent past = new Intent(getApplicationContext(), MenuActivity.class);
+                        past.putExtra("menuState",menustate);
+//                        monthly.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(past);
                         break;
                 }
 //                initRecyclerView();
@@ -226,7 +235,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<Tasks> weeklyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
-        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        selected.addAll(MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp));
         for (int i = 0; i < 6; i++) {
             Calendar c = Calendar.getInstance();
             c.setTime(tsp.toDate());
@@ -239,7 +248,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<Tasks> monthlyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
-        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        selected.addAll(MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp));
         for (int i = 0; i < 30; i++) {
             Calendar c = Calendar.getInstance();
             c.setTime(tsp.toDate());
@@ -247,6 +256,20 @@ public class MenuActivity extends AppCompatActivity {
             tsp = new Timestamp(c.getTime());
             selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
         }
+        return selected;
+    }
+
+    private List<Tasks> pastTaskView(Timestamp tsp){
+        List<Tasks> selected = new ArrayList<Tasks>();
+        selected.addAll(MainActivity.getDatabase().getTaskListBeforeTime(tsp));
+//        selected.addAll(MainActivity.getDatabase().getTaskListByTimeEarlyToday(tsp));
+//        for (int i = 0; i < 300; i++) {
+//            Calendar c = Calendar.getInstance();
+//            c.setTime(tsp.toDate());
+//            c.add(Calendar.DATE, -1);
+//            tsp = new Timestamp(c.getTime());
+//            selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+//        }
         return selected;
     }
 
@@ -272,13 +295,17 @@ public class MenuActivity extends AppCompatActivity {
 
         switch(menustate){
             case "daily":
-                tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+                tasksList = MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp);
                 break;
             case "weekly":
                 tasksList = weeklyTaskView(tsp);
                 break;
             case "monthly":
                 tasksList = monthlyTaskView(tsp);
+                break;
+            case "past":
+                tasksList = pastTaskView(tsp);
+                break;
         }
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, displayTaskList(tasksList), menustate);
@@ -361,4 +388,29 @@ public class MenuActivity extends AppCompatActivity {
 //        }
 //        return rl;
 //    }
+}
+class BottomNavigationViewHelper {
+
+    @SuppressLint("RestrictedApi")
+    public static void removeShiftMode(BottomNavigationView view) {
+        //this will remove shift mode for bottom navigation view
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                item.setShiftingMode(false);
+                // set once again checked value, so view will be updated
+                item.setChecked(item.getItemData().isChecked());
+            }
+
+        } catch (NoSuchFieldException e) {
+            Log.e("ERROR NO SUCH FIELD", "Unable to get shift mode field");
+        } catch (IllegalAccessException e) {
+            Log.e("ERROR ILLEGAL ALG", "Unable to change value of shift mode");
+        }
+    }
 }
