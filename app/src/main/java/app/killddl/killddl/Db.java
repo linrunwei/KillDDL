@@ -120,12 +120,15 @@ public class Db {
             int currYear = mCal.get(Calendar.YEAR);
             int currMonth = mCal.get(Calendar.MONTH);
             int currDay = mCal.get(Calendar.DATE);
-            if(mYear == currYear && mMonth == currMonth && mDay == currDay){
+            if(mYear == currYear && mMonth == currMonth && mDay == currDay && !((Tasks) t).isFinished){
+//            if(mYear == currYear && mMonth == currMonth && mDay == currDay){
                 selected.add((Tasks) t);
             }
         }
         return selected;
     }
+
+
 
     public int getUnfinishedTask(){
         int i = 0;
