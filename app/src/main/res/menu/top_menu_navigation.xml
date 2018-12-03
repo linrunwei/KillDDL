@@ -17,6 +17,10 @@
         android:enabled="true"
         android:title="Monthly"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/action_past"
+        android:enabled="true"
+        android:title="Past"
+        app:showAsAction="ifRoom" />
 
 </menu>
