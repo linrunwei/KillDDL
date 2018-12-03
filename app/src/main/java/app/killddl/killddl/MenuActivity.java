@@ -235,7 +235,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<Tasks> weeklyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
-        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        selected.addAll(MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp));
         for (int i = 0; i < 6; i++) {
             Calendar c = Calendar.getInstance();
             c.setTime(tsp.toDate());
@@ -248,7 +248,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<Tasks> monthlyTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
-        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+        selected.addAll(MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp));
         for (int i = 0; i < 30; i++) {
             Calendar c = Calendar.getInstance();
             c.setTime(tsp.toDate());
@@ -261,14 +261,15 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<Tasks> pastTaskView(Timestamp tsp){
         List<Tasks> selected = new ArrayList<Tasks>();
-//        selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
-        for (int i = 0; i < 300; i++) {
-            Calendar c = Calendar.getInstance();
-            c.setTime(tsp.toDate());
-            c.add(Calendar.DATE, -1);
-            tsp = new Timestamp(c.getTime());
-            selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
-        }
+        selected.addAll(MainActivity.getDatabase().getTaskListBeforeTime(tsp));
+//        selected.addAll(MainActivity.getDatabase().getTaskListByTimeEarlyToday(tsp));
+//        for (int i = 0; i < 300; i++) {
+//            Calendar c = Calendar.getInstance();
+//            c.setTime(tsp.toDate());
+//            c.add(Calendar.DATE, -1);
+//            tsp = new Timestamp(c.getTime());
+//            selected.addAll(MainActivity.getDatabase().getTaskListByTime(tsp));
+//        }
         return selected;
     }
 
@@ -294,7 +295,7 @@ public class MenuActivity extends AppCompatActivity {
 
         switch(menustate){
             case "daily":
-                tasksList = MainActivity.getDatabase().getTaskListByTime(tsp);
+                tasksList = MainActivity.getDatabase().getTaskListByTimeLaterToday(tsp);
                 break;
             case "weekly":
                 tasksList = weeklyTaskView(tsp);
