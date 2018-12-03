@@ -13,31 +13,31 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 public class GestureHelper extends ItemTouchHelper.Callback {
     public interface ActionCompletionContract {
         void onViewMoved(int oldPosition, int newPosition);
-        void onViewSwiped(int position);
+        void onViewSwiped(int position, int direction);
     }
 
     private ActionCompletionContract contract;
-    private Drawable background;
-    private Drawable xMark;
-    private int xMarkMargin;
+    private Drawable deleteBackground;
+    private Drawable finishBackground;
+    private Drawable deleteMark;
+    private Drawable finishMark;
+    private int markMargin;
 
     public GestureHelper(ActionCompletionContract contract, Context context) {
         this.contract = contract;
-        this.background = new ColorDrawable(Color.RED);
-        this.xMark = ContextCompat.getDrawable(context, R.drawable.ic_clear_24dp);
-        this.xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        this.xMarkMargin = (int) context.getResources().getDimension(R.dimen.ic_clear_margin);
+        this.deleteBackground = new ColorDrawable(Color.RED);
+        this.deleteMark = ContextCompat.getDrawable(context, R.drawable.ic_clear);
+        this.deleteMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        this.finishBackground = new ColorDrawable(0xFF09BB26);
+        this.finishMark = ContextCompat.getDrawable(context, R.drawable.ic_check);
+        this.finishMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        this.markMargin = (int) context.getResources().getDimension(R.dimen.ic_clear_margin);
     }
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-//        if (viewHolder instanceof SectionHeaderViewHolder) {
-//            return 0;
-//        }
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        int swipeFlags = ItemTouchHelper.LEFT;
-//        return makeMovementFlags(dragFlags, 0);
-//        return makeFlag(ACTION_STATE_DRAG, dragFlags);
+        int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
@@ -49,31 +49,49 @@ public class GestureHelper extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        contract.onViewSwiped(viewHolder.getAdapterPosition());
+        contract.onViewSwiped(viewHolder.getAdapterPosition(), direction);
     }
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-//            float alpha = 1 - (Math.abs(dX) / recyclerView.getWidth());
-//            viewHolder.itemView.setAlpha(alpha);
-            // draw red background
+            if (dX < 0) { // swipe from right to left, should delete a task
+//                float alpha = 1 - (Math.abs(dX) / recyclerView.getWidth());
+//                viewHolder.itemView.setAlpha(alpha);
+                // draw red background
 
-            background.setBounds(viewHolder.itemView.getRight() + (int) dX, viewHolder.itemView.getTop(), viewHolder.itemView.getRight(), viewHolder.itemView.getBottom());
-            background.draw(c);
+                deleteBackground.setBounds(viewHolder.itemView.getRight() + (int) dX, viewHolder.itemView.getTop(), viewHolder.itemView.getRight(), viewHolder.itemView.getBottom());
+                deleteBackground.draw(c);
 
-            // draw x mark
-            int itemHeight = viewHolder.itemView.getBottom() - viewHolder.itemView.getTop();
-            int intrinsicWidth = xMark.getIntrinsicWidth();
-            int intrinsicHeight = xMark.getIntrinsicWidth();
+                // draw delete mark
+                int itemHeight = viewHolder.itemView.getBottom() - viewHolder.itemView.getTop();
+                int intrinsicWidth = deleteMark.getIntrinsicWidth();
+                int intrinsicHeight = deleteMark.getIntrinsicWidth();
 
-            int xMarkLeft = viewHolder.itemView.getRight() - xMarkMargin - intrinsicWidth;
-            int xMarkRight = viewHolder.itemView.getRight() - xMarkMargin;
-            int xMarkTop = viewHolder.itemView.getTop() + (itemHeight - intrinsicHeight)/2;
-            int xMarkBottom = xMarkTop + intrinsicHeight;
-            xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+                int xMarkLeft = viewHolder.itemView.getRight() - markMargin - intrinsicWidth;
+                int xMarkRight = viewHolder.itemView.getRight() - markMargin;
+                int xMarkTop = viewHolder.itemView.getTop() + (itemHeight - intrinsicHeight)/2;
+                int xMarkBottom = xMarkTop + intrinsicHeight;
+                deleteMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
 
-            xMark.draw(c);
+                deleteMark.draw(c);
+            }
+            else if (dX > 0) { // swipe from left to right, should mark a task as finished
+                finishBackground.setBounds(viewHolder.itemView.getLeft() + (int) dX, viewHolder.itemView.getTop(), viewHolder.itemView.getLeft(), viewHolder.itemView.getBottom());
+                finishBackground.draw(c);
+
+                int itemHeight = viewHolder.itemView.getBottom() - viewHolder.itemView.getTop();
+                int intrinsicWidth = finishMark.getIntrinsicWidth();
+                int intrinsicHeight = finishMark.getIntrinsicWidth();
+
+                int xMarkLeft = viewHolder.itemView.getLeft() + markMargin;
+                int xMarkRight = viewHolder.itemView.getLeft() + markMargin + intrinsicWidth;
+                int xMarkTop = viewHolder.itemView.getTop() + (itemHeight - intrinsicHeight)/2;
+                int xMarkBottom = xMarkTop + intrinsicHeight;
+                finishMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+
+                finishMark.draw(c);
+            }
 
         }
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

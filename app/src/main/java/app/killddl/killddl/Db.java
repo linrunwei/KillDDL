@@ -98,6 +98,20 @@ public class Db {
             */
     }
 
+    public void deleteTask(int taskId) {
+        Tasks task;
+        for (int i = 0; i < taskList.size(); i++) {
+            if (taskList.get(i).getId() == taskId) {
+                task = taskList.get(i);
+                if (db != null) {
+                    db.collection("User").document(this.uid).collection("taskList").document("" + task.getId()).delete();
+                }
+                taskList.remove(i);
+                break;
+            }
+        }
+    }
+
     public void EditTask(int id,Tasks task){
         for(int i =0; i < taskList.size();i++){
             if(taskList.get(i).getId() == id){
