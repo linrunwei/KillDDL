@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
                                                             }
                                                             tasksList.add(t);
                                                         }
-                                                        User user = new User(email, loginUser.getAvatar());
+                                                        User user = new User(email, loginUser.getAvatar(), loginUser.getTaskCount());
                                                         dbase.setUser(user);
                                                         dbase.setTaskList(tasksList);
                                                         dbase.setFinishedTasks(finishedTasks);
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                             tasksList.add(t);
                                         }
-                                        User user = new User(currUser.getEmail(), loginUser != null ? loginUser.getAvatar() : 0);
+                                        User user = new User(currUser.getEmail(), loginUser != null ? loginUser.getAvatar() : 0, loginUser != null ? loginUser.getTaskCount() : 0);
                                         dbase.setUser(user);
                                         dbase.setTaskList(tasksList);
                                         dbase.setFinishedTasks(finishedTasks);

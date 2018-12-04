@@ -1,5 +1,7 @@
 package app.killddl.killddl;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,8 +16,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements  GestureHelper.ActionCompletionContract {
     private static final String TAG = "RecyclerViewAdapter";
@@ -138,12 +144,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         else {
             if (direction == ItemTouchHelper.LEFT) {
-                MainActivity.getDatabase().deleteTask(mTasks.get(position).getId());
+                Tasks toDelete = mTasks.get(position);
+                cancelNotification(false, toDelete.getName(), toDelete.getFrequency(), toDelete.getId());
+                MainActivity.getDatabase().deleteTask(toDelete.getId());
                 mTasks.remove(position);
                 notifyItemRemoved(position);
             }
             else if (direction == ItemTouchHelper.RIGHT) {
-                MainActivity.getDatabase().removeTask(mTasks.get(position).getId());
+                Tasks toFinish = mTasks.get(position);
+                cancelNotification(false, toFinish.getName(), toFinish.getFrequency(), toFinish.getId());
+                MainActivity.getDatabase().removeTask(toFinish.getId());
                 mTasks.remove(position);
                 notifyItemRemoved(position);
             }
@@ -152,5 +162,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void setTouchHelper(ItemTouchHelper touchHelper) {
         this.touchHelper = touchHelper;
+    }
+
+    public void cancelNotification(boolean isRecurring, String taskName, int frequency, int taskId) {
+        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        intent.putExtra("taskName", taskName);
+        intent.putExtra("frequency", frequency);
+        intent.putExtra("taskId", taskId);
+
+        //        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, new Random().nextInt(2048), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), taskId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
+        if (alarmManager != null) {
+            if (isRecurring) {
+                //                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent); // todo this is a expedient solution
+                alarmManager.cancel(pendingIntent);
+//                Toast.makeText(this, taskName + " has been marked as finished", Toast.LENGTH_LONG).show();
+            }
+            else {
+                //                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.cancel(pendingIntent);
+//                Toast.makeText(this, taskName + " has been marked as finished", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+//            Toast.makeText(this, "cancel notification failed", Toast.LENGTH_LONG).show();
+        }
     }
 }

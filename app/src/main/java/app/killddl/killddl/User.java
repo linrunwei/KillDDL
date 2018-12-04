@@ -8,6 +8,7 @@ public class User implements Serializable{
 
     protected String email;
     protected int avatar;
+    protected int taskCount;
 //    protected List<Tasks> taskList = new ArrayList<Tasks>();
 
     //for addValue
@@ -15,10 +16,12 @@ public class User implements Serializable{
     }
     public User(String email){
         this.email = email;
+        this.taskCount = 0;
     }
-    public User(String email, int avatar){
+    public User(String email, int avatar, int taskCount){
         this.email = email;
         this.avatar = avatar;
+        this.taskCount = taskCount;
     }
 
     public String getEmail() {
@@ -32,6 +35,12 @@ public class User implements Serializable{
     }
     public void setAvatar(int a){
         this.avatar = a;
+    }
+    public int getTaskCount() {
+        return this.taskCount;
+    }
+    public void setTaskCount(int taskCount) {
+        this.taskCount = taskCount;
     }
     /*
     public List<Tasks> getTaskListByTime(Timestamp tsp){
