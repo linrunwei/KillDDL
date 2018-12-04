@@ -1,6 +1,10 @@
 package app.killddl.killddl;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -10,6 +14,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
+
+import static android.content.Context.ALARM_SERVICE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Db {
     //save current user in DB class
@@ -67,9 +74,10 @@ public class Db {
         for(int i =0; i < taskList.size();i++){
             if(taskList.get(i).getId() == taskId){
                 task = taskList.get(i);
+
                 task.EditIsFinished(true);
                 task.EditFinishTime(Timestamp.now());
-                taskList.get(taskId).EditFinishTime(Timestamp.now());
+//                taskList.get(taskId).EditFinishTime(Timestamp.now());
                 String date = MainActivity.timestampToString(task.getFinishTime());
                 if(finishedTasks.get(date) == null)
                     finishedTasks.put(date, 1);
@@ -99,14 +107,12 @@ public class Db {
     }
 
     public void deleteTask(int taskId) {
-        Tasks task;
-        for (int i = 0; i < taskList.size(); i++) {
-            if (taskList.get(i).getId() == taskId) {
-                task = taskList.get(i);
+        for (Tasks toDelete : taskList) {
+            if (toDelete.getId() == taskId) {
                 if (db != null) {
-                    db.collection("User").document(this.uid).collection("taskList").document("" + task.getId()).delete();
+                    db.collection("User").document(this.uid).collection("taskList").document("" + toDelete.getId()).delete();
                 }
-                taskList.remove(i);
+                taskList.remove(toDelete);
                 break;
             }
         }
@@ -282,6 +288,7 @@ public class Db {
     public HashMap<String,Integer> getFinshedTasks(){
         return finishedTasks;
     }
+
 
 
 }

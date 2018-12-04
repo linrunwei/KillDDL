@@ -1,9 +1,11 @@
 package app.killddl.killddl;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -71,8 +73,17 @@ public class EditTaskActivity extends AppCompatActivity {
 //        taskId = intent.getIntExtra("edit_taskId",0);
         taskId = intent.getIntExtra("taskId",-1);
         tasksList = MainActivity.getDatabase().getTaskList();
-        targetTask = tasksList.get(taskId);
         user = MainActivity.getDatabase().getUser();
+        for (Tasks task : tasksList) {
+            if (task.getId() == taskId) {
+                targetTask = tasksList.get(taskId);
+                break;
+            }
+        }
+        if (targetTask == null) {
+            showNormalDialog();
+            return;
+        }
 
         //to which page
         if (intent.hasExtra("page")) {
@@ -419,4 +430,21 @@ public class EditTaskActivity extends AppCompatActivity {
         }
     }
 
+
+    private void showNormalDialog(){
+        final AlertDialog.Builder normalDialog = new AlertDialog.Builder(EditTaskActivity.this);
+        normalDialog.setIcon(R.drawable.ic_warning);
+        normalDialog.setTitle("Notice");
+        normalDialog.setMessage("This task has been deleted.");
+        normalDialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent newIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                        newIntent.putExtra("menuState", "daily");
+                        startActivity(newIntent);
+                    }
+                });
+        normalDialog.show();
+    }
 }

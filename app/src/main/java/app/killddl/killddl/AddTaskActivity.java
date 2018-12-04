@@ -201,7 +201,9 @@ public class AddTaskActivity extends AppCompatActivity {
             err.setText("Cannot Create task before time!");
             return;
         }
-        taskId = MainActivity.getDatabase().getTaskList().size();
+        taskId = MainActivity.getDatabase().getUser().getTaskCount();
+        MainActivity.getDatabase().getUser().setTaskCount(taskId+1);
+        MainActivity.getDatabase().updateUser(user);
         Tasks task = new Tasks(taskId, timestamp);
         task.EditColor(color);
         task.EditDescription(description);
