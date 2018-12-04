@@ -147,5 +147,9 @@ public class EditPasswordActivity extends AppCompatActivity{
             }
         });
     }
+    public void goBackProfile(View v){
+        Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
+        startActivity(Profile);
+    }
 
 }

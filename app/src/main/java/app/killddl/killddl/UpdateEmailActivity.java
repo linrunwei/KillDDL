@@ -36,7 +36,6 @@ public class UpdateEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_updateemail);
         mAuth = MainActivity.getAuth();
 
-
         //Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -154,4 +153,8 @@ public class UpdateEmailActivity extends AppCompatActivity {
         });
     }
 
+    public void goBackProfile(View v){
+        Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
+        startActivity(Profile);
+    }
 }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
@@ -204,6 +205,10 @@ public class AnalyticsActivity extends AppCompatActivity {
 
         graph.getViewport().setXAxisBoundsManual(true);
 
+    }
+    public void goBackProfile(View v){
+        Intent Profile = new Intent(getApplicationContext(),ProfileActivity.class);
+        startActivity(Profile);
     }
 }
 
