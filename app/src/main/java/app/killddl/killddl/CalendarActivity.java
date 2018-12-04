@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -58,7 +59,7 @@ public class CalendarActivity extends AppCompatActivity {
         }
         */
 
-
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.AppThemeDark);
         }else{

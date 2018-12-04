@@ -17,6 +17,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.google.firebase.Timestamp;
 
@@ -35,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         Intent intent = getIntent();
         if (intent.hasExtra("menuState")) {
             menustate = intent.getStringExtra("menuState");
