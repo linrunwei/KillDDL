@@ -37,6 +37,7 @@ Similar applications in market includes Things, Wunderlist, Omnifocus, etc. Thes
 3. Add ability to prevent user logged in with Facebook from changing their `Email` or `Password` directly in the app. 
 4. Add ability to send verification email when a user update his/her login email
 5. Allow a user to delete his or her account
+6. Add various transition animation effects
 
 ## VI. Sprint #2 Improvements  
 1. Add `visualization` of task completion statistics.
